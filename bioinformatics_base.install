@@ -1,26 +1,28 @@
 <?php
 
 /**
-	* @file
-	* bioinformatics_base.info
-	*/
+  * @file
+  * bioinformatics_base.info
+  */
 
 /**
-	* Implements hook_install().
-	*
-	* @see bioinformatics_base_islandora_required_objects()
-	*/
-	function bioinformatics_base_install() {
-		module_load_include('inc', 'islandora', 'includes/solution_packs');
-		islandora_install_solution_pack('bioinformatics_newspaper');
-	}
+  * Implements hook_install().
+  *
+  * @see bioinformatics_base_islandora_required_objects()
+  */
+  function bioinformatics_base_install() {
+    module_load_include('inc', 'islandora', 'includes/solution_packs');
+    islandora_install_solution_pack('bioinformatics_newspaper');
+  }
 
 /**
-	* Implements hook_uninstall().
-	*/
-	function bioinformatics_base_uninstall() {
-		module_load_include('inc', 'islandora', 'includes/solution_packs');
-		islandora_install_solution_pack('bioinformatics_base', 'uninstall');
-		$variables = array('bioinformatics_base');
-		array_walk($variables, 'variable_del');
-	}
+  * Implements hook_uninstall().
+  */
+  function bioinformatics_base_uninstall() {
+    module_load_include('inc', 'islandora', 'includes/solution_packs');
+    islandora_install_solution_pack('bioinformatics_base', 'uninstall');
+    $variables = array('bioinformatics_base');
+    array_walk($variables, 'variable_del');
+  }
+
+
