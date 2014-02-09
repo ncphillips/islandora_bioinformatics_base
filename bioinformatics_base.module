@@ -13,7 +13,7 @@
     $module_path = drupal_get_path('module', 'bioinformatic_base');
 
     // Project Content Model
-    $project_cm = $connection->repository->constructObject('bioinformatics:personCM');
+    $project_cm = $connection->repository->constructObject('bioinformatics:projectCM');
     $project_cm->owner = 'fedoraAdmin';
     $project_cm->label = 'Islandora Bioinformatics Project Content Model';
     $project_cm->models = 'fedora-system:ContentModel-3.0';
