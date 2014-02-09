@@ -69,3 +69,23 @@
       );
     }
 
+  function bioinformatics_base_islandora_xml_form_builder_forms() {
+    $module_path = drupal_get_path('module', 'bioinformatics_base');
+    return array(
+      'Person MADS form' => array(
+        'form_file' => "$module_path/xml/forms/bioinformatics_person_form_mads.xml",
+      ),
+    );
+  }
+
+  function bioinformatics_base_islandora_xml_form_builder_form_association() {
+    return array(
+      'bioinformatics_person_mads_form' => array(
+        'content_model' => 'bioinformatics:personCM',
+        'form_name' => 'Person MADS form',
+        'dsid' => 'MADS',
+        'title_field' => array('titleInfo', 'title'),
+        'template' => FALSE,
+      ),
+    );
+  }
