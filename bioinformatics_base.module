@@ -68,7 +68,7 @@
         ),
       );
     }
-
+/*
   function bioinformatics_base_islandora_xml_form_builder_forms() {
     $module_path = drupal_get_path('module', 'bioinformatics_base');
     return array(
@@ -89,3 +89,4 @@
       ),
     );
   }
+*/
