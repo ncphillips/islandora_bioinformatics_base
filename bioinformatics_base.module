@@ -20,7 +20,7 @@
     $datastream = $project_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
     $datastream->label = 'Project content model';
     $datastream->mimetype= 'text/xml';
-    $datastream->setContentFromFile("$module_path/xml/Project_ds_composite_model.xml", FALSE);
+    $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
     $project_cm->ingestDatastream($datastream);
 
     // Person Content Model
@@ -31,7 +31,7 @@
     $datastream = $person_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
     $datastream->label = 'Person content model';
     $datastream->mimetype= 'text/xml';
-    $datastream->setContentFromFile("$module_path/xml/Person_ds_composite_model.xml", FALSE);
+    $datastream->setContentFromFile("$module_path/xml/content_models/Person_ds_composite_model.xml", FALSE);
     $person_cm->ingestDatastream($datastream);
 
     // LabObject Content Model
@@ -42,7 +42,7 @@
     $datastream = $labObject_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
     $datastream->label = 'LabObject content model';
     $datastream->mimetype= 'text/xml';
-    $datastream->setContentFromFile("$module_path/xml/LabObject_ds_composite_model.xml", FALSE);
+    $datastream->setContentFromFile("$module_path/xml/content_models/LabObject_ds_composite_model.xml", FALSE);
     $labObject_cm->ingestDatastream($datastream);
 
     // LabActivity Content Model
@@ -53,7 +53,7 @@
     $datastream = $labActivity_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
     $datastream->label = 'LabActivity content model';
     $datastream->mimetype= 'text/xml';
-    $datastream->setContentFromFile("$module_path/xml/LabActivity_ds_composite_model.xml", FALSE);
+    $datastream->setContentFromFile("$module_path/xml/content_models/LabActivity_ds_composite_model.xml", FALSE);
     $labActivity_cm->ingestDatastream($datastream);
 
     return array(
