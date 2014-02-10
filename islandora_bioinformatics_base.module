@@ -75,10 +75,9 @@
       'Person MADS form' => array(
         'form_file' => "$module_path/xml/forms/islandora_bioinformatics_person_form_mads.xml",
       ),
-/*
       'Project MADS form' => array(
         'form_file' => "$module_path/xml/forms/islandora_bioinformatics_project_form_mads.xml",
-      ),*/
+      ),
     );
   }
 
@@ -92,12 +91,12 @@
         'transform' => '',
         'template' => FALSE,
       ),
-      /*'islandora_bioinformatics_project_mads_form' => array(
+        'islandora_bioinformatics_project_mads_form' => array(
         'content_model' => 'bioinformatics:projectCM',
         'form_name' => 'Project MADS form',
         'dsid' => 'MADS',
         'title_field' => array('titleInfo', 'title'),
         'template' => FALSE,
-      ),*/
+      ),  
     );
   }
