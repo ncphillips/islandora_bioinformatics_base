@@ -95,6 +95,7 @@
         'content_model' => 'bioinformatics:projectCM',
         'form_name' => 'Project MADS form',
         'dsid' => 'MADS',
+        'transform' => '',
         'title_field' => array('titleInfo', 'title'),
         'template' => FALSE,
       ),  
