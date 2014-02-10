@@ -48,7 +48,7 @@
     // LabActivity Content Model
     $labActivity_cm = $connection->repository->constructObject('bioinformatics:labActivityCM');
     $labActivity_cm->owner = 'fedoraAdmin';
-    $labActivity_cm->label = 'Islandora Bioinformatics Person Content Model';
+    $labActivity_cm->label = 'Islandora Bioinformatics LabActivity Content Model';
     $labActivity_cm->models = 'fedora-system:ContentModel-3.0';
     $datastream = $labActivity_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
     $datastream->label = 'LabActivity content model';
@@ -84,11 +84,11 @@
 
   function islandora_bioinformatics_base_islandora_xml_form_builder_form_association() {
     return array(
-      'islandora_bioinformatics_person_mads_form' => array(
+      'islandora_bioinformatics_person_form_mads' => array(
         'content_model' => 'bioinformatics:personCM',
         'form_name' => 'Person MADS form',
         'dsid' => 'MADS',
-        'title_field' => array('titleInfo', 'title'),
+        'title_field' => array('authority','titleInfo', 'title'),
         'transform' => '',
         'template' => FALSE,
       ),
