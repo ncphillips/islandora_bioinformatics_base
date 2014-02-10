@@ -89,6 +89,7 @@
         'form_name' => 'Person MADS form',
         'dsid' => 'MADS',
         'title_field' => array('titleInfo', 'title'),
+        'transform' => '',
         'template' => FALSE,
       ),
       /*'islandora_bioinformatics_project_mads_form' => array(
