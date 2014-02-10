@@ -1,0 +1,91 @@
+<?php
+
+/**
+  * @file
+  * Hooks and callbacks for the module.
+  */
+
+/**
+  * Implements hook_islandora_required_objects().
+  */
+
+  function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
+    $module_path = drupal_get_path('module', 'islandora_bioinformatic_base');
+
+    // Project Content Model
+    $project_cm = $connection->repository->constructObject('bioinformatics:projectCM');
+    $project_cm->owner = 'fedoraAdmin';
+    $project_cm->label = 'Islandora Bioinformatics Project Content Model';
+    $project_cm->models = 'fedora-system:ContentModel-3.0';
+    $datastream = $project_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+    $datastream->label = 'Project content model';
+    $datastream->mimetype= 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
+    $project_cm->ingestDatastream($datastream);
+
+    // Person Content Model
+    $person_cm = $connection->repository->constructObject('bioinformatics:personCM');
+    $person_cm->owner = 'fedoraAdmin';
+    $person_cm->label = 'Islandora Bioinformatics Person Content Model';
+    $person_cm->models = 'fedora-system:ContentModel-3.0';
+    $datastream = $person_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+    $datastream->label = 'Person content model';
+    $datastream->mimetype= 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/content_models/Person_ds_composite_model.xml", FALSE);
+    $person_cm->ingestDatastream($datastream);
+
+    // LabObject Content Model
+    $labObject_cm = $connection->repository->constructObject('bioinformatics:labObjectCM');
+    $labObject_cm->owner = 'fedoraAdmin';
+    $labObject_cm->label = 'Islandora Bioinformatics LabObject Content Model';
+    $labObject_cm->models = 'fedora-system:ContentModel-3.0';
+    $datastream = $labObject_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+    $datastream->label = 'LabObject content model';
+    $datastream->mimetype= 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/content_models/LabObject_ds_composite_model.xml", FALSE);
+    $labObject_cm->ingestDatastream($datastream);
+
+    // LabActivity Content Model
+    $labActivity_cm = $connection->repository->constructObject('bioinformatics:labActivityCM');
+    $labActivity_cm->owner = 'fedoraAdmin';
+    $labActivity_cm->label = 'Islandora Bioinformatics Person Content Model';
+    $labActivity_cm->models = 'fedora-system:ContentModel-3.0';
+    $datastream = $labActivity_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+    $datastream->label = 'LabActivity content model';
+    $datastream->mimetype= 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/content_models/LabActivity_ds_composite_model.xml", FALSE);
+    $labActivity_cm->ingestDatastream($datastream);
+
+    return array(
+      'islandora_bioinformatics_base' => array(
+          'title' => 'Bioinformatics Base',
+          'objects' => array(
+              $project_cm,
+              $person_cm,
+              $labObject_cm,
+              $labActivity_cm,
+          ),
+        ),
+      );
+    }
+
+  function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
+    $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
+    return array(
+      'Person MADS form' => array(
+        'form_file' => "$module_path/xml/forms/islandora_bioinformatics_person_form_mads.xml",
+      ),
+    );
+  }
+
+  function islandora_bioinformatics_base_islandora_xml_form_builder_form_association() {
+    return array(
+      'islandora_bioinformatics_person_mads_form' => array(
+        'content_model' => 'islandora_bioinformatics:personCM',
+        'form_name' => 'Person MADS form',
+        'dsid' => 'MADS',
+        'title_field' => array('titleInfo', 'title'),
+        'template' => FALSE,
+      ),
+    );
+  }
