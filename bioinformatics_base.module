@@ -13,16 +13,16 @@
     $module_path = drupal_get_path('module', 'islandora_bioinformatic_base');
 
     // Project Content Model
-    $project_cm = $connection->repository->constructObject('bioinformatics:projectCM');
-    $project_cm->owner = 'fedoraAdmin';
-    $project_cm->label = 'Islandora Bioinformatics Project Content Model';
-    $project_cm->models = 'fedora-system:ContentModel-3.0';
-    $datastream = $project_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-    $datastream->label = 'Project content model';
-    $datastream->mimetype= 'text/xml';
-    $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
-    $project_cm->ingestDatastream($datastream);
-
+#    $project_cm = $connection->repository->constructObject('bioinformatics:projectCM');
+#    $project_cm->owner = 'fedoraAdmin';
+#    $project_cm->label = 'Islandora Bioinformatics Project Content Model';
+#    $project_cm->models = 'fedora-system:ContentModel-3.0';
+#    $datastream = $project_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
+#    $datastream->label = 'Project content model';
+#    $datastream->mimetype= 'text/xml';
+#    $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
+#    $project_cm->ingestDatastream($datastream);
+#
     // Person Content Model
     $person_cm = $connection->repository->constructObject('bioinformatics:personCM');
     $person_cm->owner = 'fedoraAdmin';
@@ -60,7 +60,7 @@
       'bioinformatics_base' => array(
           'title' => 'Bioinformatics Base',
           'objects' => array(
-              $project_cm,
+//              $project_cm,
               $person_cm,
               $labObject_cm,
               $labActivity_cm,
