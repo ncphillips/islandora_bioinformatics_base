@@ -96,7 +96,7 @@
         'form_name' => 'Project MADS form',
         'dsid' => 'MADS',
         'transform' => '',
-        'title_field' => array('titleInfo', 'title'),
+        'title_field' => array('authority','titleInfo', 'title'),
         'template' => FALSE,
       ),  
     );
