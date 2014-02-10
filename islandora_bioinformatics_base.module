@@ -10,7 +10,7 @@
   */
 
   function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
-    $module_path = drupal_get_path('module', 'islandora_bioinformatic_base');
+    $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
 
     // Project Content Model
     $project_cm = $connection->repository->constructObject('bioinformatics:projectCM');
