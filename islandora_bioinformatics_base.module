@@ -6,6 +6,36 @@
   */
 
 /**
+  * Implements hook_menu().
+  */
+  function islandora_bioinformatics_base_menu() {
+    return array();
+  }
+
+/**
+  * Implements hook_theme().
+  */
+  function islandora_bioinformatics_base_theme($existing, $type, $theme, $path){
+    return array(
+
+    );
+  }
+
+/**
+  * Implements hook_CMODEL_PID_islandora_view_object() for Person.
+  */
+  function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+    return array();
+  }
+
+/**
+  * Implements hook_CMODEL_PID_islandora_view_object() for Project.
+  */
+  function islandora_bioinformatics_base_project_cmodel_islandora_view_object(AbstractObject $project) {
+    return array();
+  }
+
+/**
   * Implements hook_islandora_required_objects().
   */
 
@@ -96,10 +126,10 @@
   function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
     $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
     return array(
-      'Person MADS form' => array(
+      'Person' => array(
         'form_file' => "$module_path/xml/forms/islandora_bioinformatics_person_form_mads.xml",
       ),
-      'Project MADS form' => array(
+      'Project' => array(
         'form_file' => "$module_path/xml/forms/islandora_bioinformatics_project_form_mads.xml",
       ),
     );
@@ -109,7 +139,7 @@
     return array(
       'islandora_bioinformatics_person_form_mads' => array(
         'content_model' => 'islandora:person_cmodel',
-        'form_name' => 'Person MADS form',
+        'form_name' => 'Person',
         'dsid' => 'MADS',
         'title_field' => array('authority','titleInfo', 'title'),
         'transform' => '',
@@ -117,7 +147,7 @@
       ),
       'islandora_bioinformatics_project_mads_form' => array(
         'content_model' => 'islandora:project_cmodel',
-        'form_name' => 'Project MADS form',
+        'form_name' => 'Project',
         'dsid' => 'MADS',
         'transform' => '',
         'title_field' => array('authority','titleInfo', 'title'),
