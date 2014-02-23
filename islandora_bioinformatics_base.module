@@ -25,14 +25,20 @@
   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
   */
   function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
-    return array();
+    $output = theme('islandora_bioinformatics_base', array('object' => $person);
+    return array(
+      'islandora_person' => $output,
+    );
   }
 
 /**
   * Implements hook_CMODEL_PID_islandora_view_object() for Project.
   */
   function islandora_bioinformatics_base_project_cmodel_islandora_view_object(AbstractObject $project) {
-    return array();
+    $output = theme('islandora_bioinformatics_base', array('object' => $project);
+    return array(
+      'islandora_project' => $output,
+    );
   }
 
 /**
