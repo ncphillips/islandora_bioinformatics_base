@@ -67,6 +67,18 @@
     $datastream->setContentFromFile("$module_path/xml/content_models/LabActivity_ds_composite_model.xml", FALSE);
     $labActivity_cm->ingestDatastream($datastream);
 
+    // Project Collection
+    $project_collection = $connection->repository->constructObject('islandora:project_collection');
+    $project_collection->owner = 'fedoraAdmin';
+    $project_collection->label = 'Project Collection';
+    $project_collection->models = 'islandora:collectionCModel';
+    $project_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+    $datastream = $newspaper_collection->constructDatastream('COLLECTION_POLICY', 'X');
+    $datastream->mimetype = 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_project_collection_policy.xml", FALSE);
+    $project_collection->ingestDatastream($datastream);
+    
+
     return array(
       'islandora_bioinformatics_base' => array(
           'title' => 'Bioinformatics Base',
