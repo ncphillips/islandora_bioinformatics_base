@@ -9,4 +9,9 @@
     <form MIME="image/jpeg"/>
     <form MIME="image/png"/>
   </dsTypeModel>
+  <dsTypeModel ID="IMG"> 
+    <form MIME="image/png" /> 
+    <form MIME="image/jpeg" /> 
+    <form MIME="image/jpg" /> 
+  </dsTypeModel>
 </dsCompositeModel>

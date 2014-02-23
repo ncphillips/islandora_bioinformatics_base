@@ -46,12 +46,12 @@
  */
 function islandora_bioinformatics_base_image_upload_form_submit(array $form, array &$form_state) {
   $object = $form_state['islandora']['objects'][0];
-  if (empty($object['OBJ'])) {
-    $ds = $object->constructDatastream('OBJ', 'M');
+  if (empty($object['IMG'])) {
+    $ds = $object->constructDatastream('IMG', 'M');
     $object->ingestDatastream($ds);
   }
   else {
-    $ds = $object['OBJ'];
+    $ds = $object['IMG'];
   }
   $file = file_load($form_state['values']['file']);
   $path = drupal_realpath($file->uri);
