@@ -90,13 +90,8 @@
 
   function islandora_bioinformatics_base_islandora_xml_form_builder_form_associations() {
     return array(
-<<<<<<< HEAD:islandora_bioinformatics_base.module
       'islandora_bioinformatics_person_form_mads' => array(
-        'content_model' => 'bioinformatics:personCM',
-=======
-      'bioinformatics_person_mads_form' => array(
         'content_model' => 'islandora:personCM',
->>>>>>> develop:bioinformatics_base.module
         'form_name' => 'Person MADS form',
         'dsid' => 'MADS',
         'title_field' => array('authority','titleInfo', 'title'),
