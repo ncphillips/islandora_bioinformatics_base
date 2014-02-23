@@ -24,7 +24,7 @@
     $project_cm->ingestDatastream($datastream);
 
     // Person Content Model
-    $person_cm = $connection->repository->constructObject('islandora:personCM');
+    $person_cm = $connection->repository->constructObject('islandora:personCM1');
     $person_cm->owner = 'fedoraAdmin';
     $person_cm->label = 'Islandora Bioinformatics Person Content Model';
     $person_cm->models = 'fedora-system:ContentModel-3.0';
@@ -91,7 +91,7 @@
   function islandora_bioinformatics_base_islandora_xml_form_builder_form_associations() {
     return array(
       'islandora_bioinformatics_person_form_mads' => array(
-        'content_model' => 'islandora:personCM',
+        'content_model' => 'islandora:personCM1',
         'form_name' => 'Person MADS form',
         'dsid' => 'MADS',
         'title_field' => array('authority','titleInfo', 'title'),
@@ -112,7 +112,7 @@
  /**
  * Implements hook_islandora_ingest_steps().
  */
-function islandora_bioinformatics_base_islandora_personCM_islandora_ingest_steps(array $configuration) {
+function islandora_bioinformatics_base_islandora_personCM1_islandora_ingest_steps(array $configuration) {
   return array(
     ' islandora_bioinformatics_base' => array(
       'weight' => 10,
