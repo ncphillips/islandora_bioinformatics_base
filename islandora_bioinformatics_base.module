@@ -84,6 +84,7 @@
           'title' => 'Bioinformatics Base',
           'objects' => array(
               $project_cm,
+              $project_collection,
               $person_cm,
               $labObject_cm,
               $labActivity_cm,
