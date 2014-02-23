@@ -100,7 +100,7 @@
  /**
  * Implements hook_islandora_ingest_steps().
  */
-function 	() {
+function islandora_bioinformatics_base_islandora_personCM_islandora_ingest_steps() {
   return array(
     ' islandora_bioinformatics_base' => array(
       'weight' => 10,
