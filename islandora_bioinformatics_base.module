@@ -112,7 +112,7 @@
  /**
  * Implements hook_islandora_ingest_steps().
  */
-function islandora_bioinformatics_base_islandora_personCM_islandora_ingest_steps() {
+function islandora_bioinformatics_base_islandora_personCM_islandora_ingest_steps(array $configuration) {
   return array(
     ' islandora_bioinformatics_base' => array(
       'weight' => 10,
