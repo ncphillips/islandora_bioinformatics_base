@@ -113,8 +113,9 @@
  * Implements hook_islandora_ingest_steps().
  */
 function islandora_bioinformatics_base_islandora_personCM1_islandora_ingest_steps(array $configuration) {
+
   return array(
-    ' islandora_bioinformatics_base' => array(
+    'islandora_bioinformatics_base' => array(
       'weight' => 10,
       'type' => 'form',
       'form_id' => ' islandora_bioinformatics_base_image_upload_form',
