@@ -44,7 +44,7 @@
  * @param array $form_state
  *   The Drupal form state.
  */
-function islandora_basic_image_image_upload_form_submit(array $form, array &$form_state) {
+function islandora_bioinformatics_base_image_upload_form_submit(array $form, array &$form_state) {
   $object = $form_state['islandora']['objects'][0];
   if (empty($object['OBJ'])) {
     $ds = $object->constructDatastream('OBJ', 'M');
