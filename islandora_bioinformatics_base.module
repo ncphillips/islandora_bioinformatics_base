@@ -27,7 +27,7 @@
       'islandor_project' => array(
         'file' => 'theme/theme.inc',
         'template' =>'theme/islandora-project',
-        'pattern' => 'islandora_project__',\
+        'pattern' => 'islandora_project__',
         'variables' => array(
           'object' => NULL,
         ),
