@@ -34,6 +34,13 @@
     $datastream->setContentFromFile("$module_path/xml/content_models/Person_ds_composite_model.xml", FALSE);
     $person_cm->ingestDatastream($datastream);
 
+	// TN Datastream for Person -- To allow upload of portrait image
+	$datastream = $person_cm->constructDatastream('TN', 'M');
+	$datastream->label = 'Thumbnail';
+	$datastream->mimetype = 'image/png';
+	$datastream->setContentFromFile("$module_path/images/folder.png", FALSE);
+	$image_collection->ingestDatastream($datastream);
+	
     // LabObject Content Model
     $labObject_cm = $connection->repository->constructObject('bioinformatics:labObjectCM');
     $labObject_cm->owner = 'fedoraAdmin';
@@ -93,7 +100,7 @@
  /**
  * Implements hook_islandora_ingest_steps().
  */
-function islandora_bioinformatics_base_islandora_personCM_islandora_ingest_steps() {
+function 	() {
   return array(
     ' islandora_bioinformatics_base' => array(
       'weight' => 10,
