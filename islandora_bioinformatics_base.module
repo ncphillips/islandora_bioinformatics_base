@@ -19,12 +19,13 @@
     return array(
       'islandora_person' => array(
         'file' => 'theme/theme.inc',
+		'template' => 'theme/islandora-person',
         'pattern' => 'islandora_person__',
         'variables' => array(
           'object' => NULL,
         ),
       ),
-      'islandor_project' => array(
+      'islandora_project' => array(
         'file' => 'theme/theme.inc',
         'template' =>'theme/islandora-project',
         'pattern' => 'islandora_project__',
