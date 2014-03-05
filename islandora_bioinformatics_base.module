@@ -6,25 +6,6 @@
   */
 
 /**
-  * Implements hook_menu().
-  */
-  function islandora_bioinformatics_base_menu() {
-    menu_items = array();
-    menu_items['islandora/object/%islandora_obect/manage/project' => array(
-      'title' => 'Person',
-      'type' => MENU_LOCAL_TASK,
-      'page callback' => 'islandora_project_project_manage_project',
-      'page arguments' =>array(2),
-      'access callbacks' => 'islandora_user_access',
-      'access arguments' => array(
-        2, array(FEDORA_INGEST), array('islandora:project_cmodel'),
-      ),
-      'file' => 'includes/manage_project.inc',
-      ),
-    return menu_items;
-  }
-
-/**
   * Implements hook_theme().
   */
   function islandora_bioinformatics_base_theme($existing, $type, $theme, $path){
