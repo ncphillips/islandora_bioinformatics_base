@@ -31,12 +31,13 @@
     return array(
       'islandora_person' => array(
         'file' => 'theme/theme.inc',
+		'template' => 'theme/islandora-person',
         'pattern' => 'islandora_person__',
         'variables' => array(
           'object' => NULL,
         ),
       ),
-      'islandor_project' => array(
+      'islandora_project' => array(
         'file' => 'theme/theme.inc',
         'template' =>'theme/islandora-project',
         'pattern' => 'islandora_project__',
@@ -102,7 +103,7 @@
     $datastream = $person_cm->constructDatastream('TN', 'M');
     $datastream->label = 'Thumbnail';
     $datastream->mimetype = 'image/png';
-    $datastream->setContentFromFile("$module_path/images/folder.png", FALSE);
+    $datastream->setContentFromFile("$module_path/images/person.png", FALSE);
     $person_cm->ingestDatastream($datastream);
 	
     // LabObject Content Model
