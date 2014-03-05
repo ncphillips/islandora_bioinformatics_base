@@ -7,6 +7,11 @@
  * the islandora_bioinformatics_base_preprocess_islandora_person
  * function.  Elements such as labels and buttons can be added here
  */
+ 
+ /**
+ * 	Written by Quintin Dawson, based off of Islandora_Porcus solution pack
+ */
+ 
 $islandora_content = $islandora_object['PERSON']->content;
 $path = drupal_get_path('module', 'islandora_bioinformatics_base');
 ?>
