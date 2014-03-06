@@ -12,7 +12,7 @@
     return array(
       'islandora_person' => array(
         'file' => 'theme/theme.inc',
-		'template' => 'theme/islandora-person',
+		'template' => 'theme/islandora_person',
         'pattern' => 'islandora_person__',
         'variables' => array(
           'object' => NULL,
@@ -20,7 +20,7 @@
       ),
       'islandora_project' => array(
         'file' => 'theme/theme.inc',
-        'template' =>'theme/islandora-project',
+        'template' =>'theme/islandora_project',
         'pattern' => 'islandora_project__',
         'variables' => array(
           'object' => NULL,
