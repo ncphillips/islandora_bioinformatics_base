@@ -124,7 +124,7 @@
     $datastream = $person_collection->constructDatastream('COLLECTION_POLICY', 'X');
     $datastream->mimetype = 'text/xml';
     $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_person_collection_policy.xml", FALSE);
-    $person_collcetion->ingestDatastream($datastream);
+    $person_collection->ingestDatastream($datastream);
     
 
     return array(
