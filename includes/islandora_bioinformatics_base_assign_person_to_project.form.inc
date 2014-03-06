@@ -18,6 +18,7 @@
  *	Written by Quintin Dawson
  */
 function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
+  echo 'Test echo';
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   $extensions = array('gif png jpg jpeg');
   return array(
