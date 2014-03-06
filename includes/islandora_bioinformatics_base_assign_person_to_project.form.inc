@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Handles the uploading of the image file.
+ * Handles the assignment of person object to a  project object
  */
 
 /**
