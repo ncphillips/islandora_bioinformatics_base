@@ -9,5 +9,5 @@
             pid="islandora:collectionCModel"/>
   </content_models>
   <search_terms/>
-  <relationship>isMemeberOfCollection</relationship>
+  <relationship>isMemberOfCollection</relationship>
 </collection_policy>
