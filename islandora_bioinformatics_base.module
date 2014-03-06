@@ -115,6 +115,17 @@
     $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_project_collection_policy.xml", FALSE);
     $project_collection->ingestDatastream($datastream);
     
+    // Person Collection
+    $person_collection = $connection->repository->constructObject('islandora:person_collection');
+    $person_collection->owner = 'fedoraAdmin';
+    $person_collection->label = 'Person Collection';
+    $person_collection->models = 'islandora:collectionCModel';
+    $person_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+    $datastream = $person_collection->constructDatastream('COLLECTION_POLICY', 'X');
+    $datastream->mimetype = 'text/xml';
+    $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_person_collection_policy.xml", FALSE);
+    $person_collcetion->ingestDatastream($datastream);
+    
 
     return array(
       'islandora_bioinformatics_base' => array(
@@ -123,6 +134,7 @@
               $project_cm,
               $project_collection,
               $person_cm,
+              $person_collection,
               $labObject_cm,
               $labActivity_cm,
           ),
