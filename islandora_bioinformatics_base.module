@@ -176,6 +176,13 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_
       'module' => 'islandora_bioinformatics_base',
       'file' => 'includes/islandora_bioinformatics_base_image_upload.form.inc',
     ),
+	'islandora_bioinformatics_base' => array(
+		'weight' => 15,
+		'type' => 'form',
+		'form_id' => 'islandora_bioinformatics_base_assign_person_to_person',
+		'module' => 'islandora_bioinformatics_base',
+		'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
+	),
   );
 }
 
