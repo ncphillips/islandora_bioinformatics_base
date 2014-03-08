@@ -23,7 +23,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   return array(
 	'form' => array(
 		'#type' => 'checkboxes',
-		'#options' => array(1 => "One" + "Four", 2 => "Two", 3 => "Three"),
+		'#options' => array(1 => "One", 2 => "Two", 3 => "Three"),
 		'#default_values' => array(1,3),
 	),
   );
