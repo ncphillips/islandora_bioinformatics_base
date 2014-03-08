@@ -20,7 +20,7 @@
 function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
   $query = "Select ?pid
-			FROM <#ri>"
+			FROM <#ri>
 			WHERE {
 				?pid <fedora-model:hasModel>
 				<info:fedora/islandora:person_cmodel>
