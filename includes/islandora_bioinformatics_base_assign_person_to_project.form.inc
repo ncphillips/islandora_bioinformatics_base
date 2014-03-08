@@ -27,8 +27,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 			)";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
-  echo $result;
-  
   return array(
 	'form' => array(
 		'#type' => 'checkboxes',
