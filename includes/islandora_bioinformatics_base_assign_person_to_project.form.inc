@@ -26,19 +26,28 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
                     }";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
+   $people = array();
    foreach($result as $person) {
 	 echo $person["pid"]["value"];
-	 echo $person["title"]["value"];
+	 $people[project["pid"]["value"]] = $person["pid"]["value"];
    }
   
-  return array(
+   return array(
 	'form' => array(
 		'#type' => 'checkboxes',
-		'#options' => array("One", "Two", "Three"),
+		'#options' => $people,
+	),
+   );
+   
+   /*
+   return array(
+	'form' => array(
+		'#type' => 'checkboxes',
+		'#options' => array(1 => "One", 2 => "Two", 3 => "Three"),
 		'#default_values' => array(1,3),
 	),
   );
-  
+  */
   
   /*
   echo 'Test echo';
