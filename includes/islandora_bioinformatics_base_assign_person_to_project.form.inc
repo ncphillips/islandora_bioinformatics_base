@@ -50,7 +50,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 function islandora_bioinformatics_base_assign_person_to_project_form_submit(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
   $person_object = $tuque->repository->getObject("islandora:192");
-  echo $person_object->$id;
+  echo $person_object->id;
   
   /*
   $object = $form_state['islandora']['objects'][0];
