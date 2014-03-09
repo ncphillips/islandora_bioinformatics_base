@@ -48,6 +48,11 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
  *   The Drupal form state.
  */
 function islandora_bioinformatics_base_assign_person_to_project_form_submit(array $form, array &$form_state) {
+  $tuque = new IslandoraTuque();
+  $person_object = $tuque->repository->getObject("islandora:192");
+  echo $person_object->$id;
+  
+  /*
   $object = $form_state['islandora']['objects'][0];
   if (empty($object['IMG'])) {
 	$ds = $object->constructDatastream('IMG', 'M');
@@ -61,4 +66,5 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   $ds->setContentFromFile($path, FALSE);
   $ds->label = $file->filename;
   $ds->mimetype = $file->filemime;
+  */
 }
