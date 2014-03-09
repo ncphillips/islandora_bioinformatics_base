@@ -52,6 +52,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   $person_object = $tuque->repository->getObject("islandora:192");
   echo $person_object->id;
   
+  $people = array_filter($form_state['values']['form']);
+  
   /*
   $object = $form_state['islandora']['objects'][0];
   if (empty($object['IMG'])) {
