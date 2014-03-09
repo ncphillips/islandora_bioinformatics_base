@@ -28,7 +28,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   
    $people = array();
    foreach($result as $person) {
-	 echo $person["pid"]["value"];
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
    }
   
@@ -37,39 +36,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		'#type' => 'checkboxes',
 		'#options' => $people,
 	),
-   );
-   
-   /*
-   return array(
-	'form' => array(
-		'#type' => 'checkboxes',
-		'#options' => array(1 => "One", 2 => "Two", 3 => "Three"),
-		'#default_values' => array(1,3),
-	),
-  );
-  */
-  
-  /*
-  echo 'Test echo';
-  $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
-  $extensions = array('gif png jpg jpeg');
-  return array(
-	'file' => array(
-	  '#title' => t('Image'),
-	  '#type' => 'managed_file',
-	  '#required' => TRUE,
-	  '#description' => t('Select image to upload.<br/>Files must be less than <b>@size MB.</b><br/>Allowed file types: <b>@ext.</b>', array('@size' => $upload_size, '@ext' => $extensions[0])),
-	  '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
-	  '#upload_location' => 'temporary://',
-	  '#upload_validators' => array(
-		'file_validate_extensions' => $extensions,
-		// Assume its specified in MB.
-		'file_validate_size' => array($upload_size * 1024 * 1024),
-	  ),
-	),
-  );
-  */
-  
+   );    
 }
 
 /**
