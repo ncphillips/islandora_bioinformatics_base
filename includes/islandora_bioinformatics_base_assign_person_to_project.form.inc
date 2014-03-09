@@ -60,6 +60,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	echo $id;
   }
   
+  echo $object->id;
+  
   /*
   $object = $form_state['islandora']['objects'][0];
   if (empty($object['IMG'])) {
