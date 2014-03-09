@@ -61,20 +61,4 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   }
   
   echo $object->id;
-  
-  /*
-  $object = $form_state['islandora']['objects'][0];
-  if (empty($object['IMG'])) {
-	$ds = $object->constructDatastream('IMG', 'M');
-	$object->ingestDatastream($ds);
-  }
-  else {
-	$ds = $object['IMG'];
-  }
-  $file = file_load($form_state['values']['file']);
-  $path = drupal_realpath($file->uri);
-  $ds->setContentFromFile($path, FALSE);
-  $ds->label = $file->filename;
-  $ds->mimetype = $file->filemime;
-  */
 }
