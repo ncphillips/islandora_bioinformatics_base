@@ -197,7 +197,6 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_
 function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest_steps(array $configuration) {
 
   return array(
-  /*
     'islandora_bioinformatics_base' => array(
       'weight' => 10,
       'type' => 'form',
@@ -212,6 +211,5 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 		'module' => 'islandora_bioinformatics_base',
 		'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
 	),
-  */
   );
 }
