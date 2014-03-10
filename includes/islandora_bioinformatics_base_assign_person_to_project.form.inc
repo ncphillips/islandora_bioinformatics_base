@@ -2,6 +2,8 @@
 /**
  * @file
  * Handles the assignment of person object to a  project object
+ *
+ * @author Quintin Dawson
  */
 
 /**
@@ -15,7 +17,6 @@
  * @return array
  *   The Drupal form definition.
  *
- *	Written by Quintin Dawson
  */
 function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
