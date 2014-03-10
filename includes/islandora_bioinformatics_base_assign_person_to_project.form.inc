@@ -49,7 +49,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
  */
 function islandora_bioinformatics_base_assign_person_to_project_form_submit(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
-  $project_object = $tuque->repository->getObject($form['values']['pid]); //retrieves the relevant fedora project object
+  $project_object = $tuque->repository->getObject($form['values']['pid']); //retrieves the relevant fedora project object
   
   //get the checkboxes submitted (only those checked are submitted)
   $person_ids = array_filter($form_state['values']['form']);
