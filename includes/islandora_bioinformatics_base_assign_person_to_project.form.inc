@@ -54,7 +54,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   //echo $form_state['islandora']['objects']['repository']['objectId'];
   //echo var_dump($form_state['islandora']);
   //echo var_dump($form_state['islandora']['objects'][0]);
-  $object = form_state['islandora']['objects'][0];
+  $object = $form_state['islandora']['objects'][0];
   echo $object->id;
   //echo '<\pre>';
   
