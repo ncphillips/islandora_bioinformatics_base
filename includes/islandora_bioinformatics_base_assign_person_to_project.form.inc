@@ -51,16 +51,14 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   $tuque = new IslandoraTuque();
 	
 	//retrieves the relevant fedora project object
-    $project_object = $tuque->repository->getObject($form_state['values']['pid']); 
-  
+    //$project_object = $tuque->repository->getObject($form_state['values']['pid']); 
+    echo form_state['values']['pid'];
   //get the checkboxes submitted (only those checked are submitted)
   $person_ids = array_filter($form_state['values']['form']);
   
   //for each person selected, create a relationship between the person and the project
   foreach($person_ids as $id)  {
-	$project_object->relationships->add($id, 'hasModel', 'islandora:person_cmodel');
+	//$project_object->relationships->add($id, 'hasModel', 'islandora:person_cmodel');
 	echo $id;
   }
-  
-  echo $project_object->id;
 }
