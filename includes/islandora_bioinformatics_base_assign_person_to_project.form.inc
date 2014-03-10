@@ -54,9 +54,9 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   //$project_object = $tuque->repository->getObject($form_state['values']['pid']); 
   //echo $form['values']['pid'];
   
-  echo '<pre>';
-  var_dump($form_state); exit();
-  echo '<\pre>';	
+  //echo '<pre>';
+  //var_dump($form_state); exit();
+  //echo '<\pre>';	
 	
   //get the checkboxes submitted (only those checked are submitted)
   $person_ids = array_filter($form_state['values']['form']);
