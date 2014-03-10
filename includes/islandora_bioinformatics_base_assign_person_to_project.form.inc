@@ -17,7 +17,7 @@
  *
  *	Written by Quintin Dawson
  */
-function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state, AbstractObject $parent) {
+function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state, $parent) {
   $form_state['parent'] = $parent;
 
   echo '<pre>' . var_dump($parent) . '</pre>';
