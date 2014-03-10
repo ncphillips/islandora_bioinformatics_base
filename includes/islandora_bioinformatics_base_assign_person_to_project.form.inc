@@ -17,11 +17,7 @@
  *
  *	Written by Quintin Dawson
  */
-function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state, $parent) {
-  $form_state['parent'] = $parent;
-
-  echo '<pre>' . var_dump($parent) . '</pre>';
-  
+function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
   $query = "SELECT ?pid
                     FROM <#ri>
@@ -53,8 +49,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
  */
 function islandora_bioinformatics_base_assign_person_to_project_form_submit(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
-  $parent = $form_state['parent'];
-  echo '<pre>' . var_dump($parent) . '</pre>';
+  echo '<pre>' . var_dump($form_state['islandora']['objects']) . '</pre>';
   
   //retrieves the relevant fedora project object
   //$project_object = $tuque->repository->getObject($form_state['values']['pid']); 
