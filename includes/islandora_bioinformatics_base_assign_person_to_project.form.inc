@@ -51,7 +51,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
  */
 function islandora_bioinformatics_base_assign_person_to_project_form_submit(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
-  $parent = $form_state['parent']
+  $parent = $form_state['parent'];
   echo '<pre>' . var_dump($parent) . '</pre>';
   
   //retrieves the relevant fedora project object
