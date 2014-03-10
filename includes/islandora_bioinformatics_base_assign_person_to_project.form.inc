@@ -40,7 +40,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 }
 
 /**
- * Submit handler, creates a relation between the person an any selected objects.
+ * Submit handler, creates a relation between the project an any selected persons.
  *
  * @param array $form
  *   The Drupal form.
