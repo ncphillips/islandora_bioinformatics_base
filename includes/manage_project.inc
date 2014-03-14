@@ -1,7 +1,7 @@
 <?php
 
     function islandora_project_people(AbstractObject $object) {
-        return "FUCK";
+
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
@@ -15,6 +15,8 @@
         foreach($result as $person) {
             $people[$person["pid"]["value"]] = $person["pid"]["value"];
         }
+
+        $people_string = implode($people);
 
         return $people;
     }

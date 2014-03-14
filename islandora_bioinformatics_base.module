@@ -29,7 +29,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
        'type'=> MENU_CALLBACK,
        'page callback' => 'drupal_get_form',
        'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
-       'access arguments' => array(ISLANDORA_INGEST, 2),
+       'access arguments' => array(ISLANDORA_METADATA_EDIT, 2),
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
      // This URL shows the people associated with a project.
