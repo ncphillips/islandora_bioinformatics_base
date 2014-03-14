@@ -4,7 +4,9 @@
   * @file
   * Hooks and callbacks for the module.
   */
-  
+
+define('ISLANDORA_VIEW_OBJECTS', 'view fedora repository objects');
+define('ISLANDORA_INGEST', 'ingest fedora objects');
 /**
  * Implements hook_menu().
  */
@@ -28,7 +30,8 @@
         'access callback' => 'islandora_user_access',
         'access arguments' => array(
             2, array(ISLANDORA_VIEW_OBJECTS), array('islandora:person_cmodel')
-        )
+        ),
+        'file' => 'includes/manage_project.inc',
     ),
     // This URL begins the ingestion process of a new person to be associated with a project.
     'islandora/object/%islandora_object/manage/people/ingest' => array(
@@ -38,7 +41,7 @@
         'type' => MENU_LOCAL_ACTION,
         'access callback' => 'islandora_object_access',
         'access arguments' => array(ISLANDORA_INGEST, 2),
-        'file' => 'includes/manage_project.inc', // TODO: Create this file.
+        'file' => 'includes/manage_project.inc',
     ),
     );
 }
