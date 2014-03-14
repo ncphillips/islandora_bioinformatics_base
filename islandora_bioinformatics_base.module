@@ -18,8 +18,30 @@
        'access arguments' => array('access administration pages'),
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
+    // This URL shows the people associated with a project.
+    'islandora/object/%islandora_object/people' => array(
+        'title' => 'People',
+        'type' => MENU_LOCAL_TASK,
+        'description' => 'People collaborating on this project.',
+        'page callback' => 'islandora_project_people', //TODO: Write this callback.
+        'page arguments' => array(2),
+        'access callback' => 'islandora_user_access',
+        'access arguments' => array(
+            2, array(ISLANDORA_VIEW_OBJECTS), array('islandora:person_cmodel')
+        )
+    ),
+    // This URL begins the ingestion process of a new person to be associated with a project.
+    'islandora/object/%islandora_object/manage/people/ingest' => array(
+        'title' => 'Add Person',
+        'page callback' => 'islandora_project_ingest_person', // TODO: Write this callback.
+        'page arguments' => array(2),
+        'type' => MENU_LOCAL_ACTION,
+        'access callback' => 'islandora_object_access',
+        'access arguments' => array(ISLANDORA_INGEST, 2),
+        'file' => 'includes/manage_project.inc', // TODO: Create this file.
+    ),
     );
-  }
+}
 
 /**
   * Implements hook_theme().
