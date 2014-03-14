@@ -43,18 +43,33 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
         'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
         'file' => 'includes/manage_project.inc',
         ),
-        // This URL begins the ingestion process of a new person to be associated with a project.
-        'islandora/object/%islandora_object/manage/people/ingest' => array(
-        'title' => 'Add Person',
-        'page callback' => 'islandora_project_ingest_person', // TODO: Write this callback.
-        'page arguments' => array(2),
-        'type' => MENU_LOCAL_ACTION,
-        'access callback' => 'islandora_object_access',
-        'access arguments' => array(ISLANDORA_INGEST, 2),
-        'file' => 'includes/manage_project.inc',
-        ),
     );
 }
+
+  function project_object_load($object_id) {
+      $tuque = islandora_get_tuque_connection();
+      if ($tuque) {
+          try {
+              $object = $tuque->repository->getObject(urldecode($object_id));
+              if (in_array('islandora:project_cmodel', $object->models)){
+                  return $object;
+              }
+          }
+          catch (Exception $e) {
+              if ($e->getCode() == '404') {
+                  return FALSE;
+              }
+              else {
+                  return NULL;
+              }
+          }
+      }
+      else {
+          IslandoraTuque::getError();
+      }
+      // Assuming access denied in all other cases for now.
+      return NULL;
+  }
 
 /**
   * Implements hook_theme().
