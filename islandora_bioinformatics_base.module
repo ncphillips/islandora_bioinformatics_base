@@ -47,28 +47,16 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 }
 
   function project_object_load($object_id) {
-      $tuque = islandora_get_tuque_connection();
-      if ($tuque) {
-          try {
-              $object = $tuque->repository->getObject(urldecode($object_id));
-              if (in_array('islandora:project_cmodel', $object->models)){
+      $object = islandora_object_load($object_id);
+      if ($object) {
+          if (in_array('islandora:project_cmodel', $object->models)){
                   return $object;
-              }
           }
-          catch (Exception $e) {
-              if ($e->getCode() == '404') {
-                  return FALSE;
-              }
-              else {
-                  return NULL;
-              }
-          }
+          return NULL;
       }
       else {
-          IslandoraTuque::getError();
+          return $object;
       }
-      // Assuming access denied in all other cases for now.
-      return NULL;
   }
 
 /**
