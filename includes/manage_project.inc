@@ -1,6 +1,7 @@
 <?php
 
     function islandora_project_people(AbstractObject $object) {
+        return "FUCK";
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
