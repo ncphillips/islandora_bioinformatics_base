@@ -4,6 +4,22 @@
   * @file
   * Hooks and callbacks for the module.
   */
+  
+/**
+ * Implements hook_menu().
+ */
+ function islandora_bioinformatics_base_menu(){
+   return array(
+     'admin/islandora/bioinformatics_base' => array(
+       'title' => 'Add person to project',
+       'description' => 'Adds a person to a project',
+       'page callback' => 'drupal_get_form',
+       'page arguments' => array('islandora_bioinformatics_PersonProject_form'),
+       'access arguments' => array('access administration pages'),
+       'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
+      ),
+    );
+  }
 
   function islandora_bioinformatics_base_hook() {
     return array(
