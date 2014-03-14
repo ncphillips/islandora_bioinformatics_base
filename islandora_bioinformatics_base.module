@@ -7,7 +7,7 @@
   
 /**
  * Implements hook_menu().
- *
+ */
  function islandora_bioinformatics_base_menu(){
    return array(
      'admin/islandora/bioinformatics_base' => array(
@@ -19,7 +19,7 @@
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
     );
-  }*/
+  }
 
 /**
   * Implements hook_theme().
