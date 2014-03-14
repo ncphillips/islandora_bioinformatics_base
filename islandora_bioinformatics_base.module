@@ -46,7 +46,6 @@ define('ISLANDORA_INGEST', 'ingest fedora objects');
     );
 }
 
-  function truth(){return true;};
 /**
   * Implements hook_theme().
   */
