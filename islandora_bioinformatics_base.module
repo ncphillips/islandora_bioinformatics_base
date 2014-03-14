@@ -33,7 +33,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
      // This URL shows the people associated with a project.
-     `'islandora/object/%islandora_object/people' => array(
+     'islandora/object/%islandora_object/people' => array(
         'title' => 'People',
         'type' => MENU_LOCAL_TASK,
         'description' => 'People collaborating on this project.',
