@@ -23,7 +23,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  function islandora_bioinformatics_base_menu(){
    return array(
       //This URL allows user to add people to a specified project
-     'islandora/object/%islandora_object/add/people' => array(
+     'islandora/object/%project_object/add/people' => array(
        'title' => 'Add person to project',
        'description' => 'Adds a person to a project',
        'type'=> MENU_CALLBACK,

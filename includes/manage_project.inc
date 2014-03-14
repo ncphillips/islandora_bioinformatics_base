@@ -6,7 +6,8 @@
                     FROM <#ri>
                     WHERE {
                     ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
-                    }";
+                    }
+                    ";
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
         $people = array();
@@ -14,12 +15,5 @@
             $people[$person["pid"]["value"]] = $person["pid"]["value"];
         }
 
-        return array(
-            'form' => array(
-                '#type' => 'checkboxes',
-                '#options' => $people,
-            ),
-        );
-
-        return "MY PEOPLE!";
+        return $people;
     }
