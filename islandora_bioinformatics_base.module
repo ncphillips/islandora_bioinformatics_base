@@ -20,29 +20,29 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 /**
  * Implements hook_menu().
  */
- function islandora_bioinformatics_base_menu(){
-   return array(
-     'admin/islandora/bioinformatics_base' => array(
-       'title' => 'Add person to project',
-       'description' => 'Adds a person to a project',
-       'page callback' => 'drupal_get_form',
-       'page arguments' => array('islandora_bioinformatics_PersonProject_form'),
-       'access arguments' => array('access administration pages'),
-       'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
-      ),
-    // This URL shows the people associated with a project.
-    'islandora/object/%islandora_object/people' => array(
+function islandora_bioinformatics_base_menu(){
+    return array(
+        'admin/islandora/bioinformatics_base' => array(
+        'title' => 'Add person to project',
+        'description' => 'Adds a person to a project',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('islandora_bioinformatics_PersonProject_form'),
+        'access arguments' => array('access administration pages'),
+        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
+        ),
+        // This URL shows the people associated with a project.
+        'islandora/object/%islandora_object/people' => array(
         'title' => 'People',
         'type' => MENU_LOCAL_TASK,
         'description' => 'People collaborating on this project.',
         'page callback' => 'islandora_project_people', //TODO: Write this callback.
         'page arguments' => array(2),
         'access callback' => 'islandora_object_access_callback',
-        'access arguments' => array( array(ISLANDORA_VIEW_OBJECTS), 2 ),
+        'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
         'file' => 'includes/manage_project.inc',
-    ),
-    // This URL begins the ingestion process of a new person to be associated with a project.
-    'islandora/object/%islandora_object/manage/people/ingest' => array(
+        ),
+        // This URL begins the ingestion process of a new person to be associated with a project.
+        'islandora/object/%islandora_object/manage/people/ingest' => array(
         'title' => 'Add Person',
         'page callback' => 'islandora_project_ingest_person', // TODO: Write this callback.
         'page arguments' => array(2),
@@ -50,7 +50,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
         'access callback' => 'islandora_object_access',
         'access arguments' => array(ISLANDORA_INGEST, 2),
         'file' => 'includes/manage_project.inc',
-    ),
+        ),
     );
 }
 
