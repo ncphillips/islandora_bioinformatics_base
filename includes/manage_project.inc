@@ -1,5 +1,10 @@
 <?php
 
+    /**
+     * @todo
+     * This should return a page that lists the people associated with the project.
+     * Each person row should link to the person object itself.
+     */
     function islandora_project_people(AbstractObject $object) {
 
         $tuque = new IslandoraTuque();
