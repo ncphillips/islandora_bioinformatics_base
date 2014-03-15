@@ -19,6 +19,9 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 
 /**
  * Implements hook_menu().
+ * 
+ * @author ncphillips <ncphillups@upei.ca>
+ * @author nbsquires 
  */
  function islandora_bioinformatics_base_menu(){
    return array(
@@ -32,7 +35,10 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
        'access arguments' => array(ISLANDORA_METADATA_EDIT, 2),
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
-     // This URL shows the people associated with a project.
+     /**
+      * Creates a tab alongside the Manage and View tabs. This links to a page
+      * listing all of the people in the project.
+      */
      'islandora/object/%project_object/people' => array(
         'title' => 'People',
         'type' => MENU_LOCAL_TASK,
@@ -46,6 +52,18 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
     );
 }
 
+  /**
+   * @author ncphillips <ncphillips@upei.ca>
+   * 
+   * @param $object_id
+   * This is the PID of an object.
+   * 
+   * @return $object
+   * If $object_id references a Fedora Object with the person cmodel, then the object
+   * is returned, else return Null. If $object_id does not reference a Fedora Object,
+   * return Null or False.
+   * 
+   */
   function project_object_load($object_id) {
       $object = islandora_object_load($object_id);
       if ($object) {
@@ -57,6 +75,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
       else {
           return $object;
       }
+      
   }
 
 /**
