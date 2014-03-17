@@ -56,7 +56,8 @@ function islandora_bioinformatics_base_image_upload_form_submit(array $form, arr
 	}
 	
 	$file = file_load($form_state['values']['file']);
-	if(isset($file)) {
+	//if(isset($file)) {
+	if(!empty($file)) {
 		$path = drupal_realpath($file->uri);
 		$ds->setContentFromFile($path, FALSE);
 		$ds->label = $file->filename;
