@@ -46,6 +46,12 @@
  *   The Drupal form state.
  */
 function islandora_bioinformatics_base_image_upload_form_submit(array $form, array &$form_state) {
+  if(isset($form_state['islandora']['objects'][0])) {
+	echo "exists";
+  } else {
+	echo "doesn't exist";
+  }
+  
   $object = $form_state['islandora']['objects'][0];
   if (empty($object['IMG'])) {
 	$ds = $object->constructDatastream('IMG', 'M');
