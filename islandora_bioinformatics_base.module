@@ -141,6 +141,9 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
     $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
     $project_cm->ingestDatastream($datastream);
 
+	// Create relationship with LabObject
+	$project_cm->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:lab_object_cmodel');
+	
     // Person Content Model
     $person_cm = $connection->repository->constructObject('islandora:person_cmodel');
     $person_cm->owner = 'fedoraAdmin';
@@ -152,6 +155,9 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
     $datastream->mimetype= 'text/xml';
     $datastream->setContentFromFile("$module_path/xml/content_models/Person_ds_composite_model.xml", FALSE);
     $person_cm->ingestDatastream($datastream);
+	
+	// Create relationship with LabObject
+	$person_cm->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:lab_object_cmodel');
 	
     // LabObject Content Model
     $labObject_cm = $connection->repository->constructObject('islandora:lab_object_cmodel');
