@@ -31,6 +31,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
                     }";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
+   /*  
    //build the checkboxes form, with default values.
    $people = array();
    $default_values = array();	//determines which values are automatically selected
@@ -51,7 +52,17 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		'#default_value' => $default_values,
 		'#options' => $people,
 	),
-   );    
+   ); 
+   */
+   
+   return array(
+	'form' => array(
+		'#type' => 'checkbox',
+		'#title' => t('Checkbox form'),
+		'#description' => t('Test Field'),
+		'$default_value' => 'True',
+	),
+   ); 
 }
 
 /**
