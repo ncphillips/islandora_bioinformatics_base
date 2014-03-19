@@ -55,11 +55,23 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    ); 
    */
    
+   foreach($result as $person) {
+	return array(
+		'form' => array(
+			'#type' => 'checkbox',
+			'#title' => t($person["pid"]["value"]),
+			'#description' => t(islandora_object_load($person["pid"]["value"])->label),
+			'#default_value' => 'True',
+		),
+	);
+   
+   
+   }
    return array(
 	'form' => array(
 		'#type' => 'checkbox',
 		'#title' => t('Field Name'),
-		'#field_suffix' => t('Suffix'),
+		'#description' => t('Suffix'),
 		'#default_value' => 'True',
 	),
    ); 
