@@ -45,7 +45,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    $default_values = array_keys($people);
    echo '<pre>';
    $relationships = $project_object->relationships->get();
-   echo var_dump($relationship);
+   echo var_dump($relationships);
    echo '</pre>';
   
    return array(
