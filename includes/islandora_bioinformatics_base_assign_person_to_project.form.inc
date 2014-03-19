@@ -22,6 +22,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   $tuque = new IslandoraTuque();
   
   $project_object = $form_state['islandora']['objects'][0];
+  $project_object->relationships->add('info:fedora/' + 'islandora:388', 'hasModel', 'islandora:person_cmodel');
     
   $query = "SELECT ?pid
                     FROM <#ri>
@@ -35,7 +36,9 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    $default_values = array();	//determines which values are automatically selected
    foreach($result as $person) {
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
-		$relationship = $project_object->relationships->get($person["pid"]["value"], 'hasModel');
+	 
+	 $uri = 'info:fedora/' + $person["pid"]["value"];
+		$relationship = $project_object->relationships->get($uri, 'hasModel');
 		if($relationship[0] != NULL) {	//if relationship exists, add it to $default_values
 			$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
 		}
