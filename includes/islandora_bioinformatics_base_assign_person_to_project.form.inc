@@ -38,8 +38,13 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$people[$person["pid"]["value"]] = islandora_object_load($person["pid"]["value"])->label; //$person["pid"]["value"];
 	 
 	$uri = "info:fedora/" . $person["pid"]["value"];
-	$relationship = $project_object->relationships->get($uri, 'hasModel');
-		
+	//$relationship = $project_object->relationships->get($uri, 'isPartOf');
+	$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isPartOf');
+	
+	echo '<pre>';
+	echo var_dump($relationship);	
+	echo '</pre>';
+	
 	if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 	 	$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
 	 }
@@ -83,7 +88,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	
 	foreach($result as $person) {
 		$person_object = islandora_object_load($person['pid']['value']);	//loads object
-		$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+		//$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
 	}
 	
 	//for each person checked, create a relationship between the person and the project
