@@ -57,13 +57,13 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    
 	foreach($result as $person) {
 		$uri = "info:fedora/" . $person["pid"]["value"];  
-		//!empty($project_object->relationships->get($uri, 'hasModel')) ? 1 : 0
+		$default_value = !empty($project_object->relationships->get($uri, 'hasModel')) ? 1 : 0
 		return array(
 			'form' => array(
 				'#type' => 'checkbox',
 				'#title' => t($person["pid"]["value"]),
 				'#description' => t(islandora_object_load($person["pid"]["value"])->label),
-				'#default_value' => 1,
+				'#default_value' => default_value,
 			),
 		);
 	}
