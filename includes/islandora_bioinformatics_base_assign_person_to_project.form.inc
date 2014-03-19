@@ -57,7 +57,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    
 	foreach($result as $person) {
 		$uri = "info:fedora/" . $person["pid"]["value"];  
-		$default_value = !empty($project_object->relationships->get($uri, 'hasModel')) ? 1 : 0
+		$relationship = $project_object->relationships->get($uri, 'hasModel');
+		$default_value = !empty($relationship) ? 1 : 0;
 		return array(
 			'form' => array(
 				'#type' => 'checkbox',
