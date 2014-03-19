@@ -97,6 +97,10 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   //echo $project_object->id;
 	
   //get the checkboxes submitted (only those checked are submitted)
+  echo '<pre>';
+  echo var_dump($form_state['values']['form']);
+  echo '</pre>';
+  
   $person_ids = array_filter($form_state['values']['form']);
   
   //for each person selected, create a relationship between the person and the project
