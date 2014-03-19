@@ -83,14 +83,13 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	
 	foreach($result as $person) {
 		$person_object = islandora_object_load($person['pid']['value']);	//loads object
-		//$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+		$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
 	}
-	/*
+	
 	//for each person checked, create a relationship between the person and the project
 	foreach($person_ids as $id)  {
 		//create a relationship within the current person object to the project
+		$person_object = islandora_object_load($id);	//loads object
 		$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
-	
 	}
-	*/
 }
