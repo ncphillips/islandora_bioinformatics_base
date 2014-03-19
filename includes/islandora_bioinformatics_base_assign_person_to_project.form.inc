@@ -20,6 +20,10 @@
  */
 function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
+  
+  $project_object = $form_state['islandora']['objects'][0];
+  $project_object->relationships->add('islandora:388', 'hasModel', 'islandora:person_cmodel');
+    
   $query = "SELECT ?pid
                     FROM <#ri>
                     WHERE {
@@ -34,6 +38,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
    }
    
+   default_values = array_keys($people);
    echo '<pre>';
    echo var_dump(array_keys($people));
    echo '</pre>';
@@ -41,6 +46,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    return array(
 	'form' => array(
 		'#type' => 'checkboxes',
+		'#default_values' => $default_values,
 		'#options' => $people,
 	),
    );    
@@ -59,7 +65,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   
   //retrieves the relevant fedora project object
   $project_object = $form_state['islandora']['objects'][0];
-  echo $project_object->id;
+  //echo $project_object->id;
 	
   //get the checkboxes submitted (only those checked are submitted)
   $person_ids = array_filter($form_state['values']['form']);
