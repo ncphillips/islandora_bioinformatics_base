@@ -36,7 +36,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    $default_values = array();	//determines which values are automatically selected
    foreach($result as $person) {
     $person_object = islandora_object_load($person["pid"]["value"]);
-	$people[$person["pid"]["value"]] = person_object->label; //$person["pid"]["value"];
+	$people[$person["pid"]["value"]] = $person_object->label; //$person["pid"]["value"];
 	 
 	//$relationship = $project_object->relationships->get($uri, 'isPartOf');
 	$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isPartOf');
