@@ -31,7 +31,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 				}";
 	$result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 	
-    /*	
+    	
     $checkboxes = array();
     $i = 0;
 	foreach($result as $person) {
@@ -48,10 +48,12 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	}
 	
 	return array(
-		'form' => $checkboxes,
+		'form' => array (
+			$checkboxes,
+		),
 	);
-   */	
     
+   /*	
    //build the checkboxes form, with default values.
    $people = array();
    $default_values = array();	//determines which values are automatically selected
@@ -77,7 +79,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		'#options' => $people,
 	),
    ); 
-
+   */
 	
 }
 
