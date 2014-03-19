@@ -47,10 +47,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$i = $i + 1;
 	}
 	
-	return array(
-		'form' => array (
-			$checkboxes,
-		),
+	return array['form'](
+		$checkboxes
 	);
     
    /*	
