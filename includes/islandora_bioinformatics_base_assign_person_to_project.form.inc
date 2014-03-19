@@ -22,7 +22,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$tuque = new IslandoraTuque();
 	  
 	$project_object = $form_state['islandora']['objects'][0];
-	$project_object->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:388');
+	//$project_object->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:388');
 		
 	$query = 	"SELECT ?pid
 					FROM <#ri>
@@ -35,8 +35,14 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    $people = array();
    $default_values = array();	//determines which values are automatically selected
    foreach($result as $person) {
+   
     $person_object = islandora_object_load($person["pid"]["value"]);
 	$people[$person["pid"]["value"]] = $person_object->label; //$person["pid"]["value"];
+	 
+	//test value 
+	if($person_object->id == 'islandora:388') {
+		$person_object->relationships->add(FEDORA_MODEL_URI, 'isPartOf', $project_object->id);
+	}
 	 
 	//$relationship = $project_object->relationships->get($uri, 'isPartOf');
 	$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isPartOf');
