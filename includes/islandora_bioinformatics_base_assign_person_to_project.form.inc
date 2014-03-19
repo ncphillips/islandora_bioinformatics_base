@@ -33,6 +33,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	
     	
     $checkboxes = array();
+	$checkboxes['form'] = array();
     $i = 0;
 	foreach($result as $person) {
 		$uri = "info:fedora/" . $person["pid"]["value"];  
