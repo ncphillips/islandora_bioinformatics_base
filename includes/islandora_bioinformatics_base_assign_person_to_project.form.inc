@@ -41,7 +41,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$relationship = $project_object->relationships->get($uri, 'hasModel');
 		
 	if(!empty($relationship)) {	//if relationship exists, add it to $default_values
-	//if($relationship[0] != NULL) {	//if relationship exists, add it to $default_values
 	 	$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
 	 }
    }
