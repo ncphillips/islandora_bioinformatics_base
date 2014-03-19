@@ -40,7 +40,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	//$people[$person_object->id] = $person_object->label; //$person["pid"]["value"];
 	$people[$person["pid"]["value"]] = islandora_object_load($person["pid"]["value"])->label; //$person["pid"]["value"];
 	
-	$uri = person['pid']['value'] ;
+	$uri = $person['pid']['value'] ;
 	$relationship = $project_object->relationships->get($uri, 'isPartOf');
 	//$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isPartOf');
 	
