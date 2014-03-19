@@ -38,7 +38,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    foreach($result as $person) {
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
 		echo '<pre>';
-		echo var_dump($person["pid"]["value"]);
+		echo var_dump($person);
 		echo '</pre>';
    }
    
