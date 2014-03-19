@@ -22,7 +22,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$tuque = new IslandoraTuque();
 	  
 	$project_object = $form_state['islandora']['objects'][0];
-	$project_object->relationships->add("info:fedora/" . 'islandora:388', 'hasModel', 'islandora:person_cmodel');
+	$project_object->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:388');
 		
 	$query = 	"SELECT ?pid
 					FROM <#ri>
@@ -90,7 +90,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	foreach($person_ids as $id)  {
 		//create a relationship within the current person object to the project
 		$person_object = islandora_object_load($id);	//loads object
-		echo $person_object->id;
 		//$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
 		
 	}
