@@ -71,6 +71,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	
 	//get the checkboxes submitted (only those checked are submitted)  
 	$person_ids = array_filter($form_state['values']['people']);
+   
     /*
 	//iterate over every person and remove their relationship (if it exists) with the project.
 	$query = 	"SELECT ?pid
@@ -88,6 +89,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	foreach($person_ids as $id)  {
 		//create a relationship within the current person object to the project
 		$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+	
+	}
 	*/
-  }
 }
