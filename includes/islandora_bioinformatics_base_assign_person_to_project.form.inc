@@ -40,7 +40,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    
    $default_values = array_keys($people);
    echo '<pre>';
-   echo var_dump(array_keys($people));
+   echo var_dump($fedora_object->relationships->get());
    echo '</pre>';
   
    return array(
