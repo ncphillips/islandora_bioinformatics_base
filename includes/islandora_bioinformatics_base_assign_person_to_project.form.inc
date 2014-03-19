@@ -24,7 +24,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$project_object = $form_state['islandora']['objects'][0];
 	//$project_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');
 	$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
-		
+	$project_object->relationships->remove('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
+	
 	$query = 	"SELECT ?pid
 					FROM <#ri>
 					WHERE {
