@@ -37,7 +37,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$uri = "info:fedora/" . $person["pid"]["value"];  
 		$relationship = $project_object->relationships->get($uri, 'hasModel');
 		$default_value = !empty($relationship) ? 1 : 0;
-		$checkboxes[$i] = array(
+		$checkboxes[$person["pid"]["value"]] = array(
 			'#type' => 'checkbox',
 			'#title' => t($person["pid"]["value"]),
 			'#description' => t(islandora_object_load($person["pid"]["value"])->label),
@@ -49,6 +49,35 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	return array(
 		'form' => $checkboxes,
 	);
+	
+   /*  
+   //build the checkboxes form, with default values.
+   $people = array();
+   $default_values = array();	//determines which values are automatically selected
+   foreach($result as $person) {
+	$people[$person["pid"]["value"]] = $person["pid"]["value"];
+	 
+	$uri = "info:fedora/" . $person["pid"]["value"];
+	$relationship = $project_object->relationships->get($uri, 'hasModel');
+	$tuque = new IslandoraTuque();
+	  
+	$project_object = $form_state['islandora']['objects'][0];
+	$project_object->relationships->add("info:fedora/" . 'islandora:388', 'hasModel', 'islandora:person_cmodel');
+		
+	if(!empty($relationship)) {	//if relationship exists, add it to $default_values
+	 	$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
+	 }
+   }
+  
+   return array(
+	'form' => array(
+		'#type' => 'checkboxes',
+		'#default_value' => $default_values,
+		'#options' => $people,
+	),
+   ); 
+   */
+
 	
 }
 
