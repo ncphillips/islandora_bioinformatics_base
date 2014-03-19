@@ -70,7 +70,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   //echo $project_object->id;
 	
   //get the checkboxes submitted (only those checked are submitted)  
-  $person_keys = array_filter($form_state['values']);
+  $person_keys = array_filter($form_state['values']['people']);
   
   echo '<pre>';
   echo var_dump($form_state['values']);
