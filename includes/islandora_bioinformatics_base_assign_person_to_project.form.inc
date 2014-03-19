@@ -38,7 +38,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$uri = "info:fedora/" . $person["pid"]["value"];  
 		$relationship = $project_object->relationships->get($uri, 'hasModel');
 		$default_value = !empty($relationship) ? 1 : 0;
-		$checkboxes[$person["pid"]["value"]] = array(
+		$checkboxes['form'][$person["pid"]["value"]] = array(
 			'#type' => 'checkbox',
 			'#title' => t($person["pid"]["value"]),
 			'#description' => t(islandora_object_load($person["pid"]["value"])->label),
@@ -47,7 +47,9 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$i = $i + 1;
 	}
 	
-	return $checkboxes;
+	return array(
+		'form' => $checkboxes,
+	);
     
    /*	
    //build the checkboxes form, with default values.
