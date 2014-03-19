@@ -38,7 +38,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
 		$relationship = $project_object->relationships->get($person["pid"]["value"], 'hasModel');
 		if($relationship[0] != NULL) {
-			default_values[$person["pid"]["value"]] = $person["pid"]["value"];
+			$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
 		}
    }
    
