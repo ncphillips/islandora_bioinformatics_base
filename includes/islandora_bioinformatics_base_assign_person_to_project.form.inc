@@ -47,9 +47,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$i = $i + 1;
 	}
 	
-	return array(
-		'form' => $checkboxes,
-	);
+	return  $checkboxes;
     
    /*	
    //build the checkboxes form, with default values.
