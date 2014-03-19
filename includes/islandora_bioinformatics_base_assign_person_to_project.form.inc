@@ -31,6 +31,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 				}";
 	$result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
+	
+	/*
 	foreach($result as $person) {
 		$uri = "info:fedora/" . $person["pid"]["value"];  
 		$relationship = $project_object->relationships->get($uri, 'hasModel');
@@ -45,12 +47,13 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	
 	return $form;
     
-   /*	
+   */	
+ 	
    //build the checkboxes form, with default values.
    $people = array();
    $default_values = array();	//determines which values are automatically selected
    foreach($result as $person) {
-	$people[$person["pid"]["value"]] = $person["pid"]["value"];
+	$people[$person["pid"]["value"]] = islandora_object_load($person["pid"]["value"])->label; //$person["pid"]["value"];
 	 
 	$uri = "info:fedora/" . $person["pid"]["value"];
 	$relationship = $project_object->relationships->get($uri, 'hasModel');
@@ -70,9 +73,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		'#default_value' => $default_values,
 		'#options' => $people,
 	),
-   ); 
-   */
-	
+   ); 	
 }
 
 /**
