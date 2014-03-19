@@ -30,6 +30,10 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
                     ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
                     }";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  echo '<pre>';
+   echo var_dump($result);
+   echo '</pre>';
+  
   
    $people = array();
    //$default_values = array();
