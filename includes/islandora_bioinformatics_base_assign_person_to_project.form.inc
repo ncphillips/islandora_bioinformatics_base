@@ -74,7 +74,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   
   //for each person selected, create a relationship between the person and the project
   foreach($person_ids as $id)  {
-    $uri = "info:fedora/" + $id;
+    $uri = $id;
 	$project_object->relationships->add($uri, 'hasModel', 'islandora:person_cmodel');
 	//$project_object->relationships->add($uri, 'isPartOf', 'islandora:person_cmodel');
   }
