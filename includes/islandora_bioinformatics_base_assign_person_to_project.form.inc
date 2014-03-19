@@ -81,7 +81,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 				}";
 	$result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');	
 	
-	*/
+	/*
 	foreach($result as $person) {
 		$person_object = islandora_object_load($person['pid']['value']);	//loads object
 		$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
