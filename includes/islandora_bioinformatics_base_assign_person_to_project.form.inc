@@ -38,7 +38,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	 $people[$person["pid"]["value"]] = $person["pid"]["value"];
 		echo '<pre>';
 		$relationship = $project_object->relationships->get($person["pid"]["value"], 'hasModel');
-		echo var_dump($relationship['predicate']);
+		echo var_dump($person);
+		echo var_dump($relationship);
 		echo '</pre>';
    }
    
