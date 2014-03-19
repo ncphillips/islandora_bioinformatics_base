@@ -29,25 +29,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 				WHERE {
 				?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
 				}";
-	$result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-
-	
-	/*
-	foreach($result as $person) {
-		$uri = "info:fedora/" . $person["pid"]["value"];  
-		$relationship = $project_object->relationships->get($uri, 'hasModel');
-		$default_value = !empty($relationship) ? 1 : 0;
-		$form['people'][$person["pid"]["value"]] = array(
-			'#type' => 'checkbox',
-			'#title' => t($person["pid"]["value"]),
-			'#description' => t(islandora_object_load($person["pid"]["value"])->label),
-			'#default_value' => $default_value,
-		);
-	}
-	
-	return $form;
-    
-   */	
+	$result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');	
  	
    //build the checkboxes form, with default values.
    $people = array();
@@ -57,10 +39,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	 
 	$uri = "info:fedora/" . $person["pid"]["value"];
 	$relationship = $project_object->relationships->get($uri, 'hasModel');
-	$tuque = new IslandoraTuque();
-	  
-	$project_object = $form_state['islandora']['objects'][0];
-	$project_object->relationships->add("info:fedora/" . 'islandora:388', 'hasModel', 'islandora:person_cmodel');
 		
 	if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 	 	$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
@@ -91,17 +69,29 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   $project_object = $form_state['islandora']['objects'][0];
   //echo $project_object->id;
 	
-  //get the checkboxes submitted (only those checked are submitted)
-  echo '<pre>';
-  echo var_dump($form_state['values']);
-  echo '</pre>';
-  
-  $person_ids = array_filter($form_state['values']);
+  //get the checkboxes submitted (only those checked are submitted)  
+  $person_keys = array_keys($form_state['values']);
   
   //for each person selected, create a relationship between the person and the project
-  foreach($person_ids as $id)  {
-    $uri = "info:fedora/" . $id;
-	$project_object->relationships->add($uri, 'hasModel', 'islandora:person_cmodel');
-	//$project_object->relationships->add($uri, 'isPartOf', 'islandora:person_cmodel');
+  foreach($person_keys as $id)  {
+	 
+	 echo '<pre>';
+	 echo $id;
+	 echo '</pre>';
+     //$project_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $id);
+	
+	//store relationship in the person object
+	//$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', project_object->id);
+	
+	/*
+	//Retrieve person object
+	
+	//if relationship exists and key unchecked, remove it.
+	
+	//if relationship doesn't exist and key checked, add it
+	
+	*/
+	
+	
   }
 }
