@@ -39,6 +39,10 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	 
 	 $uri = 'info:fedora/' + $person["pid"]["value"];
 		$relationship = $project_object->relationships->get($uri, 'hasModel');
+		echo '<pre>';
+		echo var_dump($relationship);
+		echo '</pre>';
+		
 		if($relationship[0] != NULL) {	//if relationship exists, add it to $default_values
 			$default_values[$person["pid"]["value"]] = $person["pid"]["value"];
 		}
