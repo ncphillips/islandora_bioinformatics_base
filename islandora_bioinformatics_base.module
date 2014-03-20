@@ -283,7 +283,7 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
       'file' => 'includes/islandora_bioinformatics_base_image_upload.form.inc',
     ),
 	'islandora_bioinformatics_base_person_project' => array(
-		'weight' => 9,
+		'weight' => 15,
 		'type' => 'form',
 		'form_id' => 'islandora_bioinformatics_base_assign_person_to_project_form',
 		'module' => 'islandora_bioinformatics_base',
