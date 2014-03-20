@@ -22,7 +22,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$tuque = new IslandoraTuque();
 	  
 	$project_object = $form_state['islandora']['objects'][0];
-	$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
+	$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');		//used for testing
 	
 	//query fedora to retrieve a list of all person objects
 	$query = 	"SELECT ?pid
@@ -41,18 +41,21 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$person_object = islandora_object_load($person["pid"]["value"]);
 		$people[$person_object->id] = $person_object->label;
 
+		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');	//used for testing
 		}
+		*/
 		
 		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
+		/*
 		//Test code
 		$relationships = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
 			echo '<pre>';
 			echo var_dump($relationships);
 			echo '</pre>';
-			
+
 		if(!empty($relationships)) {
 			foreach($relationships as $relation) {
 				echo '<pre>';
@@ -60,16 +63,17 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 				echo '</pre>';
 			}
 		}
+		*/
 		
-		/*
 		if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 			$default_values[$person_object->id] = $person_object->id;
 		 }
-		*/
 		
+		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');	//used for testing
 		}
+		*/
    }
   
    return array(
