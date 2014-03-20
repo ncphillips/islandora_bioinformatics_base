@@ -41,17 +41,21 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$person_object = islandora_object_load($person["pid"]["value"]);
 		$people[$person_object->id] = $person_object->label;
 
+		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);	//used for testing
 		}
+		*/
 		
-		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
+		$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
+		/*
 		//Test code
 		$relationships = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
 			echo '<pre>';
 			echo var_dump($relationships);
 			echo '</pre>';	
+		*/
 		/*	//used for testing
 		if(!empty($relationships)) {
 			foreach($relationships as $relation) {
@@ -62,21 +66,23 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		}
 		*/
 		
-		/*
+		
 		if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 			$default_values[$person_object->id] = $person_object->id;
 		 }
-		 */
+		 
 		
+		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);	//used for testing
 		}
+		*/
    }
   
    return array(
 	'people' => array(
 		'#type' => 'checkboxes',
-		//'#default_value' => $default_values,
+		'#default_value' => $default_values,
 		'#options' => $people,
 	),
    ); 	
