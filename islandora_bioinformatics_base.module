@@ -26,13 +26,14 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  function islandora_bioinformatics_base_menu(){
    return array(
       //This URL allows user to add people to a specified project
-     'islandora/object/%project_object/add/people' => array(
-       'title' => 'Add person to project',
+     'islandora/object/%project_object/%project_lab_object/add/people' => array(
+       'title callback' => 'add_person_title',
+       'title arguments' => array(3),
        'description' => 'Adds a person to a project',
        'type'=> MENU_CALLBACK,
        'page callback' => 'drupal_get_form',
-       'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
-       'access arguments' => array(ISLANDORA_METADATA_EDIT, 2),
+       'page arguments' => array(3),
+       'access arguments' => TRUE,
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
      /**
@@ -76,6 +77,10 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
           return $object;
       }
       
+  }
+  
+  function add_person_title($cmodel_object){
+    return "Add people to " . $cmodel_object->label;
   }
 
 /**
