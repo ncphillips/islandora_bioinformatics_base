@@ -33,7 +33,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
        'type'=> MENU_CALLBACK,
        'page callback' => 'add_people_to_project',
        'page arguments' => array(3),
-       'access arguments' => TRUE,
+       'access callback' => TRUE,
       ),
      /**
       * Creates a tab alongside the Manage and View tabs. This links to a page
