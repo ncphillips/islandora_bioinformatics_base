@@ -55,7 +55,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 			foreach($relationships as $relation) {
 				echo '<pre>';
 				echo var_dump($relation);
-				ehco '</pre>';
+				echo '</pre>';
 			}
 		}
 		
