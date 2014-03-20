@@ -22,9 +22,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$tuque = new IslandoraTuque();
 	  
 	$project_object = $form_state['islandora']['objects'][0];
-	//$project_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');
-	$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
-	$project_object->relationships->remove('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
+	//$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');	
+	$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');	//used for testing
 	
 	$query = 	"SELECT ?pid
 					FROM <#ri>
@@ -37,16 +36,17 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
    $people = array();
    $default_values = array();	//determines which values are automatically selected
    foreach($result as $person) {
-    //load the current person object
-    $person_object = islandora_object_load($person["pid"]["value"]);
-	$people[$person_object->id] = $person_object->label;
+   
+		//load the current person object
+		$person_object = islandora_object_load($person["pid"]["value"]);
+		$people[$person_object->id] = $person_object->label;
 
-	$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
-	//$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
-	
-	if(!empty($relationship)) {	//if relationship exists, add it to $default_values
-	 	$default_values[$person_object->id] = $person_object->id;
-	 }
+		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
+		$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf', project_object->id);
+		
+		if(!empty($relationship)) {	//if relationship exists, add it to $default_values
+			$default_values[$person_object->id] = $person_object->id;
+		 }
    }
   
    return array(
