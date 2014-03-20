@@ -47,7 +47,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		}
 		
 		
-		$relationship = $project_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+		$relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 		
 		/*
 		//Test code
