@@ -41,11 +41,9 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$person_object = islandora_object_load($person["pid"]["value"]);
 		$people[$person_object->id] = $person_object->label;
 
-		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');	//used for testing
 		}
-		*/
 		
 		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
@@ -69,11 +67,9 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		 }
 		*/
 		
-		/*
 		if($person_object->id == 'islandora:388') {
 				$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', 'islandora:388');	//used for testing
 		}
-		*/
    }
   
    return array(
