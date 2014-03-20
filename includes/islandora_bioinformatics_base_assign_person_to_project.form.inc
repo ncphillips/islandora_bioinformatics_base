@@ -22,7 +22,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 	$tuque = new IslandoraTuque();
 	  
 	$project_object = $form_state['islandora']['objects'][0];
-	$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');		//used for testing
+	//$project_object->relationships->add('islandora:388', 'isMemberOf', 'islandora:person_cmodel');		//used for testing
 	
 	//query fedora to retrieve a list of all person objects
 	$query = 	"SELECT ?pid
@@ -41,22 +41,22 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		$person_object = islandora_object_load($person["pid"]["value"]);
 		$people[$person_object->id] = $person_object->label;
 
-		/*
+		
 		if($person_object->id == 'islandora:388') {
-				$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);	//used for testing
+				$person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
 		}
-		*/
 		
-		$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
-		/*
+		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
+		
+		
 		//Test code
-		$relationships = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
+		$relationships = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf');
 			echo '<pre>';
 			echo var_dump($relationships);
 			echo '</pre>';	
-		*/
-		/*	//used for testing
+		
+			//used for testing
 		if(!empty($relationships)) {
 			foreach($relationships as $relation) {
 				echo '<pre>';
@@ -64,19 +64,19 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 				echo '</pre>';
 			}
 		}
-		*/
 		
 		
+		/*
 		if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 			$default_values[$person_object->id] = $person_object->id;
 		 }
-		 
+		*/ 
 		
-		/*
+		
 		if($person_object->id == 'islandora:388') {
-				$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);	//used for testing
+				$person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
 		}
-		*/
+		
    }
   
    return array(
@@ -116,14 +116,14 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 	
 	foreach($result as $person) {
 		$person_object = islandora_object_load($person['pid']['value']);	//loads object
-		//$person_object->relationships->remove(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+		//$person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 	}
 	
 	//for each person checked, create a relationship between the person and the project
 	foreach($person_ids as $id)  {
 		//create a relationship within the current person object to the project
 		$person_object = islandora_object_load($id);	//loads object
-		//$person_object->relationships->add(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+		//$person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 		
 	}
 }
