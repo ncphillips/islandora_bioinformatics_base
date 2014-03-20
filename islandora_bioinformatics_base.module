@@ -282,6 +282,9 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
       'module' => 'islandora_bioinformatics_base',
       'file' => 'includes/islandora_bioinformatics_base_image_upload.form.inc',
     ),
+	/*
+	 *	islandora_bioinformatics_base_assign_person_to_project_form has to be the last ingest step called.  If not, then people can exit the ingest process 	after submitting the form and creating relationships within person objects.
+	*/
 	'islandora_bioinformatics_base_person_project' => array(
 		'weight' => 15,
 		'type' => 'form',
