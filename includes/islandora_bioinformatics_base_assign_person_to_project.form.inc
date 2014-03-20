@@ -47,12 +47,23 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		}
 		*/
 		
-		$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
-		//$relationship = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf', $project_object->id);
+		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
+		//Test code
+		$relationships = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
+		if(!empty($relationships)) {
+			foreach($relationships as $relation) {
+				echo '<pre>';
+				echo var_dump($relation);
+				ehco '</pre>';
+			}
+		}
+		
+		/*
 		if(!empty($relationship)) {	//if relationship exists, add it to $default_values
 			$default_values[$person_object->id] = $person_object->id;
 		 }
+		*/
 		
 		/*
 		if($person_object->id == 'islandora:388') {
