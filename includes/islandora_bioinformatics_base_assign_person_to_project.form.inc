@@ -51,6 +51,10 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		
 		//Test code
 		$relationships = $person_object->relationships->get(FEDORA_MODEL_URI, 'isMemberOf');
+			echo '<pre>';
+			echo var_dump($relationships);
+			echo '</pre>';
+			
 		if(!empty($relationships)) {
 			foreach($relationships as $relation) {
 				echo '<pre>';
