@@ -34,6 +34,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
        'page callback' => 'drupal_get_form',
        'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
        'access callback' => TRUE,
+       'module' => 'islandora_bioinformatics_base'
        'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
       ),
       
