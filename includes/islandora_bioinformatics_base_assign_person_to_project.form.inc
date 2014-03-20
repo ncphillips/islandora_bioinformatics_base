@@ -47,7 +47,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 		}
 		*/
 		
-		//$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
+		$relationship = $project_object->relationships->get($person_object->id, 'isMemberOf');
 		
 		/*
 		//Test code
