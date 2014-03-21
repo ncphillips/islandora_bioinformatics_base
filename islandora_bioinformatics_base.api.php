@@ -6,38 +6,46 @@
  */
 
 
-function hook_rel_list($object=NULL) {
-
-}
-
 function hook_rel_list_alter($object=NULL) {
-
-}
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */}
 
 function hook_rel_SUBTYPE_list_alter($object=NULL) {
-
-}
-
-function hook_rel_add_rel_ui($object=NULL) {
-
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */
 }
 
 function hook_rel_add_rel_ui_alter($object=NULL) {
-
-}
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */}
 
 function hook_rel_SUBTYPE_add_rel_ui_alter($object=NULL) {
-
-}
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */}
 
 function hook_rel_remove_rel_ui($object=NULL) {
-
-}
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */}
 
 function hook_rel_remove_rel_ui_alter($object=NULL) {
-
-}
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */}
 
 function hook_rel_SUBTYPE_remove_rel_ui_alter($object=NULL) {
-
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */
 }
