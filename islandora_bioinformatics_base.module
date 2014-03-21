@@ -99,7 +99,6 @@ function islandora_bioinformatics_base_menu(){
       'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
 
-
       /**
       * Creates a tab alongside the Manage and View tabs. This links to a page
       * listing all of the people in the project.
@@ -138,6 +137,7 @@ function cmodel_load($cmodel_id_part){
 
 /**
  * rel_cmodel_load
+ *
  * @param $cmodel_id_part
  * @param $object
  * @return FedoraObject|null
@@ -165,46 +165,46 @@ function add_person_title($cmodel_object){
 /**
   * Implements hook_theme().
   */
-  function islandora_bioinformatics_base_theme($existing, $type, $theme, $path){
-    return array(
-      'islandora_person' => array(
-        'file' => 'theme/theme.inc',
-		'template' => 'theme/islandora_person',
-        'pattern' => 'islandora_person__',
-        'variables' => array(
-          'object' => NULL,
-        ),
+function islandora_bioinformatics_base_theme($existing, $type, $theme, $path){
+  return array(
+    'islandora_person' => array(
+      'file' => 'theme/theme.inc',
+      'template' => 'theme/islandora_person',
+      'pattern' => 'islandora_person__',
+      'variables' => array(
+        'object' => NULL,
       ),
-      'islandora_project' => array(
-        'file' => 'theme/theme.inc',
-        'template' =>'theme/islandora_project',
-        'pattern' => 'islandora_project__',
-        'variables' => array(
-          'object' => NULL,
-        ),
+    ),
+    'islandora_project' => array(
+      'file' => 'theme/theme.inc',
+      'template' =>'theme/islandora_project',
+      'pattern' => 'islandora_project__',
+      'variables' => array(
+        'object' => NULL,
       ),
-    );
-  }
+    ),
+  );
+}
 
 /**
   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
   */
-  function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
-    $output = theme('islandora_bioinformatics_base', array('object' => $person));
-    return array(
-      'islandora_person' => $output,
-    );
-  }
+function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+  $output = theme('islandora_bioinformatics_base', array('object' => $person));
+  return array(
+    'islandora_person' => $output,
+  );
+}
 
 /**
   * Implements hook_CMODEL_PID_islandora_view_object() for Project.
   */
-  function islandora_bioinformatics_base_project_cmodel_islandora_view_object(AbstractObject $project) {
-    $output = theme('islandora_bioinformatics_base', array('object' => $project));
-    return array(
-      'islandora_project' => $output,
-    );
-  }
+function islandora_bioinformatics_base_project_cmodel_islandora_view_object(AbstractObject $project) {
+  $output = theme('islandora_bioinformatics_base', array('object' => $project));
+  return array(
+    'islandora_project' => $output,
+  );
+}
 
 /**
   * Implements hook_islandora_required_objects().
