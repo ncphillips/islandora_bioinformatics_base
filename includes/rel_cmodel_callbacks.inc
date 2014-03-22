@@ -1,16 +1,22 @@
 <?php
 /**
- * @file rel_cmodel_callbacks
+ * @file rel_cmodel_callbackso
+ *
+ * This file contains the various page callbacks
  */
 
 
 /**
+ * rel_cmodel_list($object, $cmodel=NULL)
+ *
  * @param FedoraObject $object
  * @param FedoraObject|null $cmodel
  */
 function rel_cmodel_list($object, $cmodel=NULL) {
   /*
-   * @TODO
+   * @TODO rel_cmodel_list
+   * Invokes hook_rel_list_alter and then hook_rel_SUBTYPE_list_alter,
+   * where subtype is the cmodels partial id.
    */
 }
 

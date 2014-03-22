@@ -16,6 +16,7 @@ function hook_rel_SUBTYPE_list_alter($object=NULL) {
   /*
    * @TODO
    * Write an example of this hook.
+   *
    */
 }
 

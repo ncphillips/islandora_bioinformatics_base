@@ -87,7 +87,7 @@ function islandora_bioinformatics_base_menu(){
     ),
 
       //This URL allows user to add people to a specified project
-    'islandora/object/%project_object/%project_lab_object/add/people' => array(
+    'islandora/object/%islandora_object/people/add' => array(
       'title callback' => 'add_person_title',
       'title arguments' => array(3),
       'description' => 'Adds a person to a project',
@@ -103,7 +103,7 @@ function islandora_bioinformatics_base_menu(){
       * Creates a tab alongside the Manage and View tabs. This links to a page
       * listing all of the people in the project.
       */
-    'islandora/object/%project_object/people' => array(
+    'islandora/object/%islandora_object/people' => array(
       'title' => 'People',
       'type' => MENU_LOCAL_TASK,
       'description' => 'People collaborating on this project.',
