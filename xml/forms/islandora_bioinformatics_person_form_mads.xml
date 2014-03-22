@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3">
   <properties>
     <root_name>mads:mads</root_name>
@@ -55,8 +54,8 @@
               <value>&lt;authority&gt;%value%&lt;/authority&gt;</value>
             </create>
             <read>
-              <path>mads:authority[not(@type)]</path>
-              <context>parent</context>
+              <path>/mads:mads/mads:authority[not(@type)]</path>
+              <context>document</context>
             </read>
             <update>
               <path>self::node()</path>
@@ -89,7 +88,7 @@
                   <value>&lt;name type="personal"&gt;%value%&lt;/name&gt;</value>
                 </create>
                 <read>
-                  <path>mads:name[@type='personal']</path>
+                  <path>/mads:mads/mads:authority/mads:name[@type='personal']</path>
                   <context>document</context>
                 </read>
                 <update>
@@ -123,8 +122,8 @@
                       <value>&lt;namePart type="given"&gt;%value%&lt;/namePart&gt;</value>
                     </create>
                     <read>
-                      <path>mads:namePart[@type='given']</path>
-                      <context>parent</context>
+                      <path>/mads:mads/mads:authority/mads:name[@type='personal']/mads:namePart[@type="given"]</path>
+                      <context>document</context>
                     </read>
                     <update>
                       <path>self::node()</path>
@@ -158,8 +157,8 @@
                       <value>&lt;namePart type="family"&gt;%value%&lt;/namePart&gt;</value>
                     </create>
                     <read>
-                      <path>mads:namePart[@type='family']</path>
-                      <context>parent</context>
+                      <path>/mads:mads/mads:authority/mads:name[@type='personal']/mads:namePart[@type="family"]</path>
+                      <context>document</context>
                     </read>
                     <update>
                       <path>self::node()</path>
@@ -246,12 +245,13 @@
                   <access>TRUE</access>
                   <collapsed>FALSE</collapsed>
                   <collapsible>FALSE</collapsible>
+                  <description>This label will be displayed to represent the object.</description>
                   <disabled>FALSE</disabled>
                   <executes_submit_callback>FALSE</executes_submit_callback>
                   <multiple>FALSE</multiple>
                   <required>FALSE</required>
                   <resizable>FALSE</resizable>
-                  <title>Title</title>
+                  <title>Display Name</title>
                   <tree>TRUE</tree>
                   <actions>
                     <create>
@@ -302,8 +302,8 @@
               <value>&lt;identifier type="u1"&gt;%value%&lt;/identifier&gt;</value>
             </create>
             <read>
-              <path>mads:identifier[@type='u1']</path>
-              <context>parent</context>
+              <path>/mads:mads/mads:identifier[@type='u1']</path>
+              <context>document</context>
             </read>
             <update>
               <path>self::node()</path>
@@ -371,8 +371,8 @@
                   <value>phone</value>
                 </create>
                 <read>
-                  <path>mads:phone</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:phone</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -406,8 +406,8 @@
                   <value>email</value>
                 </create>
                 <read>
-                  <path>mads:email</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:email</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -441,8 +441,8 @@
                   <value>organization</value>
                 </create>
                 <read>
-                  <path>mads:organization</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:organization</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -476,8 +476,8 @@
                   <value>position</value>
                 </create>
                 <read>
-                  <path>mads:position</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:position</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -511,8 +511,8 @@
                   <value>address</value>
                 </create>
                 <read>
-                  <path>mads:address</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:address</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -547,8 +547,8 @@
                   <value>&lt;dateValid point="start"&gt;%value%&lt;/dateValid&gt;</value>
                 </create>
                 <read>
-                  <path>mads:dateValid[@type='start']</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:dateValid[@point='start']</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -583,8 +583,8 @@
                   <value>&lt;dateValid point="end"&gt;%value%&lt;/dateValid&gt;</value>
                 </create>
                 <read>
-                  <path>mads:dateValid[@type='end']</path>
-                  <context>parent</context>
+                  <path>/mads:mads/mads:affiliation/mads:dateValid[@point='end']</path>
+                  <context>document</context>
                 </read>
                 <update>
                   <path>self::node()</path>
@@ -620,8 +620,8 @@
               <value>url</value>
             </create>
             <read>
-              <path>mads:url</path>
-              <context>parent</context>
+              <path>/mads:mads/mads:url</path>
+              <context>document</context>
             </read>
             <update>
               <path>self::node()</path>
@@ -655,8 +655,8 @@
               <value>&lt;note type="history"&gt;%value%&lt;/note&gt;</value>
             </create>
             <read>
-              <path>mads:note[@type='history']</path>
-              <context>parent</context>
+              <path>/mads:mads/mads:note[@type='history']</path>
+              <context>document</context>
             </read>
             <update>
               <path>self::node()</path>
@@ -698,7 +698,7 @@
             <children>
               <element name="activity">
                 <properties>
-                  <type>textfield</type>
+                  <type>textarea</type>
                   <access>TRUE</access>
                   <collapsed>FALSE</collapsed>
                   <collapsible>FALSE</collapsible>
