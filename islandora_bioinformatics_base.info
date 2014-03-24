@@ -4,4 +4,3 @@ dependencies[] = islandora
 package = Islandora Bioinformatics
 version = 7.x-dev
 core = 7.x
-configure = admin/islandora/bioinformatics/base

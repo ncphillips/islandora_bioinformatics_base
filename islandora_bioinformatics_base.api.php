@@ -2,17 +2,36 @@
 
 /**
  * @file islandora_bioinformatics_base.api.php
- * This file documents all available hook functions to manipulate data.
+ * This file documents all available hook functions.
  */
 
-
-function hook_rel_list_alter($object=NULL) {
+/**
+ * @param array $ra
+ * @param IslandoraFedoraObject null $object
+ */
+function hook_rel_lab_object_list(&$ra, $object=NULL) {
   /*
    * @TODO
    * Write an example of this hook.
-   */}
+   */
+}
 
-function hook_rel_SUBTYPE_list_alter($object=NULL) {
+/**
+ * @param array $ra
+ * @param IslandoraFedoraObject null $object
+ */
+function hook_rel_lab_object_list_alter(&$ra, $object=NULL) {
+  /*
+   * @TODO
+   * Write an example of this hook.
+   */
+}
+
+/**
+ * @param array $ra
+ * @param IslandoraFedoraObject null $object
+ */
+function hook_rel_SUBTYPE_lab_object_list_alter(&$ra, $object=NULL) {
   /*
    * @TODO
    * Write an example of this hook.
@@ -20,33 +39,33 @@ function hook_rel_SUBTYPE_list_alter($object=NULL) {
    */
 }
 
-function hook_rel_add_rel_ui_alter($object=NULL) {
-  /*
-   * @TODO
-   * Write an example of this hook.
-   */}
+/**
+ * @param array $ra
+ * @param IslandoraFedoraObject null $object
+ */
+function hook_rel_person_list(&$ra, $object=NULL) {
+ /**
+  * @TODO
+  * Write an example of this hook.
+  */
 
-function hook_rel_SUBTYPE_add_rel_ui_alter($object=NULL) {
-  /*
-   * @TODO
-   * Write an example of this hook.
-   */}
+}
 
-function hook_rel_remove_rel_ui($object=NULL) {
-  /*
-   * @TODO
-   * Write an example of this hook.
-   */}
-
-function hook_rel_remove_rel_ui_alter($object=NULL) {
-  /*
-   * @TODO
-   * Write an example of this hook.
-   */}
-
-function hook_rel_SUBTYPE_remove_rel_ui_alter($object=NULL) {
+/**
+ * @param array $ra
+ * @param IslandoraFedoraObject null $object
+ */
+function hook_rel_person_list_alter(&$ra, $object=NULL) {
   /*
    * @TODO
    * Write an example of this hook.
    */
 }
+
+
+function callback_rel_object_TYPE_ingest($object){
+
+
+}
+
+

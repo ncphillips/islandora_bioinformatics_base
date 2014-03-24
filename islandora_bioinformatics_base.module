@@ -25,31 +25,9 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  */
 function islandora_bioinformatics_base_menu(){
   return array(
-    'islandora/object/cm_rel/%cmodel/add_rel/%cmodel' => array(
+    'islandora/object/%islandora_object/lab_objects/' => array(
       /*
-       * Creates a relationship from the first cmodel to the second.
-       * @TODO
-       */
-    ),
-
-    'islandora/object/cm_rel/%cmodel/remove_rel/%cmodel' => array(
-      /*
-       * Removes a relationship from the first cmodel to the second.
-       * @TODO
-       */
-    ),
-
-    'islandora/object/%islandora_object/list/' => array(
-      /*
-       * Lists all objects associated with the islandora_object
-       * @TODO
-       */
-    ),
-
-    'islandora/object/%islandora_object/list/%rel_cmodel' => array(
-      /*
-       * Lists all objects associated with the islandora_object, that
-       * are of a certain cmodel
+       * Lists all lab_objects associated with the %islandora_object.
        * @TODO
        */
     ),
@@ -57,37 +35,31 @@ function islandora_bioinformatics_base_menu(){
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /*
        * Begins the ingestion process for a new object that will
-       * be of a cmodel related to this one.
+       * be of a type %cmodel and related to %islandora_object.
        * @TODO
        */
     ),
 
-    'islandora/object/%islandora_object/add_rel/' => array(
-      /*
-       * Provides an interface for adding relationships
-       * between objects.
-       * @TODO
+    'islandora/object/%islandora_object/people' => array(
+      /**
+       * Creates a tab alongside the Manage and View tabs. This links to a page
+       * listing all of the people in the project.
        */
+
+      'title' => 'People',
+      'type' => MENU_LOCAL_TASK,
+      'description' => 'People collaborating on this project.',
+      'page callback' => 'islandora_project_people', //TODO: Write this callback.
+      'page arguments' => array(2),
+      'access callback' => 'islandora_object_access_callback',
+      'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
+      'file' => 'includes/manage_project.inc',
     ),
 
-    'islandora/object/%islandora_object/add_rel/$islandora_object' => array(
-      /*
-       * Adds a relationship from the first islandora_object
-       * to the second islandora_object.
-       * @TODO
-       */
-    ),
-
-    'islandora/object/%islandora_object/remove_rel/%islandora_object' => array(
-      /*
-       * Removes a relationship from the first islandora_object
-       * to the second islandora_object.
-       * @TODO
-       */
-    ),
-
-      //This URL allows user to add people to a specified project
     'islandora/object/%islandora_object/people/add' => array(
+      /**
+       * Displays form for adding/removing people to %islandora_object.
+       */
       'title callback' => 'add_person_title',
       'title arguments' => array(3),
       'description' => 'Adds a person to a project',
@@ -98,26 +70,14 @@ function islandora_bioinformatics_base_menu(){
       'module' => 'islandora_bioinformatics_base',
       'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
-
-      /**
-      * Creates a tab alongside the Manage and View tabs. This links to a page
-      * listing all of the people in the project.
-      */
-    'islandora/object/%islandora_object/people' => array(
-      'title' => 'People',
-      'type' => MENU_LOCAL_TASK,
-      'description' => 'People collaborating on this project.',
-      'page callback' => 'islandora_project_people', //TODO: Write this callback.
-      'page arguments' => array(2),
-      'access callback' => 'islandora_object_access_callback',
-      'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
-      'file' => 'includes/manage_project.inc',
-    ),
   );
 }
 
 /**
  * cmodel_load
+ *
+ * This function assumes that Content Model IDs follow
+ * the pattern "islandora:" . $name . "_cmodel"
  *
  * @author Nolan Phillips <ncphillips@upei.ca>
  * @param String $cmodel_id_part
@@ -138,9 +98,12 @@ function cmodel_load($cmodel_id_part){
 /**
  * rel_cmodel_load
  *
- * @param $cmodel_id_part
- * @param $object
+ * @author Nolan Phillips ncphillips@upei.ca
+ * @param string $cmodel_id_part
+ * @param IslandoraFedoraObject $object
  * @return FedoraObject|null
+ * If the cmodel exists and has a datarel_partOf relationship to
+ * the cmodel of %object, then it is returned; else return NULL.
  */
 function rel_cmodel_load($cmodel_id_part, $object) {
   $cmodel = cmodel_load($cmodel_id_part);
@@ -158,10 +121,47 @@ function rel_cmodel_load($cmodel_id_part, $object) {
   return $cmodel;
 }
 
-function add_person_title($cmodel_object){
-  return "Add people to " . $cmodel_object->label;
+
+function rel_lab_objects_list($object) {
+  /** @TODO
+    Invokes hook_rel_lab_object_list
+    Invokes drupal_alter on
+      hook_rel_lab_object_list_alter
+      get list of all related cmodels, and remove the non lab_object subtypes
+        for each related cmodel, where the cmodel name is TYPE
+          hook_rel_lab_object_TYPE_list_alter
+    See the bottom of the following function for an example of how to do this alter
+    calling https://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_prepare_form/7
+   */
+
 }
-  
+
+/**
+ * Implements hook_rel_lab_objects_list.
+ */
+function islandora_bioinformatics_base_rel_lab_objects_list($object){
+  /** @TODO */
+  }
+
+
+function rel_people_list($object) {
+  /** @TODO
+    invoke hook_rel_people_list
+    invoke drupal_alter on hook_rel_people_list_alter
+   */
+}
+
+/**
+ * Implements hook_rel_people_list.
+ */
+function islandora_bioinformatics_base_rel_people_list($object){
+
+}
+
+function rel_lab_object_ingest($object, $cmodel){
+
+}
+
 /**
   * Implements hook_theme().
   */
@@ -218,40 +218,37 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
 
   $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
 
-  // Project Content Model
+  //---------Project Content Model------------------------------------------------------------------------------------//
   $project_cm = $connection->repository->constructObject('islandora:project_cmodel');
   $project_cm->owner = 'fedoraAdmin';
-  $project_cm->label = 'Islandora Bioinformatics Project Content Model';
+  $project_cm->label = 'Project Content Model';
   $project_cm->models = 'fedora-system:ContentModel-3.0';
 
   $datastream = $project_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-  $datastream->label = 'Project content model';
+  $datastream->label = 'Project Datastreams';
   $datastream->mimetype= 'text/xml';
   $datastream->setContentFromFile("$module_path/xml/content_models/Project_ds_composite_model.xml", FALSE);
   $project_cm->ingestDatastream($datastream);
 
-  // Create relationship with LabObject
-  $project_cm->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:lab_object_cmodel');
-
-  // Person Content Model
+  //---------Project Content Model------------------------------------------------------------------------------------//
   $person_cm = $connection->repository->constructObject('islandora:person_cmodel');
   $person_cm->owner = 'fedoraAdmin';
-  $person_cm->label = 'Islandora Bioinformatics Person Content Model';
+  $person_cm->label = 'Person Content Model';
   $person_cm->models = 'fedora-system:ContentModel-3.0';
 
   $datastream = $person_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
-  $datastream->label = 'Person content model';
+  $datastream->label = 'Person Datastreams';
   $datastream->mimetype= 'text/xml';
   $datastream->setContentFromFile("$module_path/xml/content_models/Person_ds_composite_model.xml", FALSE);
   $person_cm->ingestDatastream($datastream);
 
   // Create relationship with LabObject
-  $person_cm->relationships->add(FEDORA_MODEL_URI, 'hasModel', 'islandora:lab_object_cmodel');
+  $person_cm->relationships->add('', 'datarel_partOf', 'islandora:project_cmodel');
 
-  // LabObject Content Model
+  //---------Lab Object Content Model---------------------------------------------------------------------------------//
   $labObject_cm = $connection->repository->constructObject('islandora:lab_object_cmodel');
   $labObject_cm->owner = 'fedoraAdmin';
-  $labObject_cm->label = 'Islandora Bioinformatics LabObject Content Model';
+  $labObject_cm->label = 'LabObject Abstract Content Model';
   $labObject_cm->models = 'fedora-system:ContentModel-3.0';
 
   $datastream = $labObject_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
@@ -260,10 +257,10 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/content_models/LabObject_ds_composite_model.xml", FALSE);
   $labObject_cm->ingestDatastream($datastream);
 
-  // LabActivity Content Model
+  //---------Lab Activity Content Model-------------------------------------------------------------------------------//
   $labActivity_cm = $connection->repository->constructObject('islandora:lab_activity_cmodel');
   $labActivity_cm->owner = 'fedoraAdmin';
-  $labActivity_cm->label = 'Islandora Bioinformatics LabActivity Content Model';
+  $labActivity_cm->label = 'LabActivity Abstract Content Model';
   $labActivity_cm->models = 'fedora-system:ContentModel-3.0';
 
   $datastream = $labActivity_cm->constructDatastream('DS-COMPOSITE-MODEL', 'X');
@@ -272,7 +269,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/content_models/LabActivity_ds_composite_model.xml", FALSE);
   $labActivity_cm->ingestDatastream($datastream);
 
-  // Project Collection
+  //---------Project Collection---------------------------------------------------------------------------------------//
   $project_collection = $connection->repository->constructObject('islandora:project_collection');
   $project_collection->owner = 'fedoraAdmin';
   $project_collection->label = 'Project Collection';
@@ -283,7 +280,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_project_collection_policy.xml", FALSE);
   $project_collection->ingestDatastream($datastream);
 
-  // Person Collection
+  //---------Person Collection ---------------------------------------------------------------------------------------//
   $person_collection = $connection->repository->constructObject('islandora:person_collection');
   $person_collection->owner = 'fedoraAdmin';
   $person_collection->label = 'Person Collection';
