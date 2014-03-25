@@ -23,7 +23,13 @@
             $people[$person_object->id] = $person_object->label;
         }
 
-        $people_string = implode($people);
+        $people_string = "";
+        foreach($people as $person){
+            $people_string = $people_string . "\n" . $person;
+        }
+        
+        
+        //implode($people);
 
         return $people_string;
     }
