@@ -24,7 +24,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   $project_object = $form_state['islandora']['objects'][0];
 
   //query fedora to retrieve a list of all person objects
-  $query = 	"SELECT ?pid
+  $query = "SELECT ?pid
           FROM <#ri>
           WHERE {
           ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
@@ -93,7 +93,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   $person_ids = array_filter($form_state['values']['people']);
 
   //iterate over every person and remove their relationship (if it exists) with the project.
-  $query = 	"SELECT ?pid
+  $query = "SELECT ?pid
             FROM <#ri>
             WHERE {
             ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
@@ -108,7 +108,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
   //for each person checked, create a relationship between the person and the project
   foreach ($person_ids as $id)  {
     //create a relationship within the current person object to the project
-    $person_object = islandora_object_load($id);  //loads object
+    $person_object = islandora_object_load($id); //loads object
     $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
   }
 }
