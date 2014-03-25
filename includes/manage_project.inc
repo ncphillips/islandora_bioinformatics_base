@@ -1,6 +1,9 @@
 <?php
 
     /**
+     *
+     * @file manage_project.inc
+     *
      * @todo
      * This should return a page that lists the people associated with the project.
      * Each person row should link to the person object itself.
@@ -17,20 +20,20 @@
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
         $people = array();
-        foreach($result as $person) {
+        foreach ($result as $person) {
             $person_object = islandora_object_load($person["pid"]["value"]);
             
             
             //check if relationship exists and add to people array
             $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
             
-            if(!empty($relationship)){
+            if (!empty($relationship)) {
                 $people[$person_object->id] = $person_object->label;
             }
         }
 
         $people_string = "";
-        foreach($people as $person){
+        foreach ($people as $person) {
           $people_string .= $person . "\n";
         }
         

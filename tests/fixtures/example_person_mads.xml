@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<mads:mads xmlns:mads="http://www.loc.gov/mads/v2" xmlns="http://www.loc.gov/mads/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <mads:authority>
+    <mads:name type="personal">
+      <mads:namePart type="given">Billy</mads:namePart>
+      <mads:namePart type="family">The Hero</mads:namePart>
+      <mads:namePart type="date"/>
+    </mads:name>
+    <mads:titleInfo>
+      <mads:title>Billy The Hero</mads:title>
+    </mads:titleInfo>
+  </mads:authority>
+  <mads:identifier type="u1"/>
+  <mads:affiliation>
+    <mads:phone></mads:phone>
+    <mads:email></mads:email>
+    <mads:organization></mads:organization>
+    <mads:position></mads:position>
+    <mads:address></mads:address>
+    <mads:dateValid point="start"/>
+    <mads:dateValid point="end"/>
+  </mads:affiliation>
+  <mads:url></mads:url>
+  <mads:note type="history"/>
+  <mads:fieldOfActivity></mads:fieldOfActivity>
+</mads:mads>
