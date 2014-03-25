@@ -29,8 +29,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
           WHERE {
           ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
         }";
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');	
- 	
+    $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+    
     //build the checkboxes form, with default values.
     $people = array();
     $default_values = array();  //determines which values are automatically selected
@@ -49,12 +49,12 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 
     $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 
-		
+
     echo '<pre>';
     echo var_dump($relationship);
     echo '</pre>';
-		
-    if (!empty($relationship)) {	//if relationship exists, add it to $default_values
+    
+    if (!empty($relationship)) {  //if relationship exists, add it to $default_values
       $default_values[$person_object->id] = $person_object->id;
     }
 
@@ -72,7 +72,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
     '#default_value' => $default_values,
     '#options' => $people,
     ),
-    ); 	
+    );
   }
 
 /**
@@ -99,16 +99,16 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
             ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
         }";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');	
-	
+
   foreach ($result as $person) {
-    $person_object = islandora_object_load($person['pid']['value']);	//loads object
+    $person_object = islandora_object_load($person['pid']['value']);  //loads object
     $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
   }
 
   //for each person checked, create a relationship between the person and the project
   foreach ($person_ids as $id)  {
     //create a relationship within the current person object to the project
-    $person_object = islandora_object_load($id);	//loads object
+    $person_object = islandora_object_load($id);  //loads object
     $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
   }
 }

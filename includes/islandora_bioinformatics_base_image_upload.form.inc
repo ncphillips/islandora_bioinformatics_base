@@ -32,7 +32,7 @@
     'file_validate_extensions' => $extensions,
     // Assume it's specified in MB.
     'file_validate_size' => array($upload_size * 1024 * 1024),
-  ),),)
+  ), ), );
 }
 
 /**
@@ -45,7 +45,7 @@
  */
 function islandora_bioinformatics_base_image_upload_form_submit(array $form, array &$form_state) {
   $file = file_load($form_state['values']['file']);
-  if (!empty($file)) {	//check if a file has been uploaded
+  if (!empty($file)) {  //check if a file has been uploaded
     $object = $form_state['islandora']['objects'][0];
     if (empty($object['IMG'])) {
       $ds = $object->constructDatastream('IMG', 'M');
