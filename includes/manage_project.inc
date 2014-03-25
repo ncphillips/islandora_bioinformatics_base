@@ -18,10 +18,12 @@
 
         $people = array();
         foreach($result as $person) {
-            $people[$person["pid"]["value"]] = $person["pid"]["value"];
+            $person_object = islandora_object_load($person["pid"]["value"]);
+            //$people[$person["pid"]["value"]] = $person["pid"]["value"];
+            $people[$person_object->id] = $person_object->label;
         }
 
         $people_string = implode($people);
 
-        return $people;
+        return $people_string;
     }
