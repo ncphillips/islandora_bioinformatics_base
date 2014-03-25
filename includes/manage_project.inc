@@ -19,8 +19,14 @@
         $people = array();
         foreach($result as $person) {
             $person_object = islandora_object_load($person["pid"]["value"]);
-            //$people[$person["pid"]["value"]] = $person["pid"]["value"];
-            $people[$person_object->id] = $person_object->label;
+            
+            
+            //check if relationship exists and add to people array
+            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+            
+            if(!empty($relationship)){
+                $people[$person_object->id] = $person_object->label;
+            }
         }
 
         $people_string = "";
