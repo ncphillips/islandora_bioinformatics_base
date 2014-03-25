@@ -23,7 +23,7 @@
             $people[$person_object->id] = $person_object->label;
         }
 
-   //     $people_string = implode($people);
+        $people_string = implode($people);
 
-        return $people;
+        return $people_string;
     }
