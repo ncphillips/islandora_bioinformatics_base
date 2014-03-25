@@ -49,7 +49,7 @@ function islandora_bioinformatics_base_menu(){
       'title' => 'People',
       'type' => MENU_LOCAL_TASK,
       'description' => 'People collaborating on this project.',
-      'page callback' => 'islandora_project_people', //TODO: Write this callback.
+      'page callback' => 'rel_people_list', //TODO: Write this callback.
       'page arguments' => array(2),
       'access callback' => 'islandora_object_access_callback',
       'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
@@ -149,6 +149,10 @@ function rel_people_list($object) {
     invoke hook_rel_people_list
     invoke drupal_alter on hook_rel_people_list_alter
    */
+   module_load_include("inc", "islandora_bioinformatics_base", "manage_project");
+   $project_people_function = "islandora_project_people";
+   return $projcet_people_function($object);
+   
 }
 
 /**
