@@ -98,7 +98,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
             WHERE {
             ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
         }";
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');	
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
   foreach ($result as $person) {
     $person_object = islandora_object_load($person['pid']['value']);  //loads object
