@@ -22,7 +22,7 @@
             
             
             //check if relationship exists and add to people array
-            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', "islandora:project_cm");
+            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object);
             
             if(!empty($relationship)){
                 $people[$person_object->id] = $person_object->label;
