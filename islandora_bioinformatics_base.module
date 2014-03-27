@@ -151,7 +151,7 @@ function rel_people_list($object) {
    */
    module_load_include("inc", "islandora_bioinformatics_base", "manage_project");
    $project_people_function = "islandora_project_people";
-   return $projcet_people_function($object);
+   return $project_people_function($object);
    
 }
 
