@@ -61,7 +61,7 @@ function islandora_bioinformatics_base_menu() {
        * Displays form for adding/removing people to %islandora_object.
        */
       'title callback' => 'add_person_title',
-      'title arguments' => array(3),
+      'title arguments' => array(2),
       'description' => 'Adds a person to a project',
       'page callback' => 'drupal_get_form',
       'type' => MENU_CALLBACK,
