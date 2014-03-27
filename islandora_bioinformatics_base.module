@@ -66,8 +66,7 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'type' => MENU_CALLBACK,
       'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
-      'access callback' => 'islandora_bioinformatics_base_access',
-      'access arguments' => array(2),
+      'access callback' => TRUE,
       'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
   );
