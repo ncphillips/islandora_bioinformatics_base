@@ -492,9 +492,9 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 *
 */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
-  echo 'Account' . '<pre>' . dpm($account) . '</pre>';
+  echo dpm($account);
 
-  echo 'Category' . '<pre>' . dpm($category) . '</pre>';
+  echo dpm($category);
 
   /*
   $tuque = new IslandoraTuque();
