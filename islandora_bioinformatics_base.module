@@ -539,6 +539,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream->setContentFromString($xml);
     
   //ingest object into fedora
-  $tuque->repository->ingestObject($person_object);
-  //$ingested_object = islandora_add_object($person_object);
+  //$tuque->repository->ingestObject($person_object);
+  $ingested_object = islandora_add_object($person_object);
 }
