@@ -23,6 +23,8 @@ function TESTCB(){
   $object = "Your Mom";
   $rel_cmodels = array("One", "Two", "Three");
 
+  module_load_include('inc', 'islandora_bioinformatics_base', 'rel_lab_objects_form.inc');
+
   foreach ($rel_cmodels as $rel_cmodel) {
     $element_name = $rel_cmodel . "_form";
     $render_array[$element_name] = drupal_get_form('rel_lab_objects_form', $object, $rel_cmodel);
