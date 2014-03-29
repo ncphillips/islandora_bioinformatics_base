@@ -495,10 +495,10 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque = new IslandoraTuque();
   
   //build person object
-  $person_cm = $tuque->repository->constructObject('islandora:person_cmodel');
-  $person_cm->owner = 'fedoraAdmin';
-  $person_cm->label = 'Person Content Model';   //replace with name for drupal object?
-  $person_cm->models = 'fedora-system:ContentModel-3.0';
+  $person_object = $tuque->repository->constructObject('islandora:person_cmodel');
+  $person_object->owner = 'fedoraAdmin';
+  $person_object->label = 'Person Content Model';   //replace with name for drupal object?
+  $person_object->models = 'fedora-system:ContentModel-3.0';
   
   //build MADS xml from user information here
   $xml = '<?xml version="1.0"?>
@@ -530,8 +530,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   
   
   //ingest the MADS datastream to the object
-  $datastream = $person_cm->constructDatastream('MADS', 'X');
-  $person_cm->ingestDatastream($datastream);
+  $datastream = $person_object->constructDatastream('MADS', 'X');
+  $person_object->ingestDatastream($datastream);
   
   //build MADS datastream
   $datastream->label = 'MADS Record';
@@ -539,6 +539,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream->setContentFromString($xml);
     
   //ingest object into fedora
-  $tuque->repository->ingestObject($person_cm);
-  //$ingested_object = islandora_add_object($person_cm);
+  $tuque->repository->ingestObject($person_object);
+  //$ingested_object = islandora_add_object($person_object);
 }
