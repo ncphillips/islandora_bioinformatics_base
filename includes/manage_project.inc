@@ -14,7 +14,7 @@
         $query = "SELECT ?pid
                     FROM <#ri>
                     WHERE {
-                    ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+                    ?pid <datarel_partOf> <info:fedora/islandora:person_cmodel> .
                     }
                     ";
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');

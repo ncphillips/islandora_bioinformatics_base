@@ -17,23 +17,35 @@ define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
-function rel_lab_objects_form($form, &$form_state, $object, $rel_cmodel) {
+/**
+ * @param $form
+ * @param $form_state
+ * @param IslandoraFedoraObject $object
+ * The object whose relationships we're showing.
+ * @param array $rel_lab_objects
+ * An array of lab_objects related to the Object.
+ *
+ * @return array
+ *
+ * This is the Base Related Lab Object Form.
+ *
+ * It accepts an array of lab objects
+ */
 
-  $form['object'] = array(
-    '#type' => 'hidden',
-    '#value' => $object,
-  );
+foreach(result as person)
+  people[] = load()
 
 
-  $form[] = array(
-    '#prefix' => t("<h1>Related $rel_cmodel</h1><div id='form_$rel_cmodel'>"),
-    '#suffix' => t('</div>'),
-  );
+function rel_lab_objects_form($form, &$form_state, $object, $rel_lab_objects) {
+
+  if(!isset($form_state['object'])){
+    $form_state['object'] = $object;
+  }
 
   // Add Lab Object Button
   $form['add'] = array(
     '#type' => 'button',
-    '#value' => t("Add $rel_cmodel"),
+    '#value' => t("Add Object"),
   );
 
   // Possible actions in a dropdown menu.
@@ -84,14 +96,27 @@ function rel_lab_objects_form_submit(array $form, array &$form_state) {
 function TESTCB(){
   $render_array = array();
 
-  $object = "Your Mom";
-  $rel_cmodels = array("One", "Two", "Three");
+  $object = 'Your Mom';
+  $rel_cmodels = array('specimen', 'lcms');
+
 
   foreach ($rel_cmodels as $rel_cmodel) {
     $element_name = $rel_cmodel . "_form";
-    $render_array[$element_name] = drupal_get_form('rel_lab_objects_form', $object, $rel_cmodel);
+    $render_array[$element_name] = drupal_get_form('rel_lab_objects_' . $rel_cmodel . '_form', $object, $rel_cmodel);
+    $module_name = "islandora_lab_object_$rel_cmodel"
   }
   return $render_array;
+}
+
+function related_lab_objects_forms($form_id, $args) {
+
+  // All content models that are lab_objects
+  $lab_object_cmodels = array('One', 'Two');
+  foreach($lab_object_cmodels as $lab_object_cmodel){
+    $form_name = 'rel_' . $lab_object_cmodel . '_lab_object_form';
+    $forms[$form_name]['callback'] = 'rel_lab_object_form';
+  }
+  return $forms;
 }
 
 /**
