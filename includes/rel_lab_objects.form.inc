@@ -54,7 +54,7 @@ function rel_lab_objects_form($form, &$form_state, $object) {
 }
 
 function rel_lab_objects_form_submit(array $form, array &$form_state) {
-  echo "<h1>Clicked Button: $form_state['clicked_button']['#value']</h1>";
+  echo t("<h1>Clicked Button: " . $form_state['clicked_button']['#value'] . "</h1>");
   echo '<pre>';
   var_dump($form_state['values']);
   echo'</pre>';
