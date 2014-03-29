@@ -17,6 +17,19 @@ define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
+function TESTCB(){
+  $render_array = array();
+
+  $object = "Your Mom";
+  $rel_cmodels = array("One", "Two", "Three");
+
+  foreach ($rel_cmodels as $rel_cmodel) {
+    $element_name = $rel_cmodel . "_form";
+    $render_array[$element_name] = drupal_get_form('rel_lab_objects_form', $object, $rel_cmodel);
+  }
+  return $render_array
+}
+
 /**
  * Implements hook_menu().
  *
@@ -28,10 +41,8 @@ function islandora_bioinformatics_base_menu() {
     'testing/%' => array(
       'title' => 'TEST',
       'type' => MENU_CALLBACK,
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('rel_lab_objects_form', 1),
+      'page callback' => 'TESTCB',
       'access callback' => TRUE,
-      'file' => 'includes/rel_lab_objects.form.inc',
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
       /*
