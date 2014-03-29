@@ -45,7 +45,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
       $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
     }
     */
-
     $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 
     if (!empty($relationship)) {  //if relationship exists, add it to $default_values
