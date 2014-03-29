@@ -492,7 +492,7 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 *
 */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
-  echo dpm($account['pid']);
+  echo dpm($account);
 
   //echo dpm($category);
 
