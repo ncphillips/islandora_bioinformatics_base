@@ -16,9 +16,10 @@ function rel_lab_objects_form($form, &$form_state, $object) {
     );
 
     // Add Lab Object Button
-    $form[$rel_cmodel]['add_button'] = array(
+    $form[$rel_cmodel]['add'] = array(
       '#type' => 'button',
       '#value' => t("Add $rel_cmodel"),
+      '#name' => "add_$rel_cmodel",
     );
 
     // Possible actions in a dropdown menu.
@@ -28,14 +29,15 @@ function rel_lab_objects_form($form, &$form_state, $object) {
       '#options' => array(
         'delete' => t('Delete'),
       ),
-      '#description' => t('Actions')
+      '#description' => t('Actions'),
+      '#name' => "selected_$rel_cmoedl",
     );
 
     // Submit button for actions.
     $form[$rel_cmodel]['submit'] = array(
       '#type' => 'submit',
-      '#value' => 'Go',
-      ''
+      '#value' => 'Submit',
+      '#name' => "submit_$rel_cmodel",
     );
 
     // Table of Related Lab Objects.
@@ -52,9 +54,9 @@ function rel_lab_objects_form($form, &$form_state, $object) {
       '#type' => 'tableselect',
       '#header' => $header,
       '#options' => $options,
-      '#empty' => t("There is no related content of type $rel_cmodel.")
+      '#empty' => t("There is no related content of type $rel_cmodel."),
+      '#name' => "table_$rel_cmodel",
     );
-
   }
   return $form;
 }
