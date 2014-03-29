@@ -541,7 +541,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //ingest the MADS datastream to the object
   $person_cm->ingestDatastream($datastream);
   
-  echo dpm($person_cm);
+  //echo dpm($person_cm);
+  echo dpm($datastream);
   
   //ingest object into fedora
   //$tuque->repository->ingestObject($person_cm);
