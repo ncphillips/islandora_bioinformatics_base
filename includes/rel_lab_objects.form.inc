@@ -3,12 +3,19 @@
 function rel_lab_objects_form($form, &$form_state, $object) {
   $rel_cmodels = array('Example 1', 'Example 2');
 
+  $form['#markup'] = "<h1>Related Objects for $object</h1>";
   $form['object'] = array(
     '#type' => 'hidden',
     '#value' => $object,
   );
 
   foreach($rel_cmodels as $rel_cmodel){
+
+    $form[$rel_cmodel] = array(
+      '#markup' => t("<h2>$rel_cmodel</h2>"),
+      '#prefix' => t("<div id='form_$rel_cmodel'>"),
+      '#suffix' => t('</div>'),
+    );
 
     // Add Lab Object Button
     $form[$rel_cmodel]['add_button'] = array(
@@ -30,6 +37,7 @@ function rel_lab_objects_form($form, &$form_state, $object) {
     $form[$rel_cmodel]['submit'] = array(
       '#type' => 'submit',
       '#value' => 'Go',
+      ''
     );
 
     // Table of Related Lab Objects.
@@ -38,8 +46,8 @@ function rel_lab_objects_form($form, &$form_state, $object) {
     );
 
     $options = array(
-      '1' => array('title'=>'Test 1'),
-      '2' => array('title'=>'Test 2'),
+      '1' => array('title'=> "$rel_cmodel 1"),
+      '2' => array('title'=> "$rel_cmodel 2"),
     );
 
     $form[$rel_cmodel]['table'] = array(
