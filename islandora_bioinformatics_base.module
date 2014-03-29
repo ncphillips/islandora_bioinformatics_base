@@ -540,5 +540,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_cm->ingestDatastream($datastream);
   
   //ingest object
-  $tuque->ingestObject($person_cm);
+  //$tuque->ingestObject($person_cm);
+  $ingested_object = islandora_add_object($person_cm);
 }
