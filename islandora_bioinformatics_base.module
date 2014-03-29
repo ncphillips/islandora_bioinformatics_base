@@ -23,7 +23,6 @@ function TESTCB(){
   $object = "Your Mom";
   $rel_cmodels = array("One", "Two", "Three");
 
-
   foreach ($rel_cmodels as $rel_cmodel) {
     $element_name = $rel_cmodel . "_form";
     $render_array[$element_name] = drupal_get_form('rel_lab_objects', $object, $rel_cmodel);

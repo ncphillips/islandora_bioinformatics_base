@@ -1,6 +1,6 @@
 <?php
 
-function rel_lab_objects_form($form, &$form_state, $object, $cmodel) {
+function islandora_bioinformatics_base_form_rel_lab_objects_form_alter($form, &$form_state, $object, $cmodel) {
   $rel_cmodels = array('Example 1', 'Example 2');
 
   $form['object'] = array(
