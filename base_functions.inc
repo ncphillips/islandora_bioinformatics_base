@@ -16,6 +16,7 @@ module_load_include('inc', 'islandora', 'islandora.rules');
  * This function simply checks to make sure a relationship doesnt exist before adding it
  */
 function add_hasPart($cmodel, $rel_to){
+  echo "HELLO?";
   if (!islandora_object_has_relationship($cmodel, '', 'datarel_hasPart', $rel_to, FALSE))
     $cmodel->relationships->add(FEDORA_RELS_EXT_URI, 'datarel_hasPart', $rel_to);
 }
