@@ -1,4 +1,5 @@
 <?php
+module_load_include('inc', 'islandora', 'islandora.rules');
 
 /**
  * @file
