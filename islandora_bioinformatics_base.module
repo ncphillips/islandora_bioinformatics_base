@@ -532,14 +532,14 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
               <mads:fieldOfActivity></mads:fieldOfActivity>
             </mads:mads>';    
   
-  //ingest the MADS datastream to the object
-  $person_cm->ingestDatastream($datastream);
-  
   //build MADS datastream
   $datastream = $person_cm->constructDatastream('MADS', 'X');
   $datastream->label = 'MADS Record';
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromString($xml);
+  
+  //ingest the MADS datastream to the object
+  $person_cm->ingestDatastream($datastream);
   
   echo dpm($person_cm);
   
