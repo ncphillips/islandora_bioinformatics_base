@@ -493,12 +493,9 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
   //echo dpm($account);
-  echo $account->name;
-  echo $account->mail;
   
   //echo dpm($category);
 
-  /*
   $tuque = new IslandoraTuque();
   
   //build person object
@@ -517,13 +514,13 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
                   <mads:namePart type="date"/>
                 </mads:name>
                 <mads:titleInfo>
-                  <mads:title>USERNAME</mads:title>
+                  <mads:title>' . $account->name . ' </mads:title>
                 </mads:titleInfo>
               </mads:authority>
-              <mads:identifier type="u1">USERNAME</mads:identifier>
+              <mads:identifier type="u1">' . $account->name . '</mads:identifier>
               <mads:affiliation>
                 <mads:phone></mads:phone>
-                <mads:email>EMAIL@gmail.com</mads:email>
+                <mads:email>' . $account->mail . '</mads:email>
                 <mads:organization></mads:organization>
                 <mads:position></mads:position>
                 <mads:address></mads:address>
@@ -547,6 +544,4 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //ingest object into fedora
   $tuque->repository->ingestObject($person_cm);
   //$ingested_object = islandora_add_object($person_cm);
-  
-  */
 }
