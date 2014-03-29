@@ -492,6 +492,11 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 *
 */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
+  echo 'Account' . '<pre>' . var_dump($account) . '</pre>';
+
+  echo 'Category' . '<pre>' . var_dump($category) . '</pre>';
+
+  /*
   $tuque = new IslandoraTuque();
   
   //build person object
@@ -501,8 +506,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_cm->models = 'fedora-system:ContentModel-3.0';
   
   //build MADS xml from user information here
-  $xml = '
-          <?xml version="1.0"?>
+  $xml = '<?xml version="1.0"?>
             <mads:mads xmlns:mads="http://www.loc.gov/mads/v2" xmlns="http://www.loc.gov/mads/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink">
               <mads:authority>
                 <mads:name type="personal">
@@ -511,13 +515,13 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
                   <mads:namePart type="date"/>
                 </mads:name>
                 <mads:titleInfo>
-                  <mads:title>' .  'PLACEHOLDER - Username'    .'</mads:title>
+                  <mads:title>USERNAME</mads:title>
                 </mads:titleInfo>
               </mads:authority>
-              <mads:identifier type="u1">' . 'PLACEHOLDER  - Username'  .'</mads:identifier>
+              <mads:identifier type="u1">USERNAME</mads:identifier>
               <mads:affiliation>
                 <mads:phone></mads:phone>
-                <mads:email>' . 'PLACEHOLDER - EMAIL'  . '</mads:email>
+                <mads:email>EMAIL@gmail.com</mads:email>
                 <mads:organization></mads:organization>
                 <mads:position></mads:position>
                 <mads:address></mads:address>
@@ -527,8 +531,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
               <mads:url></mads:url>
               <mads:note type="history"/>
               <mads:fieldOfActivity></mads:fieldOfActivity>
-            </mads:mads>
-          ';    
+            </mads:mads>';    
   
   //build MADS datastream
   $datastream = $person_cm->constructDatastream('MADS', 'X');
@@ -539,7 +542,9 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //ingest the MADS datastream to the object
   $person_cm->ingestDatastream($datastream);
   
-  //ingest object
-  //$tuque->ingestObject($person_cm);
-  $ingested_object = islandora_add_object($person_cm);
+  //ingest object into fedora
+  $tuque->repository->ingestObject($person_cm);
+  //$ingested_object = islandora_add_object($person_cm);
+  
+  */
 }
