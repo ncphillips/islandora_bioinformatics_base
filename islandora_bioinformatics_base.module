@@ -81,6 +81,62 @@ function rel_lab_objects_form_submit(array $form, array &$form_state) {
 
 }
 
+/**
+ * Page Callback
+ * rel_people_list($object)
+ *
+ * @author Dalton Mackenzie <demackenzie@upei.ca>
+ *
+ * This page callback takes an object and determines
+ * which people have a relationship with it
+ * via a SPARQL query.
+ *
+ * From here it should use drupal_get_form to generate
+ * a form populated with the people related to the given
+ * object.
+ *
+ * This form will be stored as an element in a
+ * renderable array, which the function will then return.
+ */
+
+function rel_people_list($object) {
+  $render_array = array();
+
+  $target_pid = $object->id; //Get the pid for the input object, we'll want to see if any people have an isPartOf relationship with this pid.
+
+  $tuque = new IslandoraTuque(); //Establish a tuque object
+
+  //Construct a query which will find all pids adhering to the following two conditions:
+  //Condition 1: pid corresponds to an object that hasModel person_cmodel (ie. is a person object)
+  //Condition 2: pid corresponds to an object which isPartOf the input object. (the one with the target pid)
+
+  $query = "SELECT ?pid
+            FROM <#ri>
+            WHERE {
+              ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+              ?pid <fedora:isPartOf> <info:fedora/$target_pid> .
+            }"; 
+
+  $result = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+
+  $people = array();
+
+  foreach ($result as $person) { //For each of the person objects returned by the query,
+
+    //Load the current person object
+    $people[] = islandora_object_load($person["pid"]["values"]); //Add them to an array of people.
+  }
+
+  //Drupal should invoke hook_forms() with the following line of code.
+
+  $render_array = drupal_get_form('rel_people_list', $object, $people); //Now get the form, passing it object and people.
+
+  //Return the renderable array
+  return $render_array;
+}
+
+
+
 function TESTCB(){
   $render_array = array();
 
