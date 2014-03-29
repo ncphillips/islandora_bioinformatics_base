@@ -94,7 +94,7 @@ function TESTCB(){
 
   foreach ($rel_cmodels as $rel_cmodel) {
     $element_name = $rel_cmodel . "_form";
-    $render_array[$element_name] = drupal_get_form('rel_lab_objects', $object, $rel_cmodel);
+    $render_array[$element_name] = drupal_get_form('rel_lab_objects_form', $object, $rel_cmodel);
   }
   return $render_array;
 }
