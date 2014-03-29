@@ -17,8 +17,7 @@ define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
-function rel_lab_objects_form($form, &$form_state, $object, $cmodel) {
-  $rel_cmodels = array('Example 1', 'Example 2');
+function rel_lab_objects_form($form, &$form_state, $object, $rel_cmodel) {
 
   $form['object'] = array(
     '#type' => 'hidden',
@@ -35,7 +34,6 @@ function rel_lab_objects_form($form, &$form_state, $object, $cmodel) {
   $form['add'] = array(
     '#type' => 'button',
     '#value' => t("Add $rel_cmodel"),
-    '#name' => "add_$rel_cmodel",
   );
 
   // Possible actions in a dropdown menu.
@@ -46,14 +44,12 @@ function rel_lab_objects_form($form, &$form_state, $object, $cmodel) {
       'delete' => t('Delete'),
     ),
     '#description' => t('Actions'),
-    '#name' => "selected_$rel_cmodel",
   );
 
   // Submit button for actions.
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
-    '#name' => "submit_$rel_cmodel",
   );
 
   // Table of Related Lab Objects.
@@ -71,7 +67,6 @@ function rel_lab_objects_form($form, &$form_state, $object, $cmodel) {
     '#header' => $header,
     '#options' => $options,
     '#empty' => t("There is no related content of type $rel_cmodel."),
-    '#name' => "table_$rel_cmodel",
   );
 
   return $form;
