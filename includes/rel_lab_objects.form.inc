@@ -30,7 +30,7 @@ function rel_lab_objects_form($form, &$form_state, $object) {
         'delete' => t('Delete'),
       ),
       '#description' => t('Actions'),
-      '#name' => "selected_$rel_cmoedl",
+      '#name' => "selected_$rel_cmodel",
     );
 
     // Submit button for actions.
