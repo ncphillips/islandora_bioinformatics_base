@@ -3,7 +3,6 @@
 function rel_lab_objects_form($form, &$form_state, $object) {
   $rel_cmodels = array('Example 1', 'Example 2');
 
-  $form['#markup'] = "<h1>Related Objects for $object</h1>";
   $form['object'] = array(
     '#type' => 'hidden',
     '#value' => $object,
