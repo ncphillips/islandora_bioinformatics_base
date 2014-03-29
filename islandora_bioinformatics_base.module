@@ -31,7 +31,7 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('rel_lab_objects_form', 1),
       'access callback' => TRUE,
-      'file' => 'includes/related_lab_objects.form.inc',
+      'file' => 'includes/rel_lab_objects.form.inc',
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
       /*
