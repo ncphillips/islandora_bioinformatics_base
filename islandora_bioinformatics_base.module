@@ -25,6 +25,14 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  */
 function islandora_bioinformatics_base_menu() {
   return array(
+    'testing/%' => array(
+      'title' => 'TEST',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('rel_lab_objects_form', 1),
+      'access callback' => TRUE,
+      'file' => 'includes/related_lab_objects.form.inc',
+    ),
     'islandora/object/%islandora_object/lab_objects/' => array(
       /*
        * Lists all lab_objects associated with the %islandora_object.
@@ -137,10 +145,30 @@ function rel_lab_objects_list($object) {
 
 /**
  * Implements hook_rel_lab_objects_list.
+ * @author Nolan Phillips ncphillips@upei.ca
+ *
+ * @param IslandoraFedoraObject | NULL
  */
 function islandora_bioinformatics_base_rel_lab_objects_list($object) {
-  /** @TODO */
+  // Dummy Node
+  $rel_objects = array(
+    array('id' => 1, 'title' => 'Test 1'),
+    array('id' => 2, 'title' => 'Test 2'),
+  );
+
+  $header = array(
+    'id' => t('ID'),
+    'title' => t('Title'),
+  );
+
+  $options = array();
+  foreach ($rel_objects as $rel_object) {
+    $options[$rel_object['id']] = array(
+      'title' => $rel_object['title'],
+    );
   }
+
+}
 
 
 function rel_people_list($object) {
