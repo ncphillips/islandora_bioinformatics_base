@@ -11,8 +11,7 @@ function rel_lab_objects_form($form, &$form_state, $object) {
   foreach($rel_cmodels as $rel_cmodel){
 
     $form[$rel_cmodel] = array(
-      '#markup' => t("<h2>$rel_cmodel</h2>"),
-      '#prefix' => t("<div id='form_$rel_cmodel'>"),
+      '#prefix' => t("<h1>Related $rel_cmodel</h1><div id='form_$rel_cmodel'>"),
       '#suffix' => t('</div>'),
     );
 
