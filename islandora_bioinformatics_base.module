@@ -149,8 +149,8 @@ function rel_people_list($object) {
     invoke drupal_alter on hook_rel_people_list_alter
    */
    module_load_include("inc", "islandora_bioinformatics_base", "manage_project");
- //  $project_people_function = "islandora_project_people";
-   //return $project_people_function($object);
+   $project_people_function = "islandora_project_people";
+   return $project_people_function($object);
    
 }
 
