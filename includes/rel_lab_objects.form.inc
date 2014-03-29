@@ -58,5 +58,6 @@ function rel_lab_objects_form_submit(array $form, array &$form_state) {
   echo '<pre>';
   var_dump($form_state['values']);
   echo'</pre>';
+  exit();
 
 }
