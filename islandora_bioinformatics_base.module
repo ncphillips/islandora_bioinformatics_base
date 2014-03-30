@@ -696,8 +696,12 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 function person_mads_to_array($person_object){
   $ns = "http://www.loc.gov/mads/v2";
 
+  $person_mads = array();
+
   $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
   foreach ($person_xml->children($ns) as $test){
+    echo "<pre>";
     var_dump($test);
+    echo "</pre>";
   }
 }
