@@ -174,7 +174,9 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $email = '';
     $phone = '';
 
-    $MADS = new SimpleXMLElement($person['MADS']->content);
+    $MADS_SXML = new SimpleXMLElement($person['MADS']->content);
+    $MADS = $MADS_SXML->children(ns=$ns);
+
     $name_parts = $MADS->authority->name->namepart;
     foreach($name_parts as $name_part){
       if($name_part['type'] == 'given')
