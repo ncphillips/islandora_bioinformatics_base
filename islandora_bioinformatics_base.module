@@ -32,10 +32,6 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  * It accepts an array of lab objects
  */
 
-foreach(result as person)
-  people[] = load()
-
-
 function rel_lab_objects_form($form, &$form_state, $object, $rel_lab_objects) {
 
   if(!isset($form_state['object'])){
@@ -141,15 +137,88 @@ function rel_people_list($object) {
 
   //Drupal should invoke hook_forms() with the following line of code.
 
-  $render_array = drupal_get_form('rel_people_list', $object, $people); //Now get the form, passing it object and people.
+  $render_array = drupal_get_form('rel_people_form', $object, $people); //Now get the form, passing it object and people.
 
   //Return the renderable array
   return $render_array;
 }
 
+function rel_people_form($form_id, &$form_state, $object, $people) {
+
+  if(!isset($form_state['object'])){
+    $form_state['object'] = $object;
+  }
+
+  // Submit button for actions.
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  // Table of Related Lab Objects.
+  $header = array(
+    'first' => t('First Name'),
+    'last' => t('Last Name'),
+    'phone' => t('Phone Number'),
+    'email' => t('Email'),
+  );
+
+  $options = array(
+    '1' => array('title'=> "$rel_cmodel 1"),
+    '2' => array('title'=> "$rel_cmodel 2"),
+  );
+
+  foreach ($people as $person){
+    // Default Values
+    $first = '';
+    $last = '';
+    $email = '';
+    $phone = '';
+
+    $MADS = $person['MADS'];
+    $name_parts = $MADS->authority->name->namepart
+    foreach($name_parts as $name_part){
+      if($name_part['type'] == 'given')
+        $last = $name_part;
+      elseif ($name_part['type'] == 'family')
+        $last = $name_part;
+    }
+
+    $phone = $MADS->authority->affiliation->phone;
+    $email = $MADS->authority->affiliation->email;
+
+    $options[$person->id] = array(
+      'first' => $first_name,
+      'last' => $last_name,
+      'phone' => $phone,
+      'email' => $email,
+    );
+  }
+
+  $form['table'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#empty' => t("There is no related content of type $rel_cmodel."),
+  );
+
+  return $form;
+}
+
+
+
+
+
+
 
 
 function TESTCB(){
+
+  $object = islandora_object_load('islandora:525');
+  $people[] = islandora_object_load('islandora:388');
+
+  return drupal_get_form('rel_people_form', $object, $people);
+
   $render_array = array();
 
   $object = 'Your Mom';
@@ -165,6 +234,7 @@ function TESTCB(){
 }
 
 function related_lab_objects_forms($form_id, $args) {
+
 
   // All content models that are lab_objects
   $lab_object_cmodels = array('One', 'Two');
