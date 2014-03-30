@@ -163,10 +163,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     'email' => t('Email'),
   );
 
-  $options = array(
-    '1' => array('title'=> "$rel_cmodel 1"),
-    '2' => array('title'=> "$rel_cmodel 2"),
-  );
+  $options = array();
 
   foreach ($people as $person){
     // Default Values
