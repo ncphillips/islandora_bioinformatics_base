@@ -438,6 +438,8 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
   */
 function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+  $person_obj = islandora_object_load("islandora:388");
+  person_mads_to_array($person_obj);
   $output = theme('islandora_bioinformatics_base', array('object' => $person));
   return array(
     'islandora_person' => $output,
@@ -683,4 +685,13 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
+}
+
+/**
+ * @author Brent Mitton
+ * @param $person_object
+ * Takes in an islandora person object and returns a simple array of the MADS data
+ */
+function person_mads_to_array($person_object){
+  echo $person_object["MADS"]->content;
 }
