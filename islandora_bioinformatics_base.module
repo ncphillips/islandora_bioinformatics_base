@@ -228,7 +228,7 @@ function TESTCB(){
   foreach ($rel_cmodels as $rel_cmodel) {
     $element_name = $rel_cmodel . "_form";
     $render_array[$element_name] = drupal_get_form('rel_lab_objects_' . $rel_cmodel . '_form', $object, $rel_cmodel);
-    $module_name = "islandora_lab_object_$rel_cmodel"
+    $module_name = "islandora_lab_object_$rel_cmodel";
   }
   return $render_array;
 }
