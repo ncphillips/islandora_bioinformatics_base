@@ -706,7 +706,7 @@ function person_mads_to_array($person_object){
   foreach ($person_xml->children($ns) as $part){
 
 
-    switch ($part->getName){
+    switch ((string) $part->getName){
       case "authority":
         echo "authority";
         break;
