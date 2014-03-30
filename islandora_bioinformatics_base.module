@@ -718,10 +718,10 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 
 /**
 * @author Quintin Dawson
-* When a Drupal user is modified
+* When a Drupal user is modified, update the associated person object with the new values
 *
 */
-function islandora_bioinformatics_base__user_update(&$edit, $account, $category) {
+function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
 
 }
 
