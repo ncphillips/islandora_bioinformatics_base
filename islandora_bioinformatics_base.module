@@ -715,7 +715,7 @@ function person_mads_to_array($person_object){
         $person_mads["title"] = ($part->titleInfo->title) ? (string)$part->titleInfo->title : "";
         break;
       case "identifier":
-        var_dump($part->attributes[0]);
+        // I dont know if this is even working
         break;
       case "affiliation":
         $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
@@ -723,12 +723,18 @@ function person_mads_to_array($person_object){
         $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
         $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
         $person_mads['contact']['address'] = ($part->address) ? (string)$part->address : "";
+        $person_mads['contact']['startDate'] = ($part->dateValid[0]) ? (string)$part->dateValid[0] : "";
+        $person_mads['contact']['endDate'] = ($part->dateValid[1]) ? (string)$part->dateValid[1] : "";
+
         break;
       case "url":
+        $person_mads['contact']['url'] = ($part->url) ? (string)$part->url : "";
         break;
       case "note":
+        // I want to figure out how we want to deal with this before I do it
         break;
       case "fieldOfActivity":
+        // What is this?
         break;
       default:
         throw new Exception("Unexpected XML Field.");
