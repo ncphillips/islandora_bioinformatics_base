@@ -694,5 +694,10 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
  * Takes in an islandora person object and returns a simple array of the MADS data
  */
 function person_mads_to_array($person_object){
-  echo $person_object["MADS"]->content;
+  $ns = "http://www.loc.gov/mads/v2";
+
+  $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
+  foreach ($person_xml->children($ns) as $test){
+    var_dump($test);
+  }
 }
