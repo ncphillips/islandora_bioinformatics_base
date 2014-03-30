@@ -710,7 +710,7 @@ function person_mads_to_array($person_object){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
         echo "<pre>";
-        var_dump($part->name->namePart[0];
+        var_dump($part->name->namePart[0]);
         echo "</pre>";
 
         break;
