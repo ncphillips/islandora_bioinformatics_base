@@ -380,7 +380,7 @@ function islandora_bioinformatics_base_menu() {
 }
 
 function test_people_add($object){
- drupal_get_form('includes/islandora_bioinformatics_base_assign_person_to_project.form.inc', $object);
+ drupal_get_form('includes/manage_projects.form.inc', $object);
  $form['submit'] =  array(
     '#type' => 'submit',
     '#value' => 'Submit',
