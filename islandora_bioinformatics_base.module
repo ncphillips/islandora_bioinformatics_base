@@ -711,11 +711,11 @@ function person_mads_to_array($person_object){
         // I'm just going to rely on position for now. Which is pretty awful
         $person_mads["name"]["first"] = ($part->name->namePart[0]) ? (string)$part->name->namePart[0] : "" ;
         $person_mads["name"]["last"] = ($part->name->namePart[1]) ? (string)$part->name->namePart[1] : "" ;
-        $person_mads["name"]["date"] = ($part->name->namePart[2]) ? (string)$part->name->namePart[2] : "" ;
+        $person_mads["name"]["birthdate"] = ($part->name->namePart[2]) ? (string)$part->name->namePart[2] : "" ;
         $person_mads["title"] = ($part->titleInfo->title) ? (string)$part->titleInfo->title : "";
         break;
       case "identifier":
-        // I don't want to do anything with this.
+        var_dump($part->attributes[0]);
         break;
       case "affiliation":
         $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
@@ -723,8 +723,6 @@ function person_mads_to_array($person_object){
         $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
         $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
         $person_mads['contact']['address'] = ($part->address) ? (string)$part->address : "";
-
-
         break;
       case "url":
         break;
