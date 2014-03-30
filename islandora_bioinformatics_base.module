@@ -165,6 +165,8 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
 
   $options = array();
 
+  $ns = "http://www.loc.gov/mads/v2";
+
   foreach ($people as $person){
     // Default Values
     $first = '';
@@ -172,7 +174,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $email = '';
     $phone = '';
 
-    $MADS = $person['MADS'];
+    $MADS = new SimpleXMLElement($person['MADS']->content);
     $name_parts = $MADS->authority->name->namepart;
     foreach($name_parts as $name_part){
       if($name_part['type'] == 'given')
@@ -181,8 +183,8 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
         $last = $name_part;
     }
 
-    $phone = $MADS->authority->affiliation->phone;
-    $email = $MADS->authority->affiliation->email;
+    $phone = $MADS[content]->authority->affiliation->phone;
+    $email = $MADS[content]->authority->affiliation->email;
 
     $options[$person->id] = array(
       'first' => $first_name,
@@ -214,9 +216,6 @@ function TESTCB(){
   $object = islandora_object_load('islandora:525');
   $people = islandora_object_load('islandora:388');
 
-  echo "FUCK".$people["MADS"]->content;
-  echo "FUCK ALL".$object;
-  exit();
   return drupal_get_form('rel_people_form', $object, $people);
 
   $render_array = array();
