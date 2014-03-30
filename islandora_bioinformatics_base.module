@@ -214,6 +214,8 @@ function TESTCB(){
   $object = islandora_object_load('islandora:525');
   $people[] = islandora_object_load('islandora:388');
 
+  echo $people;
+  exit();
   return drupal_get_form('rel_people_form', $object, $people);
 
   $render_array = array();
