@@ -728,7 +728,7 @@ function person_mads_to_array($person_object){
 
         break;
       case "url":
-        $person_mads['contact']['url'] = ($part->url) ? (string)$part->url : "";
+        $person_mads['contact']['url'] = ($part) ? (string)$part : "";
         break;
       case "note":
         // I want to figure out how we want to deal with this before I do it
