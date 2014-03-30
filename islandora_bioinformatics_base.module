@@ -140,31 +140,9 @@ function rel_people_list($object) {
   return $render_array;
 }
 
-function rel_people_form($form, &$form_state, $object, $people) {
-  $people = array();
-  $people[] = islandora_object_load('islandora:388');
-
-  if(!isset($form_state['object'])){
-    $form_state['object'] = $object;
-  }
-
-  if (!isset($form_state['people'])) {
-    $form_state['people'] = $people;
-  }
-
-  // Possible actions in a dropdown menu.
-  $form['selected'] = array(
-    '#type' => 'select',
-    '#title' => 'Actions',
-    '#options' => array(
-      'delete' => t('Remove'),
-    ),
-    '#description' => t('Actions'),
-    'submit' =>  array(
-      '#type' => 'submit',
-      '#value' => 'Submit',
-    ),
-  );
+function islandora_bioinformatics_base_related_people_form_alter($form, &$form_state) {
+  $object = $form_state['object'];
+  $people = $form_state['related_objects'];
 
   // Table of Related Lab Objects.
   $header = array(
@@ -276,6 +254,8 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   return $related_objects;
 }
 
+
+
 /**
  * related_islandora_objects_form
  *
@@ -341,6 +321,13 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   return $form;
 }
 
+/**
+ * Implements hook_forms
+ *
+ * @param $formid
+ * @param $args
+ * @return mixed
+ */
 function islandora_bioinformatics_base_forms($formid, $args) {
   $forms['related_person_form'] = array(
     'callback' => 'related_islandora_object_form',
