@@ -694,4 +694,5 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
  */
 function person_mads_to_array($person_object){
   echo $person_object["MADS"]->content;
+  exit(0);
 }
