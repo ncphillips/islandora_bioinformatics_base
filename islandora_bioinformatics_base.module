@@ -214,8 +214,8 @@ function TESTCB(){
   $object = islandora_object_load('islandora:525');
   $people[] = islandora_object_load('islandora:388');
 
-  echo $people;
-  echo $object;
+  echo "FUCK".$people;
+  echo "FUCK ALL".$object;
   exit();
   return drupal_get_form('rel_people_form', $object, $people);
 
