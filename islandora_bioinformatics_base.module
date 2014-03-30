@@ -710,9 +710,9 @@ function person_mads_to_array($person_object){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
 
-        $person_mads["name"]["first"] = (gettype($part->name->namepart[0]) == "string") ? $part->name->namepart[0] : "" ;
-        $person_mads["name"]["last"] = (gettype($part->name->namepart[1]) == "string") ? $part->name->namepart[1] : "" ;
-        $person_mads["name"]["date"] = (gettype($part->name->namepart[2]) == "string") ? $part->name->namepart[2] : "" ;
+        $person_mads["name"]["first"] = (gettype($part->name->namePart[0]) == "string") ? $part->name->namePart[0] : "" ;
+        $person_mads["name"]["last"] = (gettype($part->name->namePart[1]) == "string") ? $part->name->namePart[1] : "" ;
+        $person_mads["name"]["date"] = (gettype($part->name->namePart[2]) == "string") ? $part->name->namePart[2] : "" ;
 
         break;
       case "identifier":
