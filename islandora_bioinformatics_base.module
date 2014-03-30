@@ -727,16 +727,12 @@ function person_mads_to_array($person_object){
 
         break;
       case "url":
-        echo "url";
         break;
       case "note":
-        echo "note";
         break;
       case "fieldOfActivity":
-        echo "foa";
         break;
       default:
-        echo "other";
         throw new Exception("Unexpected XML Field.");
         break;
     }
