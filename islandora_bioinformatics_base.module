@@ -703,7 +703,7 @@ function person_mads_to_array($person_object){
   // parse the 'authority' section of mads.
 
 
-  foreach ($person_xml->authority as $part){
+  foreach ($person_xml->children($ns) as $part){
     echo "<pre>";
     var_dump($part);
     echo "</pre>";  }
