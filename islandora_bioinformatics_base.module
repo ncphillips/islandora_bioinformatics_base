@@ -691,6 +691,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 /**
  * @author Brent Mitton
  * @param $person_object
+ * @return An array with person information
  * Takes in an islandora person object and returns a simple array of the MADS data
  */
 function person_mads_to_array($person_object){
