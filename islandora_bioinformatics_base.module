@@ -104,6 +104,7 @@ function rel_lab_objects_form_submit(array $form, array &$form_state) {
  */
 
 function rel_people_list($object) {
+  // @TODO This function may be removed?
   $render_array = array();
 
   $target_pid = $object->id; //Get the pid for the input object, we'll want to see if any people have an isPartOf relationship with this pid.
@@ -139,7 +140,7 @@ function rel_people_list($object) {
   return $render_array;
 }
 
-function rel_people_form($form_id, &$form_state, $object, $people) {
+function rel_people_form($form, &$form_state, $object, $people) {
   $people = array();
   $people[] = islandora_object_load('islandora:388');
 
@@ -222,10 +223,131 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
   return $form;
 }
 
+/**
+ * related_islandora_objects
+ *
+ * This function finds al
+ *
+ * @param IslandoraFedoraObject $object
+ * @param string array | null $cmodels
+ * An array of strings representing fedora IDs of Content Models.
+ * @param array | null $relationships
+ * An associative array whose keys are namespaces, and whose values
+ * are arrays of relationships in that namespace.
+ *
+ * @return IslandoraFedoraObject array $related_objects
+ */
+function related_islandora_objects($object, $cmodels=null, $relationships=null){
+  $related_objects = array();
+
+  $obj_id = $object->id;
+  $cmodel_clause = '';
+  $rel_clause = '';
 
 
+  // THIS IS NOT CORRECT
+  // All of these must be OR'd together.
+  foreach($cmodels as $cmodel)
+    $cmodel_clause = "$cmodel_clause ?pid <fedora-model:hasModel> <info:fedora/$cmodel> .";
 
+  // Should be any of these relationships
+  foreach($relationships as $ns => $rels) {
+    foreach($rels as $rel){
+      $nsrel = $ns.':'.$rel;
+      $rel_clause = "$rel_clause  ?pid <$nsrel> <info:fedora/$obj_id> .";
+    }
+  }
 
+  $query = "SELECT ?pid
+            FROM <#ri>
+            WHERE {
+              $cmodel_clause
+              $rel_clause
+            }";
+
+  $tuque = new IslandoraTuque();
+
+  $result = $tuque->repository->ri->query($query);
+
+  foreach($result as $related_object) {
+    $related_objects[] = islandora_object_load($related_object['pid']['values']);
+  }
+
+  return $related_objects;
+}
+
+/**
+ * related_islandora_objects_form
+ *
+ * Constructs a form which has a select table of islandora objects related to the
+ * $object. A related object is listed iff it's cmodel is in $cmodels and the
+ * relationship to $object is in $relationships.
+ *
+ * @param $form
+ * @param $form_state
+ * @param $object
+ * @param null $cmodels
+ * @param null $relationships
+ *
+ */
+function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
+
+  // Find the list of related islandora objects.
+  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+
+  $form_state['object'] = $object;
+  $form_state['related_objects'] = $related_objects;
+  if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
+  if(isset($relationships)) $form_state['relationships'] = $relationships;
+
+  // From our form there should be a list of specific operations that can be performed
+  // on the objects in the list.
+  $form['selected'] = array(
+    '#type' => 'select',
+    '#title' => 'Actions',
+    '#options' => array(
+      'delete' => t('Remove'),
+    ),
+    '#description' => t('Actions'),
+  );
+
+  // Submit button for form actions.
+  $form['submit'] =>  array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+  );
+
+  $header = array(
+    'id' => 'ID',
+    'title' => 'Title',
+  );
+
+  $options = array();
+
+  foreach($related_objects as $related_object) {
+    $options[$related_object->id] = array(
+      'id' => $related_object->id,
+      'title' => $related_object->title,
+    );
+  }
+
+  $form['table'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#empty' => t("There is no people related to this object."),
+  );
+
+  return $form;
+}
+
+function islandora_bioinformatics_base_forms($formid, $args) {
+  $forms['related_person_form'] = array(
+    'callback' => 'related_islandora_object_form',
+  );
+
+  return $forms;
+}
 
 
 
@@ -311,6 +433,7 @@ function islandora_bioinformatics_base_menu() {
   );
 }
 
+// LOADERS //
 /**
  * cmodel_load
  *
@@ -358,6 +481,7 @@ function rel_cmodel_load($cmodel_id_part, $object) {
   }
   return $cmodel;
 }
+// END LOADERS //
 
 
 function rel_lab_objects_list($object) {
@@ -371,40 +495,6 @@ function rel_lab_objects_list($object) {
     See the bottom of the following function for an example of how to do this alter
     calling https://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_prepare_form/7
    */
-
-}
-
-/**
- * Implements hook_rel_lab_objects_list.
- * @author Nolan Phillips ncphillips@upei.ca
- *
- * @param IslandoraFedoraObject | NULL
- */
-function islandora_bioinformatics_base_rel_lab_objects_list($object) {
-  // Dummy Node
-  $rel_objects = array(
-    array('id' => 1, 'title' => 'Test 1'),
-    array('id' => 2, 'title' => 'Test 2'),
-  );
-
-  $header = array(
-    'id' => t('ID'),
-    'title' => t('Title'),
-  );
-
-  $options = array();
-  foreach ($rel_objects as $rel_object) {
-    $options[$rel_object['id']] = array(
-      'title' => $rel_object['title'],
-    );
-  }
-
-}
-
-/**
- * Implements hook_rel_people_list.
- */
-function islandora_bioinformatics_base_rel_people_list($object) {
 
 }
 
@@ -460,7 +550,6 @@ function islandora_bioinformatics_base_project_cmodel_islandora_view_object(Abst
 /**
   * Implements hook_islandora_required_objects().
   */
-
 function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
   /*
    * @TODO Add datarel from Person to Project.
