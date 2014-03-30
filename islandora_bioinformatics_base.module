@@ -234,7 +234,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   );
 
   // Submit button for form actions.
-  $form['submit'] =>  array(
+  $form['submit'] =  array(
     '#type' => 'submit',
     '#value' => 'Submit',
   );
