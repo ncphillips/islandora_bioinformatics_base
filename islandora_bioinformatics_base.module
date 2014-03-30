@@ -697,15 +697,14 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream = $person_object->constructDatastream('MADS', 'X');
   $person_object->ingestDatastream($datastream);
   
-  echo '<pre>';
-  var_dump($datastream);
-  echo '</pre>';
-  
-  
   //build MADS datastream
   $datastream->label = 'MADS Record';
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromString($xml);
+    
+  echo '<pre>';
+  var_dump($datastream);
+  echo '</pre>';
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
