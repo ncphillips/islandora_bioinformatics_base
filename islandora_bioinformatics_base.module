@@ -708,8 +708,9 @@ function person_mads_to_array($person_object){
 
     switch ((string) $part->getName()){
       case "authority":
+        // I'm just going to rely on position for now. Which is pretty awful
         echo "<pre>";
-        var_dump($part->name->attributes);
+        var_dump($part->name[0]);
         echo "</pre>";
 
         break;
