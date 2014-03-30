@@ -38,12 +38,6 @@ function rel_lab_objects_form($form, &$form_state, $object, $rel_lab_objects) {
     $form_state['object'] = $object;
   }
 
-  // Add Lab Object Button
-  $form['add'] = array(
-    '#type' => 'button',
-    '#value' => t("Add Object"),
-  );
-
   // Possible actions in a dropdown menu.
   $form['selected'] = array(
     '#type' => 'select',
@@ -149,11 +143,27 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $form_state['object'] = $object;
   }
 
+  if (!isset($form_state['people'])) {
+    $form_state['people'] = $people;
+  }
+
+  // Possible actions in a dropdown menu.
+  $form['selected'] = array(
+    '#type' => 'select',
+    '#title' => 'Actions',
+    '#options' => array(
+      'delete' => t('Remove'),
+    ),
+    '#description' => t('Actions'),
+  );
+
   // Submit button for actions.
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
   );
+
+  //
 
   // Table of Related Lab Objects.
   $header = array(
@@ -173,6 +183,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $last = '';
     $email = '';
     $phone = '';
+    if(!isset($person['MADS']))break;
     $MADS_SXML = new SimpleXMLElement($person['MADS']->content);
     $MADS = $MADS_SXML->children($ns);
 
@@ -184,8 +195,8 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
         $last = $name_part;
     }
 
-    $phone = $MADS[content]->authority->affiliation->phone;
-    $email = $MADS[content]->authority->affiliation->email;
+    $phone = $MADS->authority->affiliation->phone;
+    $email = $MADS->authority->affiliation->email;
 
     $options[$person->id] = array(
       'first' => $first_name,
@@ -231,18 +242,6 @@ function TESTCB(){
     $module_name = "islandora_lab_object_$rel_cmodel";
   }
   return $render_array;
-}
-
-function related_lab_objects_forms($form_id, $args) {
-
-
-  // All content models that are lab_objects
-  $lab_object_cmodels = array('One', 'Two');
-  foreach($lab_object_cmodels as $lab_object_cmodel){
-    $form_name = 'rel_' . $lab_object_cmodel . '_lab_object_form';
-    $forms[$form_name]['callback'] = 'rel_lab_object_form';
-  }
-  return $forms;
 }
 
 /**
