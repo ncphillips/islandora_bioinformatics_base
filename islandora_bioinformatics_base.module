@@ -706,7 +706,7 @@ function person_mads_to_array($person_object){
   foreach ($person_xml->children($ns) as $part){
 
 
-    switch ((string) $part->getName){
+    switch ((string) $part->getName()){
       case "authority":
         echo "authority";
         break;
@@ -726,6 +726,7 @@ function person_mads_to_array($person_object){
         echo "foa";
         break;
       default:
+
         echo "other";
         //throw new Exception("Unexpected XML Field.");
         break;
