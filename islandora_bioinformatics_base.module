@@ -709,9 +709,10 @@ function person_mads_to_array($person_object){
     switch ((string) $part->getName()){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
-        echo "<pre>";
-        var_dump($part->name->namePart[0]);
-        echo "</pre>";
+
+        $person_mads["name"]["first"] = (gettype($part->name->namepart[0]) == "string") ? $part->name->namepart[0] : "" ;
+        $person_mads["name"]["last"] = (gettype($part->name->namepart[1]) == "string") ? $part->name->namepart[1] : "" ;
+        $person_mads["name"]["date"] = (gettype($part->name->namepart[2]) == "string") ? $part->name->namepart[2] : "" ;
 
         break;
       case "identifier":
@@ -734,6 +735,8 @@ function person_mads_to_array($person_object){
         throw new Exception("Unexpected XML Field.");
         break;
     }
+
+    var_dump($person_mads);
 
   }
 }
