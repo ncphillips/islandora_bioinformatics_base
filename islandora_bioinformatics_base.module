@@ -78,6 +78,8 @@ function rel_people_list($object) {
  * @param $form
  * @param $form_state
  * @return mixed
+ *
+ * @authoer Nolan Phillips ncphillips@upei.ca
  */
 function islandora_bioinformatics_base_related_people_form_alter($form, &$form_state) {
   $object = $form_state['object'];
@@ -153,6 +155,8 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  * are arrays of relationships in that namespace.
  *
  * @return IslandoraFedoraObject array $related_objects
+ *
+ * @authoer Nolan Phillips ncphillips@upei.ca
  */
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $related_objects = array();
@@ -206,6 +210,8 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
  * @param $object
  * @param null $cmodels
  * @param null $relationships
+ *
+ * @author Nolan Phillips ncphillips@upei.ca
  *
  */
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
@@ -265,6 +271,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
  * @param $formid
  * @param $args
  * @return mixed
+ *
+ * @author Nolan Phillips ncphillips@upei.ca
  */
 function islandora_bioinformatics_base_forms($formid, $args) {
   $forms['related_person_form'] = array(
@@ -335,8 +343,8 @@ function islandora_bioinformatics_base_menu() {
       'title' => 'People',
       'type' => MENU_LOCAL_TASK,
       'description' => 'People collaborating on this project.',
-      'page callback' => 'rel_people_list', //TODO: Write this callback.
-      'page arguments' => array(2),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('related_people_form', 2),
       'access callback' => 'islandora_object_access_callback',
       'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
       'file' => 'includes/manage_project.inc',
