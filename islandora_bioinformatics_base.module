@@ -185,10 +185,10 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $MADS_SXML = new SimpleXMLElement($person['MADS']->content);
     echo $MADS_SXML;
     $MADS = $MADS_SXML->children($ns);
-    echo $MADS;
+    echo "</br>MADS: $MADS";
 
     $name_parts = $MADS->authority->name->namepart;
-    echo $name_parts;
+    echo "</br>Name Parts: $name_parts";
     exit();
     foreach($name_parts as $name_part){
       if($name_part['type'] == 'given')
