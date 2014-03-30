@@ -666,30 +666,30 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_object->models = 'fedora-system:ContentModel-3.0';
   
   //build MADS xml from user information here
-  $xml = "<?xml version='1.0'?>
-            <mads:mads xmlns:mads='http://www.loc.gov/mads/v2' xmlns='http://www.loc.gov/mads/v2' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xlink='http://www.w3.org/1999/xlink'>
+  $xml = "<?xml version="1.0"?>
+            <mads:mads xmlns:mads=\"http://www.loc.gov/mads/v2\" xmlns=\"http://www.loc.gov/mads/v2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">
               <mads:authority>
-                <mads:name type='personal'>
-                  <mads:namePart type='given'></mads:namePart>
-                  <mads:namePart type='family'></mads:namePart>
-                  <mads:namePart type='date'/>
+                <mads:name type=\"personal\">
+                  <mads:namePart type=\"given\"></mads:namePart>
+                  <mads:namePart type=\"family\"></mads:namePart>
+                  <mads:namePart type=\"date\"/>
                 </mads:name>
                 <mads:titleInfo>
                   <mads:title>" . $account->name . "</mads:title>
                 </mads:titleInfo>
               </mads:authority>
-              <mads:identifier type='u1'>" . $account->name . "</mads:identifier>
+              <mads:identifier type=\"u1\">" . $account->name . "</mads:identifier>
               <mads:affiliation>
                 <mads:phone></mads:phone>
                 <mads:email>" . $account->mail . "</mads:email>
                 <mads:organization></mads:organization>
                 <mads:position></mads:position>
                 <mads:address></mads:address>
-                <mads:dateValid point='start'/>
-                <mads:dateValid point='end'/>
+                <mads:dateValid point=\"start\"/>
+                <mads:dateValid point=\"end\"/>
               </mads:affiliation>
               <mads:url></mads:url>
-              <mads:note type='history'/>
+              <mads:note type=\"history\"/>
               <mads:fieldOfActivity></mads:fieldOfActivity>
             </mads:mads>";    
   
