@@ -704,7 +704,28 @@ function person_mads_to_array($person_object){
 
 
   foreach ($person_xml->children($ns) as $part){
-    echo "<pre>";
-    var_dump($part->getName());
-    echo "</pre>";  }
+
+
+    switch ($part->getName){
+      case "authority":
+        echo "<pre>";
+        var_dump($part->authority->name);
+        echo "</pre>";
+        break;
+      case "identifier":
+        break;
+      case "affiliation":
+        break;
+      case "url":
+        break;
+      case "note":
+        break;
+      case "fieldOfActivity":
+        break;
+      default:
+        throw new Exception("Unexpected XML Field.");
+        break;
+    }
+
+  }
 }
