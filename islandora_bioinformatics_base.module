@@ -17,59 +17,69 @@ define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
+
 /**
- * Page Callback rel_people_list($object)
+ * Page Callback rel_lab_object_callback($object)
  *
  * @author Dalton Mackenzie <demackenzie@upei.ca>
  *
  * This page callback takes an object and determines
- * which people have a relationship with it
- * via a SPARQL query.
+ * which lab object content models have a relationship
+ * with its content model via SPARQL query.
  *
- * From here it should use drupal_get_form to generate
- * a form populated with the people related to the given
+ * From here it should use drupal_get_form once for each
+ * content model to generate a form populated with the lab 
+ * objects of the specified content model related to the given
  * object.
  *
- * This form will be stored as an element in a
+ * These forms will be stored as a elements in a
  * renderable array, which the function will then return.
  */
-function rel_people_list($object) {
-  // @TODO This function may be removed?
+function rel_lab_object_callback($object) {
+  
   $render_array = array();
 
-  $target_pid = $object->id; //Get the pid for the input object, we'll want to see if any people have an isPartOf relationship with this pid.
+  $target_pid = $object['models'][0]->id; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
 
   $tuque = new IslandoraTuque(); //Establish a tuque object
 
   //Construct a query which will find all pids adhering to the following two conditions:
-  //Condition 1: pid corresponds to an object that hasModel person_cmodel (ie. is a person object)
-  //Condition 2: pid corresponds to an object which isPartOf the input object. (the one with the target pid)
+  //Condition 1: pid corresponds to a content model that has a data relationship with $object
 
   $query = "SELECT ?pid
             FROM <#ri>
             WHERE {
-              ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
-              ?pid <fedora:isPartOf> <info:fedora/$target_pid> .
+              ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
+              ?pid <datarel_isPartOf> <info:fedora/$target_pid> .
             }"; 
 
-  $result = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+  $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
-  $people = array();
+  
+ 
+  foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,
+ 
+    //Parse the pid of the related content model to get the form id.
 
-  foreach ($result as $person) { //For each of the person objects returned by the query,
+    //The format will namespace:objectType_cmodel, so use the strtok function twice with ':' as the delimiter,
+    //and then once more with '_' to extract the object_type, which will be used to construct the form id.
 
-    //Load the current person object
-    $people[] = islandora_object_load($person["pid"]["values"]); //Add them to an array of people.
+    $first_part_of_pid = strtok($related_cmodel_pid, ':');
+    $related_cmodel = strtok($related_cmodel_pid, ':');
+    $object_type = strtok($related_cmodel, '_');
+
+    $form_id = 'related_' . $object_type . '_form'
+
+    //Add the form array to the render array.
+
+    $render_array[] = drupal_get_form($form_id, $object);
+
   }
 
-  //Drupal should invoke hook_forms() with the following line of code.
-
-  $render_array = drupal_get_form('rel_people_form', $object, $people); //Now get the form, passing it object and people.
 
   //Return the renderable array
   return $render_array;
 }
-
 
 /**
  * Implements hook_related_people_form_alter()
