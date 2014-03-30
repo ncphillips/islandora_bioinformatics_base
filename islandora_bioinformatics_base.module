@@ -68,7 +68,7 @@ function rel_lab_object_callback($object) {
     $related_cmodel = strtok($related_cmodel_pid, ':');
     $object_type = strtok($related_cmodel, '_');
 
-    $form_id = 'related_' . $object_type . '_form'
+    $form_id = 'related_' . $object_type . '_form';
 
     //Add the form array to the render array.
 
