@@ -718,11 +718,12 @@ function person_mads_to_array($person_object){
         // I don't want to do anything with this.
         break;
       case "affiliation":
-        echo $part->phone;
-        echo $part->email;
-        echo $part->organization;
-        echo $part->position;
-        echo $part->address;
+        $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
+        $person_mads['contact']['email'] = ($part->email) ? (string)$part->email : "";
+        $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
+        $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
+        $person_mads['contact']['address'] = ($part->address) ? (string)$part->address : "";
+
 
         break;
       case "url":
