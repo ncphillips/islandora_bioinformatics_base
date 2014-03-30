@@ -1,5 +1,7 @@
 <?php
 
+$person_obj = islandora_object_load("islandora:388");
+person_mads_to_array($person_obj);
 /**
   * @file
   * Hooks and callbacks for the module.
@@ -528,6 +530,7 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
   */
 function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+
   $output = theme('islandora_bioinformatics_base', array('object' => $person));
   return array(
     'islandora_person' => $output,
@@ -772,4 +775,61 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
+}
+
+/**
+ * @author Brent Mitton
+ * @param $person_object
+ * Takes in an islandora person object and returns a simple array of the MADS data
+ */
+function person_mads_to_array($person_object){
+  $ns = "http://www.loc.gov/mads/v2";
+
+  $person_mads = array();
+
+  $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
+
+  // parse the 'authority' section of mads.
+
+
+  foreach ($person_xml->children($ns) as $part){
+
+
+    switch ((string) $part->getName()){
+      case "authority":
+        // I'm just going to rely on position for now. Which is pretty awful
+        $person_mads["name"]["first"] = ($part->name->namePart[0]) ? (string)$part->name->namePart[0] : "" ;
+        $person_mads["name"]["last"] = ($part->name->namePart[1]) ? (string)$part->name->namePart[1] : "" ;
+        $person_mads["name"]["birthdate"] = ($part->name->namePart[2]) ? (string)$part->name->namePart[2] : "" ;
+        $person_mads["title"] = ($part->titleInfo->title) ? (string)$part->titleInfo->title : "";
+        break;
+      case "identifier":
+        // I dont know if this is even working
+        break;
+      case "affiliation":
+        $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
+        $person_mads['contact']['email'] = ($part->email) ? (string)$part->email : "";
+        $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
+        $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
+        $person_mads['contact']['address'] = ($part->address) ? (string)$part->address : "";
+        $person_mads['contact']['startDate'] = ($part->dateValid[0]) ? (string)$part->dateValid[0] : "";
+        $person_mads['contact']['endDate'] = ($part->dateValid[1]) ? (string)$part->dateValid[1] : "";
+
+        break;
+      case "url":
+        $person_mads['contact']['url'] = ($part) ? (string)$part : "";
+        break;
+      case "note":
+        // I want to figure out how we want to deal with this before I do it
+        break;
+      case "fieldOfActivity":
+        // What is this?
+        break;
+      default:
+        throw new Exception("Unexpected XML Field.");
+        break;
+    }
+  }
+
+  return $person_mads;
 }
