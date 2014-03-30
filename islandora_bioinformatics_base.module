@@ -515,7 +515,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $person_cm->ingestDatastream($datastream);
 
   // Create relationship with LabObject
-  $person_cm->relationships->add('', 'datarel_partOf', 'islandora:project_cmodel');
+  $person_cm->relationships->add('', 'datarel_isPartOf', 'islandora:project_cmodel');
 
   //---------Lab Object Content Model---------------------------------------------------------------------------------//
   $lab_object_cm = $connection->repository->constructObject('islandora:lab_object_cmodel');
