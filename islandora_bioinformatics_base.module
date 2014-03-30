@@ -225,7 +225,9 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
 
   // Find the list of related islandora objects.
-  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+//  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+  $object = islandora_object_load('islandora:524');
+  $related_objects[] = islandora_object_load('islandora:388');
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
@@ -525,7 +527,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $person_cm->ingestDatastream($datastream);
 
   // Create relationship with LabObject
-  $person_cm->relationships->add('', 'datarel_partOf', 'islandora:project_cmodel');
+  $person_cm->relationships->add('', 'datarel_isPartOf', 'islandora:project_cmodel');
 
   //---------Lab Object Content Model---------------------------------------------------------------------------------//
   $lab_object_cm = $connection->repository->constructObject('islandora:lab_object_cmodel');
@@ -672,10 +674,12 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque = new IslandoraTuque();
   
   //build person object
-  $person_object = $tuque->repository->constructObject('islandora:person_cmodel');
+
+  //////You're overwriting the Person Content Model, not making a new object of type content model.
+  $person_object = $tuque->repository->constructObject('islandora');
   $person_object->owner = 'fedoraAdmin';
-  $person_object->label = 'Person Content Model';   //replace with name for drupal object?
-  $person_object->models = 'fedora-system:ContentModel-3.0';
+  $person_object->label = $account->name;
+  $person_object->models = 'islandora:person_cmodel';
   
   //build MADS xml from user information here
   $xml = '<?xml version="1.0"?>
@@ -715,6 +719,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream->setContentFromString($xml);
     
   dpm($account);
+    
+  $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:person_collection');
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);

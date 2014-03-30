@@ -53,6 +53,8 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
       if (!empty($relationship)) {  //if relationship exists, add it to $default_values
         $default_values[$person_object->id] = $person_object->id;
       }
+      
+      var_dump($default_values);
 
       /*
       if($person_object->id == 'islandora:388') {
