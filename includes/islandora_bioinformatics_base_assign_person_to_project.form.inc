@@ -29,42 +29,43 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
           WHERE {
           ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
         }";
-    $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-    
-    //build the checkboxes form, with default values.
-    $people = array();
-    $default_values = array();  //determines which values are automatically selected
-    foreach ($result as $person) {
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  
+  //build the checkboxes form, with default values.
+  $people = array();
+  $default_values = array();  //determines which values are automatically selected
+  foreach ($result as $person) {
 
-    //load the current person object
-    $person_object = islandora_object_load($person["pid"]["value"]);
-    $people[$person_object->id] = $person_object->label;
+      //load the current person object
+      $person_object = islandora_object_load($person["pid"]["value"]);
+      $people[$person_object->id] = $person_object->label;
 
-    /*
-    if($person_object->id == 'islandora:388') {
-      $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
-    }
-    */
-    $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+      /*
+      if($person_object->id == 'islandora:388') {
+        $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
+      }
+      */
+      
+      $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
 
-    if (!empty($relationship)) {  //if relationship exists, add it to $default_values
-      $default_values[$person_object->id] = $person_object->id;
-    }
+      if (!empty($relationship)) {  //if relationship exists, add it to $default_values
+        $default_values[$person_object->id] = $person_object->id;
+      }
 
-    /*
-    if($person_object->id == 'islandora:388') {
-      $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
-    }
-    */
+      /*
+      if($person_object->id == 'islandora:388') {
+        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
+      }
+      */
 
-    }
+  }
 
   return array(
     'people' => array(
-    '#type' => 'checkboxes',
-    '#default_value' => $default_values,
-    '#options' => $people,
-    ),
+      '#type' => 'checkboxes',
+      '#default_value' => $default_values,
+      '#options' => $people,
+      ),
     );
   }
 
