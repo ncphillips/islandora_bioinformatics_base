@@ -182,6 +182,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $email = '';
     $phone = '';
     if(!isset($person['MADS']))break;
+    echo $person['MADS'];
     $MADS_SXML = new SimpleXMLElement($person['MADS']->content);
     echo $MADS_SXML;
     $MADS = $MADS_SXML->children($ns);
