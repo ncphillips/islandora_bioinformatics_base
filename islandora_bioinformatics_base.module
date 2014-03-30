@@ -187,10 +187,9 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $MADS = new SimpleXMLElement($MADS_DATA);
     $MADS->registerXPathNamespace('mads', 'http://www.loc.gov/mads/v2');
 
-    $ms = (string) $MADS;
-    echo "Helllooooo $ms";
+    echo $MADS;
 
-    $name_parts = (string) $MADS->authority;
+    $name_parts = $MADS->authority;
     echo "</br>Authority 1: $name_parts";
 
     $name_parts = (string) $MADS->authority->name;
