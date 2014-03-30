@@ -723,7 +723,7 @@ function person_mads_to_array($person_object){
       case "fieldOfActivity":
         break;
       default:
-        throw new Exception("Unexpected XML Field.");
+        //throw new Exception("Unexpected XML Field.");
         break;
     }
 
