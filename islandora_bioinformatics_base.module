@@ -1,7 +1,5 @@
 <?php
 
-$person_obj = islandora_object_load("islandora:388");
-person_mads_to_array($person_obj);
 /**
   * @file
   * Hooks and callbacks for the module.
