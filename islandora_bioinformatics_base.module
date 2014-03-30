@@ -743,6 +743,9 @@ function person_mads_to_array($person_object){
 
 
   }
-  var_dump($person_mads);
 
+  echo "<pre>";
+  var_dump($person_mads);
+  echo "</pre>";
+  return $person_mads;
 }
