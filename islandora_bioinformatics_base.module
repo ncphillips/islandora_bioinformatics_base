@@ -272,9 +272,15 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
  *
  * @author Nolan Phillips ncphillips@upei.ca
  */
-function islandora_bioinformatics_base_forms($formid, $args) {
+function islandora_bioinformatics_base_forms() {
   $forms['related_person_form'] = array(
     'callback' => 'related_islandora_object_form',
+    'callback arguments' => array(
+        'islandora:person_cmodel',
+        array(
+          FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),
+        ),
+    ),
   );
 
   return $forms;
