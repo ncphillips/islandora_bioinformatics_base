@@ -710,6 +710,16 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //$ingested_object = islandora_add_object($person_object);
 }
 
+
+/**
+* @author Quintin Dawson
+* When a Drupal user is modified
+*
+*/
+function islandora_bioinformatics_base__user_update(&$edit, $account, $category) {
+
+}
+
 /**
  * @author Brent Mitton
  * @param $person_object
