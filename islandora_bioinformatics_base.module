@@ -138,8 +138,8 @@ function rel_people_list($object) {
 }
 
 function rel_people_form($form_id, &$form_state, $object, $people) {
-
-  $people = [islandora_object_load('islandora:388')];
+  $people = array();
+  $people[] = islandora_object_load('islandora:388');
 
   if(!isset($form_state['object'])){
     $form_state['object'] = $object;
