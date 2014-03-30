@@ -183,9 +183,12 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     $phone = '';
     if(!isset($person['MADS']))break;
     $MADS_SXML = new SimpleXMLElement($person['MADS']->content);
+    echo $MADS_SXML;
     $MADS = $MADS_SXML->children($ns);
+    echo $MADS;
 
     $name_parts = $MADS->authority->name->namepart;
+    echo $name_part;
     foreach($name_parts as $name_part){
       if($name_part['type'] == 'given')
         $first = $name_part;
