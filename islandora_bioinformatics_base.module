@@ -669,7 +669,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_object = $tuque->repository->constructObject('islandora');
   $person_object->owner = 'fedoraAdmin';
   $person_object->label = 'Person Content Model';   //replace with name for drupal object?
-  $person_object->models = 'fedora-system:ContentModel-3.0';
+  //$person_object->models = 'fedora-system:ContentModel-3.0';
+  $person_object->models = 'islandora:person_cmodel';
   
   //build MADS xml from user information here
   $xml = '<?xml version="1.0"?>
