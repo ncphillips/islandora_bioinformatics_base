@@ -653,7 +653,8 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 }
 
 /**
-*
+* @author Quintin Dawson
+* When a new drupal user is created, this function will create a corresponding Person object in Fedora.
 *
 */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {  
@@ -702,9 +703,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromString($xml);
     
-  echo '<pre>';
-  var_dump($datastream);
-  echo '</pre>';
+  dpm($account);
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
