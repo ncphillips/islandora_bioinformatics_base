@@ -10,6 +10,8 @@
      */
     function islandora_project_people(AbstractObject $object) {
 
+        var_dump($object);
+        
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
