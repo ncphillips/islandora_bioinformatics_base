@@ -20,74 +20,7 @@ define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
 /**
- * @param $form
- * @param $form_state
- * @param IslandoraFedoraObject $object
- * The object whose relationships we're showing.
- * @param array $rel_lab_objects
- * An array of lab_objects related to the Object.
- *
- * @return array
- *
- * This is the Base Related Lab Object Form.
- *
- * It accepts an array of lab objects
- */
-
-function rel_lab_objects_form($form, &$form_state, $object, $rel_lab_objects) {
-
-  if(!isset($form_state['object'])){
-    $form_state['object'] = $object;
-  }
-
-  // Possible actions in a dropdown menu.
-  $form['selected'] = array(
-    '#type' => 'select',
-    '#title' => 'Actions',
-    '#options' => array(
-      'delete' => t('Delete'),
-    ),
-    '#description' => t('Actions'),
-  );
-
-  // Submit button for actions.
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-  );
-
-  // Table of Related Lab Objects.
-  $header = array(
-    'title' => t('Title'),
-  );
-
-  $options = array(
-    '1' => array('title'=> "$rel_cmodel 1"),
-    '2' => array('title'=> "$rel_cmodel 2"),
-  );
-
-  $form['table'] = array(
-    '#type' => 'tableselect',
-    '#header' => $header,
-    '#options' => $options,
-    '#empty' => t("There is no related content of type $rel_cmodel."),
-  );
-
-  return $form;
-}
-
-function rel_lab_objects_form_submit(array $form, array &$form_state) {
-  echo t("<h1>Clicked Button: " . $form_state['clicked_button']['#value'] . "</h1>");
-  echo '<pre>';
-  var_dump($form_state['values']);
-  echo'</pre>';
-  exit();
-
-}
-
-/**
- * Page Callback
- * rel_people_list($object)
+ * Page Callback rel_people_list($object)
  *
  * @author Dalton Mackenzie <demackenzie@upei.ca>
  *
@@ -102,7 +35,6 @@ function rel_lab_objects_form_submit(array $form, array &$form_state) {
  * This form will be stored as an element in a
  * renderable array, which the function will then return.
  */
-
 function rel_people_list($object) {
   // @TODO This function may be removed?
   $render_array = array();
@@ -140,6 +72,13 @@ function rel_people_list($object) {
   return $render_array;
 }
 
+
+/**
+ * Implements hook_related_people_form_alter()
+ * @param $form
+ * @param $form_state
+ * @return mixed
+ */
 function islandora_bioinformatics_base_related_people_form_alter($form, &$form_state) {
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
@@ -253,7 +192,6 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   return $related_objects;
 }
-
 
 
 /**
