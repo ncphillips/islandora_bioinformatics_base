@@ -708,21 +708,25 @@ function person_mads_to_array($person_object){
 
     switch ($part->getName){
       case "authority":
-        echo "<pre>";
-        var_dump($part->authority->name);
-        echo "</pre>";
+        echo "authority";
         break;
       case "identifier":
+        echo "ident";
         break;
       case "affiliation":
+        echo "affil";
         break;
       case "url":
+        echo "url";
         break;
       case "note":
+        echo "note";
         break;
       case "fieldOfActivity":
+        echo "foa";
         break;
       default:
+        echo "other";
         //throw new Exception("Unexpected XML Field.");
         break;
     }
