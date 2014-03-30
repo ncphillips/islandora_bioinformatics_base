@@ -668,8 +668,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //////You're overwriting the Person Content Model, not making a new object of type content model.
   $person_object = $tuque->repository->constructObject('islandora');
   $person_object->owner = 'fedoraAdmin';
-  $person_object->label = 'Person Content Model';   //replace with name for drupal object?
-  //$person_object->models = 'fedora-system:ContentModel-3.0';
+  $person_object->label = $account->name;
   $person_object->models = 'islandora:person_cmodel';
   
   //build MADS xml from user information here
