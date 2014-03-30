@@ -705,7 +705,7 @@ function person_mads_to_array($person_object){
   var_dump($person_xml->authority);
   echo "</pre>";
 
-  foreach ($person_xml->authority->name as $namepart){
-    echo "HI $namepart";
+  foreach ($person_xml->authority->children($ns) as $part){
+    echo "HI $part";
   }
 }
