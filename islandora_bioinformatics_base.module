@@ -709,17 +709,21 @@ function person_mads_to_array($person_object){
     switch ((string) $part->getName()){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
-
         $person_mads["name"]["first"] = ($part->name->namePart[0]) ? (string)$part->name->namePart[0] : "" ;
         $person_mads["name"]["last"] = ($part->name->namePart[1]) ? (string)$part->name->namePart[1] : "" ;
         $person_mads["name"]["date"] = ($part->name->namePart[2]) ? (string)$part->name->namePart[2] : "" ;
-
+        $person_mads["title"] = ($part->titleInfo->title) ? (string)$part->titleInfo->title : "";
         break;
       case "identifier":
-        echo "ident";
+        // I don't want to do anything with this.
         break;
       case "affiliation":
-        echo "affil";
+        echo $part->phone;
+        echo $part->email;
+        echo $part->organization;
+        echo $part->position;
+        echo $part->address;
+
         break;
       case "url":
         echo "url";
@@ -736,7 +740,8 @@ function person_mads_to_array($person_object){
         break;
     }
 
-    var_dump($person_mads);
 
   }
+  var_dump($person_mads);
+
 }
