@@ -184,8 +184,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     if(!isset($person['MADS']))break;
     echo 'FULL DATASTREAM </br></br>' . $person['MADS']->content . '</br></br>END FULL DATASTREAM';
     $MADS_DATA = $person['MADS']->content;
-    $MADS_SXML = new SimpleXMLElement($MADS_DATA);
-    $MADS = $MADS_SXML->children($ns);
+    $MADS = new SimpleXMLElement($MADS_DATA);
 
     echo (string) $MADS;
 
