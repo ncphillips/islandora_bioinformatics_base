@@ -139,6 +139,8 @@ function rel_people_list($object) {
 
 function rel_people_form($form_id, &$form_state, $object, $people) {
 
+  $people = [islandora_object_load('islandora:388')];
+
   if(!isset($form_state['object'])){
     $form_state['object'] = $object;
   }
@@ -155,15 +157,11 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
       'delete' => t('Remove'),
     ),
     '#description' => t('Actions'),
+    'submit' =>  array(
+      '#type' => 'submit',
+      '#value' => 'Submit',
+    ),
   );
-
-  // Submit button for actions.
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Submit',
-  );
-
-  //
 
   // Table of Related Lab Objects.
   $header = array(
