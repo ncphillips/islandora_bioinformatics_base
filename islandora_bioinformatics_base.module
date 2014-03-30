@@ -666,7 +666,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_object->models = 'fedora-system:ContentModel-3.0';
   
   //build MADS xml from user information here
-  $xml = '<?xml version="1.0"?>
+  $xml = t('<?xml version="1.0"?>
             <mads:mads xmlns:mads="http://www.loc.gov/mads/v2" xmlns="http://www.loc.gov/mads/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink">
               <mads:authority>
                 <mads:name type="personal">
@@ -691,7 +691,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
               <mads:url></mads:url>
               <mads:note type="history"/>
               <mads:fieldOfActivity></mads:fieldOfActivity>
-            </mads:mads>';    
+            </mads:mads>');    
   
   echo $xml;
   
