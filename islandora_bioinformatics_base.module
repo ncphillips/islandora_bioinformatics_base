@@ -709,8 +709,9 @@ function person_mads_to_array($person_object){
     switch ((string) $part->getName()){
       case "authority":
         echo "<pre>";
-        var_dump($part->name);
+        var_dump($part->name->attributes);
         echo "</pre>";
+
         break;
       case "identifier":
         echo "ident";
