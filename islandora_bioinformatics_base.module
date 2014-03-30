@@ -212,7 +212,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
 function TESTCB(){
 
   $object = islandora_object_load('islandora:525');
-  $people[] = islandora_object_load('islandora:388');
+  $people = islandora_object_load('islandora:388');
 
   echo "FUCK".$people["MADS"]->content;
   echo "FUCK ALL".$object;
