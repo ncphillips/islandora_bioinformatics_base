@@ -215,7 +215,9 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
 
   // Find the list of related islandora objects.
-  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+//  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+  $object = islandora_object_load('islandora:524');
+  $related_objects[] = islandora_object_load('islandora:388');
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
@@ -662,6 +664,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque = new IslandoraTuque();
   
   //build person object
+
+  //////You're overwriting the Person Content Model, not making a new object of type content model.
   $person_object = $tuque->repository->constructObject('islandora:person_cmodel');
   $person_object->owner = 'fedoraAdmin';
   $person_object->label = 'Person Content Model';   //replace with name for drupal object?
