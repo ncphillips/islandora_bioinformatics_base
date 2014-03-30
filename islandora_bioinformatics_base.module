@@ -396,18 +396,6 @@ function islandora_bioinformatics_base_rel_lab_objects_list($object) {
 
 }
 
-
-function rel_people_list($object) {
-  /** @TODO
-    invoke hook_rel_people_list
-    invoke drupal_alter on hook_rel_people_list_alter
-   */
-   module_load_include("inc", "islandora_bioinformatics_base", "manage_project");
-   $project_people_function = "islandora_project_people";
-   return $project_people_function($object);
-   
-}
-
 /**
  * Implements hook_rel_people_list.
  */
