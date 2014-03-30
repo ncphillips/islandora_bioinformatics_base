@@ -21,7 +21,9 @@
 function islandora_bioinformatics_base_assign_person_to_project_form(array $form, array &$form_state) {
   $tuque = new IslandoraTuque();
   
-  $project_object = $form_state['islandora']['objects'][0];
+  $project_object = $form_state['islandora']['objects'][0]; //this is NULL
+  
+  //var_dump($project_object);
 
   //query fedora to retrieve a list of all person objects
   $query = "SELECT ?pid
