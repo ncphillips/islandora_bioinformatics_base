@@ -1,5 +1,7 @@
 <?php
 
+$person_obj = islandora_object_load("islandora:388");
+person_mads_to_array($person_obj);
 /**
   * @file
   * Hooks and callbacks for the module.
@@ -438,8 +440,7 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
   */
 function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
-  $person_obj = islandora_object_load("islandora:388");
-  person_mads_to_array($person_obj);
+
   $output = theme('islandora_bioinformatics_base', array('object' => $person));
   return array(
     'islandora_person' => $output,
@@ -694,5 +695,4 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
  */
 function person_mads_to_array($person_object){
   echo $person_object["MADS"]->content;
-  exit(0);
 }
