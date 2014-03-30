@@ -185,6 +185,7 @@ function rel_people_form($form_id, &$form_state, $object, $people) {
     echo 'FULL DATASTREAM </br></br>' . $person['MADS']->content . '</br></br>END FULL DATASTREAM';
     $MADS_DATA = $person['MADS']->content;
     $MADS = new SimpleXMLElement($MADS_DATA);
+    $MADS->registerXPathNamespace('mads', 'http://www.loc.gov/mads/v2');
 
     echo (string) $MADS;
 
