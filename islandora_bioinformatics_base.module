@@ -123,7 +123,7 @@ function callback_rel_lab_object_ingest($object, $cmodel) {
  *
  * @author Nolan Phillips ncphillips@upei.ca
  */
-function islandora_bioinformatics_base_form_related_people_form_alter($form, &$form_state) {
+function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$form_state) {
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
 
