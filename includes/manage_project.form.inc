@@ -80,6 +80,8 @@
             ),
         );
         
+        var_dump($render);
+        
         return $render;
     }
     
