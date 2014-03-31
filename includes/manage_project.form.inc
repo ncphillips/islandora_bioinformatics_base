@@ -66,23 +66,24 @@
             }
         }
         
-        $render = array(
+        $form = array(
             //list of people
             'people' => array(
                 '#type' => 'checkboxes',
                 '#default_value' => $related_people,
                 '#options' => $people,
             ),
-            //submit button
-            'submit' =  array(
-                '#type' => 'submit',
-                '#value' => 'Submit',
-            ),
         );
         
-        var_dump($render);
+        //submit button
+        $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Submit',
+        );
         
-        return $render;
+    //    var_dump($render);
+        
+        return $form;
     }
     
     function islandora_project_people_add_submit(array $form, array &$form_state, AbstractObject $object) {
