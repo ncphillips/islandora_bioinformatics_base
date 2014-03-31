@@ -195,7 +195,6 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  * @return IslandoraFedoraObject array $related_objects
  *
  * @author Nolan Phillips ncphillips@upei.ca
- * @author Brent Mitton
  */
 function related_islandora_objects(){//$object, $cmodels=null, $relationships=null){
   // Test Data
@@ -249,6 +248,9 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   foreach($result as $related_object) {
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
   }
+
+  foreach($related_objects as $o) echo $o;
+
 
   return $related_objects;
 }
