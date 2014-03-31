@@ -333,6 +333,9 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   // From our form there should be a list of specific operations that can be performed
   // on the objects in the list.
+  $form['banana'] = array(
+    '#markup' => '<h1>OH MY GOD</h1>',
+  );
   $form['selected'] = array(
     '#type' => 'select',
     '#title' => 'Actions',
