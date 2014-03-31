@@ -185,8 +185,6 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
 /**
  * related_islandora_objects
  *
- * This function finds al
- *
  * @param IslandoraFedoraObject $object
  * @param string array | null $cmodels
  * An array of strings representing fedora IDs of Content Models.
@@ -196,38 +194,51 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  *
  * @return IslandoraFedoraObject array $related_objects
  *
- * @authoer Nolan Phillips ncphillips@upei.ca
+ * @author Nolan Phillips ncphillips@upei.ca
+ * @author Brent Mitton
  */
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
+  // Test Data
   $object = islandora_object_load('islandora:524');
   $cmodels = array('islandora:person_cmodel');
-  echo "Cmodels: ";
-  var_dump($cmodels);
-  $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
-  echo "</br>Rels: ";
-  var_dump($relationships);
+  $relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
+  // Start
   $obj_id = $object->id;
-  echo "</br>Obj: $obj_id";
 
-  $cmodel_clauses = array();
-  foreach($cmodels as $cmodel){
-    $cmodel_clauses[] = "{?pid <fedora-model:hasModel> <info:fedora/islandora:$cmodel>}";
-  }
-  $cmodel_clause = implode(' UNION ', $cmodel_clauses);
+  // Create an array of tripple queries.
+  $cmodel_queries = array();
+  foreach($cmodels as $cmodel)
+    $cmodel_queries[] = "{?pid <fedora-model:hasModel> <info:fedora/$cmodel>}";
 
-  $rel_clauses = array();
+  // Union all the tripple queries.
+  $cmodel_query = implode(' UNION ', $cmodel_queries);
+
+
+  // Construct the set of prefices
+  $prefix = 'a';
+  $pre = array(); // An associative array of namespace => prefix.
+  $pre_defs = array(); // An array of PREFIX definitions
   foreach($relationships as $ns => $rel){
-    $nsrel = $ns.':'.$rel;
-    $rel_clauses[] = "{?pid $nsrel $obj_id}";
+    $pre[$ns] = $prefix.':';
+    $pre_defs[] = 'PREFIX' . $prefix++ . ": <$ns>";
+  }
+  $pre_def = implode(' ', $pre_defs);
+
+  foreach($relationships as $ns => $rels){
+    foreach($rels as $rel){
+      $nsrel = $pre[$ns].$rel;
+      $rel_clauses[] = "{?pid $nsrel $obj_id}";
+    }
   }
   $rel_clause = implode(' UNION ', $rel_clauses);
 
   $query = "
+    $pre_def
     SELECT *
     FROM <#ri>
     WHERE {
-        { $cmodel_clause }
+        { $cmodel_query}
         { $rel_clause }
     }
   ";
