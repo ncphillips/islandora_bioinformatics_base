@@ -67,10 +67,16 @@
         }
         
         $render = array(
+            //list of people
             'people' => array(
-            '#type' => 'checkboxes',
-            '#default_value' => $related_people,
-            '#options' => $people,
+                '#type' => 'checkboxes',
+                '#default_value' => $related_people,
+                '#options' => $people,
+            ),
+            //submit button
+            'submit' =  array(
+                '#type' => 'submit',
+                '#value' => 'Submit',
             ),
         );
         
