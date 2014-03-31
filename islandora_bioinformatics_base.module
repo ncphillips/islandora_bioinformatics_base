@@ -818,7 +818,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 */
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
   //retrieve Person object related to the Drupal user
-  tuque = new IslandoraTuque();
+  $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
   $query = "SELECT ?pid
           FROM <#ri>
