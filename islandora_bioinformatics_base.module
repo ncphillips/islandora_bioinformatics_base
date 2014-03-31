@@ -201,9 +201,12 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $object = islandora_object_load('islandora:524');
   $cmodels = array('islandora:person_cmodel');
+  echo "Cmodels: $cmodels";
   $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
+  echo "Rels: $relationships";
 
   $obj_id = $object->id;
+  echo "Obj: $obj_id";
 
   $cmodel_clauses = array();
   foreach($cmodels as $cmodel){
@@ -216,6 +219,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $nsrel = $ns.':'.$rel;
     $rel_clauses[] = "{?pid $nsrel $obj_id}";
   }
+  $rel_clause = implode(' UNION ', $rel_clauses);
 
   $query = "
     SELECT *
@@ -226,7 +230,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     }
   ";
 
-  echo $query;
+  echo "Query: $query";
   exit();
 
   $tuque = new IslandoraTuque();
