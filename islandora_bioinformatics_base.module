@@ -129,8 +129,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
   // Table of Related Lab Objects.
   $header = array(
-    'first' => t('First Name'),
-    'last' => t('Last Name'),
+    'name' => t('Name'),
     'phone' => t('Phone Number'),
     'email' => t('Email'),
   );
@@ -146,7 +145,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
     $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
     $options[$person->id] = array(
-      'Name' => $name,
+      'name' => $name,
       'phone' => $person_mads['contact']['phone'],
       'email' => $person_mads['contact']['email'],
     );
