@@ -238,7 +238,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
       $cmodel_queries[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
 
     // Union all the cmodel tripple queries.
-    $cmodel_query = implode(' UNION ', $cmodel_queries);
+    $cmodel_query = '{'.implode(' UNION ', $cmodel_queries).'}';
   }
 
   // Construct the set of prefix definitions.
@@ -266,7 +266,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
       }
     }
     // Union all the relationship tripple queries.
-    $rel_clause = implode(' UNION ', $rel_clauses);
+    $rel_clause = '{'.implode(' UNION ', $rel_clauses).'}';
   }
   else {
     $rel_clause = "{?pid ?any_rel <info:fedora/$obj_id>}";
@@ -277,8 +277,8 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     SELECT *
     FROM <#ri>
     WHERE {
-        { $cmodel_query}
-        { $rel_clause }
+        $cmodel_query
+        $rel_clause
     }
   ";
 
