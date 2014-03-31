@@ -206,7 +206,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   foreach($cmodels as $cmodel){
   }
-}
+
 
   $tuque = new IslandoraTuque();
 
