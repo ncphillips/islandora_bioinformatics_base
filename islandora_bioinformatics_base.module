@@ -161,9 +161,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
     );
   }
 
-  $form['table'] = array();
   // Set up the table.
-  $form['table'] = array(
+  $form['table3'] = array(
     '#type' => 'tableselect',
     '#header' => $header,
     '#options' => $options,
@@ -184,6 +183,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
  * are arrays of relationships in that namespace.
  *
  * @return IslandoraFedoraObject array $related_objects
+ * An array of IslandoraFedoraObjects that are related to the $object.
  *
  * @author Nolan Phillips ncphillips@upei.ca
  *
@@ -219,50 +219,62 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
 
+  $obj_id = $object->id;  // The Fedora PID of $object.
+  $cmodel_query = '';  // A union of CModel tripples.
 
-  // Start Function.
-  $obj_id = $object->id;
+  $pre = array();  // An associative array of namespace => prefix.
+  $pre_defs = array();  // An array of prefix definitions.
 
-  // Create an array of cmodel tripple queries.
-  $cmodel_query = '';
+  // Default values for $pre and $pre_defs
+  $pre[FEDORA_MODEL_URI] = 'fedora-model:';
+
+  // Besides 'fedora-model', the first prefix being used is 'a'.
+  $prefix = 'a';$pre_defs[] = 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>';
+
+  /**
+   * If any cmodels were passed in, then we accept an object if any of it's
+   * cmodels is in the list of cmodels.
+   *
+   * else, if no cmodel was passed in, then any kind of object, regardless of cmodel,
+   * will be accepted by the query.
+   */
   if ($cmodels){
-    $cmodel_queries = array();
+    $cmodel_tripples= array();
     foreach($cmodels as $cmodel)
-      $cmodel_queries[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
-
+      $cmodel_tripples[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
     // Union all the cmodel tripple queries.
-    $cmodel_query = '{'.implode(' UNION ', $cmodel_queries).'}';
+    $cmodel_query = '{'.implode(' UNION ', $cmodel_tripples).'}';
   }
 
   // Construct the set of prefix definitions.
-  // An associative array of namespace => prefix.
-  $pre = array('info:fedora/fedora-system:def/relations-external#' => 'fedora-model:');
-
-  // An array of PREFIX definitions
-  $pre_defs = array('PREFIX fedora-model: <info:fedora/fedora-system:def/model#>');
-
-  // Besides 'fedora-model', the first prefix being used is 'a'.
-  $prefix = 'a';
+  /**
+   * If a list of relationships is defined, then we accept an object if
+   * it has one of the defined relationships to the $object.
+   *
+   * else, if no relationships are defined, then we accept objects no matter
+   * what kind of relationship it has with the $object.
+   */
   if($relationships){
+    // Define PREFIX statements
     foreach($relationships as $ns => $rel){
       $pre[$ns] = $prefix.':';
       $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
     }
     $pre_def = implode(' ', $pre_defs);
 
-    // Create the relationship queries.
+    // Define relationship tripples
     foreach($relationships as $ns => $rels){
       foreach($rels as $rel){
         $nsrel = $pre[$ns] . $rel;
-        $rel_clauses[] = "{?pid $nsrel <info:fedora/$obj_id>}";
+        $rel_tripples[] = "{?pid $nsrel <info:fedora/$obj_id>}";
       }
     }
-    // Union all the relationship tripple queries.
-    $rel_clause = '{'.implode(' UNION ', $rel_clauses).'}';
+    // Union all the relationship tripples
+    $rel_query = '{'.implode(' UNION ', $rel_tripples).'}';
   }
   else {
     $pre_def = $pre_defs[0];
-    $rel_clause = "{?pid ?any_rel <info:fedora/$obj_id>}";
+    $rel_query = "{?pid ?any_rel <info:fedora/$obj_id>}";
   }
 
   $query = "
@@ -271,12 +283,14 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     FROM <#ri>
     WHERE {
         $cmodel_query
-        $rel_clause
+        $rel_query
     }
   ";
 
-  file_put_contents('/tmp/sparqlquery.txt', $query);
+  // For testing porpoises.
+  //file_put_contents('/tmp/sparqlquery.txt', $query);
 
+  // Run the query.
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
 
