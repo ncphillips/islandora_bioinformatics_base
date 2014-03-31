@@ -255,7 +255,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
   }
 
-  foreach($related_objects as $o) echo $o->id;
+  foreach($related_objects as $o) echo $o;
   exit();
 
 
