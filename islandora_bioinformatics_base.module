@@ -338,7 +338,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $header = array(
     'id' => 'ID',
-    'title' => 'Title',
   );
 
   $options = array();
@@ -346,7 +345,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   foreach($related_objects as $related_object) {
     $options[$related_object->id] = array(
       'id' => $related_object->id,
-      'title' => $related_object->title,
     );
   }
 
