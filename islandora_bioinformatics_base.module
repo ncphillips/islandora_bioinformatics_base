@@ -245,6 +245,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
 
+  var_dump($result);
   file_put_contents('/tmp/sparqlresults.txt', $result);
   file_put_contents('/tmp/sparqlquery.txt', $query);
 
