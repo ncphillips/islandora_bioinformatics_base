@@ -202,7 +202,6 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   $object = islandora_object_load('islandora:524');
   $cmodels = array('islandora:person_cmodel');
   $relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
-  echo FEDORA_RELS_EXT_URI;
 
   // Start
   $obj_id = $object->id;
@@ -244,18 +243,8 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     }
   ";
 
-  file_put_contents('/tmp/sparqlquery.txt', $query);
-
-
-  //echo "<pre> $query </pre>";
-  //exit();
   $tuque = new IslandoraTuque();
-
   $result = $tuque->repository->ri->sparqlQuery($query);
-
-  echo $result;
-  exit();
-
   $related_objects = array();
   foreach($result as $related_object) {
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
