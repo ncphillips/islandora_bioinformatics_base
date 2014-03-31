@@ -127,6 +127,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
 
+  echo $object->id;
+
   // Table of Related Lab Objects.
   $header = array(
     'first' => t('First Name'),
