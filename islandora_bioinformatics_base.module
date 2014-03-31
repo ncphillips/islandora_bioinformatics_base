@@ -82,8 +82,6 @@ function callback_rel_lab_object($object) {
     $render_array/*[]*/ = drupal_get_form($form_id, $object);
 
   }
-
-
   //Return the renderable array
   return $render_array;
 }
@@ -100,7 +98,6 @@ function callback_rel_lab_object($object) {
  * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
  *
  */
-
 function callback_rel_lab_object_ingest($object, $cmodel) {
 
   //Get the pid of the content model
