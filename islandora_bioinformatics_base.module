@@ -16,6 +16,7 @@ define('ISLANDORA_VIEW_DATASTREAM_HISTORY', 'view old datastream versions');
 define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
+define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
 
 /**
