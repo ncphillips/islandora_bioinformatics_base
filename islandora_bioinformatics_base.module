@@ -269,12 +269,13 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     $rel_clause = '{'.implode(' UNION ', $rel_clauses).'}';
   }
   else {
+    $pre_def = $pre_defs[0];
     $rel_clause = "{?pid ?any_rel <info:fedora/$obj_id>}";
   }
 
   $query = "
     $pre_def
-    SELECT *
+    SELECT ?pid
     FROM <#ri>
     WHERE {
         $cmodel_query
