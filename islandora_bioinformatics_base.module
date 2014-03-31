@@ -199,14 +199,33 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  * @authoer Nolan Phillips ncphillips@upei.ca
  */
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
-  $related_objects = array();
+  $object = islandora_object_load('islandora:524');
+  $cmodels = array('islandora:person_cmodel');
+  $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
 
   $obj_id = $object->id;
 
-
   foreach($cmodels as $cmodel){
+    $cmodel_clauses[] = "{?pid <fedora-model:hasModel> <info:fedora/islandora:$cmodel>}";
   }
-}
+  $cmodel_clause = implode(' UNION ', $cmodel_clauses);
+
+  foreach($relationships as $ns => $rel){
+    $nsrel = $ns.':'$rel;
+    $rel_clauses[] = "{?pid $nsrel $obj_id}";
+  }
+
+  $query = "
+    SELECT *
+    FROM <#ri>
+    WHERE {
+        { $cmodel_clause }
+        { $rel_clause }
+    }
+  ";
+
+  echo $query;
+  exit();
 
   $tuque = new IslandoraTuque();
 
@@ -342,6 +361,13 @@ function islandora_bioinformatics_base_menu() {
       'title' => 'TEST',
       'type' => MENU_CALLBACK,
       'page callback' => 'TESTCB',
+      'access callback' => TRUE,
+    ),
+    'sparqltest' => array(
+      'title' => 'related_islandora_objects',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'related_islandora_objects',
+
       'access callback' => TRUE,
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
