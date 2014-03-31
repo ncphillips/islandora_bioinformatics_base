@@ -250,6 +250,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   }
 
   foreach($related_objects as $o) echo $o->id;
+  exit();
 
 
   return $related_objects;
