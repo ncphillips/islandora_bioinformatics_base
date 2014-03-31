@@ -199,37 +199,47 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  * @authoer Nolan Phillips ncphillips@upei.ca
  */
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
-  $related_objects = array();
+  $object = islandora_object_load('islandora:524');
+  $cmodels = array('islandora:person_cmodel');
+  echo "Cmodels: ";
+  var_dump($cmodels);
+  $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
+  echo "</br>Rels: ";
+  var_dump($relationships);
 
   $obj_id = $object->id;
-  $cmodel_clause = '';
-  $rel_clause = '';
+  echo "</br>Obj: $obj_id";
 
-
-  // THIS IS NOT CORRECT
-  // All of these must be OR'd together.
-  foreach($cmodels as $cmodel)
-    $cmodel_clause = "$cmodel_clause ?pid <fedora-model:hasModel> <info:fedora/$cmodel> .";
-
-  // Should be any of these relationships
-  foreach($relationships as $ns => $rels) {
-    foreach($rels as $rel){
-      $nsrel = $ns.':'.$rel;
-      $rel_clause = "$rel_clause  ?pid <$nsrel> <info:fedora/$obj_id> .";
-    }
+  $cmodel_clauses = array();
+  foreach($cmodels as $cmodel){
+    $cmodel_clauses[] = "{?pid <fedora-model:hasModel> <info:fedora/islandora:$cmodel>}";
   }
+  $cmodel_clause = implode(' UNION ', $cmodel_clauses);
 
-  $query = "SELECT ?pid
-            FROM <#ri>
-            WHERE {
-              $cmodel_clause
-              $rel_clause
-            }";
+  $rel_clauses = array();
+  foreach($relationships as $ns => $rel){
+    $nsrel = $ns.':'.$rel;
+    $rel_clauses[] = "{?pid $nsrel $obj_id}";
+  }
+  $rel_clause = implode(' UNION ', $rel_clauses);
+
+  $query = "
+    SELECT *
+    FROM <#ri>
+    WHERE {
+        { $cmodel_clause }
+        { $rel_clause }
+    }
+  ";
+
+  echo "Query: $query";
+  exit();
 
   $tuque = new IslandoraTuque();
 
   $result = $tuque->repository->ri->query($query);
 
+  $related_objects = array();
   foreach($result as $related_object) {
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
   }
@@ -362,6 +372,13 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'TESTCB',
       'access callback' => TRUE,
     ),
+    'sparqltest' => array(
+      'title' => 'related_islandora_objects',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'related_islandora_objects',
+
+      'access callback' => TRUE,
+    ),
     'islandora/object/%islandora_object/lab_objects/' => array(
       /*
        * Lists all lab_objects associated with the %islandora_object.
@@ -390,7 +407,7 @@ function islandora_bioinformatics_base_menu() {
       'page arguments' => array('related_people_form', 2),
       'access callback' => 'islandora_object_access_callback',
       'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
-      'file' => 'includes/manage_project.inc',
+      'file' => 'includes/manage_project.form.inc',
     ),
 
     'islandora/object/%islandora_object/people/add' => array(
@@ -400,19 +417,17 @@ function islandora_bioinformatics_base_menu() {
       'title callback' => 'add_person_title',
       'title arguments' => array(2),
       'description' => 'Adds a person to a project',
-     // 'page callback' => 'drupal_get_form',
       'page callback' => 'test_people_add',
       'page arguments' => array(2),
       'type' => MENU_CALLBACK,
-      //'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
       'access callback' => TRUE,
-      //'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
   );
 }
 
 function test_people_add($object){
- drupal_get_form('includes/manage_projects.form.inc', $object);
+ module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
+ drupal_get_form('islandora_project_people_add_form', $object);
 }
 
 // LOADERS //

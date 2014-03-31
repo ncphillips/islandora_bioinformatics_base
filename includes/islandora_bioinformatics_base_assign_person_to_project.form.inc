@@ -23,8 +23,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   
   $project_object = $form_state['islandora']['objects'][0]; //this is NULL
   
-  //var_dump($project_object);
-
   //query fedora to retrieve a list of all person objects
   $query = "SELECT ?pid
           FROM <#ri>
@@ -54,8 +52,6 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
         $default_values[$person_object->id] = $person_object->id;
       }
       
-      var_dump($default_values);
-
       /*
       if($person_object->id == 'islandora:388') {
         $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
