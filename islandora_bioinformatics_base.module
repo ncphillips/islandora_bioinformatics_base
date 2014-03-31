@@ -151,6 +151,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
     if(!isset($person['MADS'])) break;
 
     $person_mads = person_mads_to_array($person);
+    echo $person->id;
 
     $options[$person->id] = array(
       'first' => $person_mads['name']['first'],
