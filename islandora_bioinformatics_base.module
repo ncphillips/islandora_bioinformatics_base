@@ -210,7 +210,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   // Create an array of tripple queries.
   $cmodel_queries = array();
   foreach($cmodels as $cmodel)
-    $cmodel_queries[] = "{?pid <fedora-model:hasModel> <info:fedora/$cmodel>}";
+    $cmodel_queries[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
 
   // Union all the tripple queries.
   $cmodel_query = implode(' UNION ', $cmodel_queries);
