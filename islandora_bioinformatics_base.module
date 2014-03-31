@@ -262,7 +262,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     // Create the relationship queries.
     foreach($relationships as $ns => $rels){
       foreach($rels as $rel){
-        $nsrel = $pre[$ns].$rel;
+        $nsrel = $pre[$ns] . $rel;
         $rel_clauses[] = "{?pid $nsrel <info:fedora/$obj_id>}";
       }
     }
@@ -376,13 +376,18 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
  * @author Nolan Phillips ncphillips@upei.ca
  */
 function islandora_bioinformatics_base_forms($form_id, $args) {
-  $forms['related_people_form'] = array(
-    'callback' => 'related_islandora_objects_form',
-    'callback arguments' => array(
-      array('islandora:person_cmodel'),
-      array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),),
-    ),
-  );
+
+  switch($form_id){
+    case 'related_people_form':
+      $args[] = array('islandora:person_cmodel');
+      $args[] = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),),
+
+      $forms['related_people_form'] = array(
+        'callback' => 'related_islandora_objects_form',
+        'callback arguments' => $args,
+      );
+      break;
+  }
   return $forms;
 }
 
