@@ -205,11 +205,13 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   $obj_id = $object->id;
 
+  $cmodel_clauses = array();
   foreach($cmodels as $cmodel){
     $cmodel_clauses[] = "{?pid <fedora-model:hasModel> <info:fedora/islandora:$cmodel>}";
   }
   $cmodel_clause = implode(' UNION ', $cmodel_clauses);
 
+  $rel_clauses = array();
   foreach($relationships as $ns => $rel){
     $nsrel = $ns.':'.$rel;
     $rel_clauses[] = "{?pid $nsrel $obj_id}";
@@ -231,6 +233,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   $result = $tuque->repository->ri->query($query);
 
+  $related_objects = array();
   foreach($result as $related_object) {
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
   }
