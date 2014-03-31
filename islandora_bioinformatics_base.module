@@ -229,8 +229,15 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   //$cmodels = array('islandora:person_cmodel');
   //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
+
+
   // Start Function.
   $obj_id = $object->id;
+
+  echo "Object ID: $obj_id";
+  echo '<pre>';
+  var_dump($cmodels);
+  echo '</pre>';
 
   // Create an array of cmodel tripple queries.
   $cmodel_query = '';
@@ -381,7 +388,6 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
     case 'related_people_form':
       $args[] = array('islandora:person_cmodel');
       $args[] = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),);
-      var_dump($args);
       $forms['related_people_form'] = array(
         'callback' => 'related_islandora_objects_form',
         'callback arguments' => $args,
