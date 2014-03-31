@@ -211,7 +211,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $cmodel_clause = implode(' UNION ', $cmodel_clauses);
 
   foreach($relationships as $ns => $rel){
-    $nsrel = $ns.':'$rel;
+    $nsrel = $ns.':'.$rel;
     $rel_clauses[] = "{?pid $nsrel $obj_id}";
   }
 
