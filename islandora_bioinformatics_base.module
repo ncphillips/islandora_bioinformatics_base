@@ -201,12 +201,14 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $object = islandora_object_load('islandora:524');
   $cmodels = array('islandora:person_cmodel');
-  echo "Cmodels: $cmodels";
+  echo "Cmodels: ";
+  var_dump($cmodels);
   $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
-  echo "Rels: $relationships";
+  echo "</br>Rels: ";
+  var_dump($relationships);
 
   $obj_id = $object->id;
-  echo "Obj: $obj_id";
+  echo "</br>Obj: $obj_id";
 
   $cmodel_clauses = array();
   foreach($cmodels as $cmodel){
