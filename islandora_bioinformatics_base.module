@@ -221,7 +221,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $pre_defs = array(); // An array of PREFIX definitions
   foreach($relationships as $ns => $rel){
     $pre[$ns] = $prefix.':';
-    $pre_defs[] = 'PREFIX' . $prefix++ . ": <$ns>";
+    $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
   }
   $pre_def = implode(' ', $pre_defs);
 
@@ -243,12 +243,11 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     }
   ";
 
-  echo "Query: $query";
-  exit();
-
   $tuque = new IslandoraTuque();
 
   $result = $tuque->repository->ri->query($query);
+  echo $result;
+  exit();
 
   $related_objects = array();
   foreach($result as $related_object) {
