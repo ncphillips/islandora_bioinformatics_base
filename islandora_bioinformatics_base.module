@@ -400,13 +400,10 @@ function islandora_bioinformatics_base_menu() {
       'title callback' => 'add_person_title',
       'title arguments' => array(2),
       'description' => 'Adds a person to a project',
-     // 'page callback' => 'drupal_get_form',
       'page callback' => 'test_people_add',
       'page arguments' => array(2),
       'type' => MENU_CALLBACK,
-      //'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
       'access callback' => TRUE,
-      //'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
   );
 }
