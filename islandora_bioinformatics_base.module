@@ -170,29 +170,11 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $related_objects = array();
 
   $obj_id = $object->id;
-  $cmodel_clause = '';
-  $rel_clause = '';
 
 
-  // THIS IS NOT CORRECT
-  // All of these must be OR'd together.
-  foreach($cmodels as $cmodel)
-    $cmodel_clause = "$cmodel_clause ?pid <fedora-model:hasModel> <info:fedora/$cmodel> .";
-
-  // Should be any of these relationships
-  foreach($relationships as $ns => $rels) {
-    foreach($rels as $rel){
-      $nsrel = $ns.':'.$rel;
-      $rel_clause = "$rel_clause  ?pid <$nsrel> <info:fedora/$obj_id> .";
-    }
+  foreach($cmodels as $cmodel){
   }
-
-  $query = "SELECT ?pid
-            FROM <#ri>
-            WHERE {
-              $cmodel_clause
-              $rel_clause
-            }";
+}
 
   $tuque = new IslandoraTuque();
 
