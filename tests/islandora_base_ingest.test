@@ -1,8 +1,13 @@
 <?php
 
 /**
-* @file
+* @file islandora_base_ingest.test
 * Attempts to ingest a project object into a randomly generated base collection, follwed by a person object, and then tries to add the person object to the project.
+*
+* For the duration of the test, the two pids in use will be:
+*
+* islandora:test_person and islandora:test_project
+*
 *
 * @author Dalton Mackenzie <demackenzie@upei.ca>
 */
@@ -39,6 +44,10 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
   }
 
   /**
+  * @function testIngestProjectandPerson()
+  *
+  * @author Dalton Mackenzie <demackenzie@upei.ca>
+  *
   * Creates an administrative user and attempts to ingest a project
   */
 
@@ -152,12 +161,74 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     
     //deleteObject($pid, $button = NULL,$safety = TRUE) function IslandoraWebTestCase
 
-    $this->deleteObject('test_person', $button = NULL, $safety = TRUE);
-    $this->deleteObject('test_project', $button = NULL, $safety = TRUE);
 
     //Test every role with every use case. (Make sure anon can't delete objects, but admins can etc.)
   
     //As for clicking links and such, manage permissions in the collection test group has a bunch of link clicking
     //methods to look at.
 
+  }
 
+  /**
+  *
+  * @function testRelationBetweenPersonAndProject
+  *
+  * @author Dalton Mackenzie <demackenzie@upei.ca>
+  *
+  * This function will establish the relationship:
+  * islandora:test_person isPartOf islandora:test_project
+  *
+  * It will then run a SPARQL query, searching for all people
+  * related to the test project.
+  *
+  * The only expected returned result should be islandora:test_person
+  *
+  * Finally, the relationship will be removed, and the query will
+  * be run again. The results should be empty.
+  */
+
+  public function testRelationBetweenPersonAndProject() {
+
+    $testSuccess = false;
+
+    //Establish a relationship between islandora:test_person and islandora_test_project
+
+    //First load the objects using the pids.
+    $person_object = islandora_object_load('islandora:test_person');
+    $project_ojbect = islandora_object_load('islandora:test_project');
+
+    //Next, add the isMemberOf relationship to the person_object, with the project_object as the target.
+
+    $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+
+    //Now run a query to ensure that the relationship exists.
+
+      $query = "SELECT ?pid
+                FROM <#ri>
+                WHERE {
+                  ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+                  ?pid <fedora:isMemberOf> <info:fedora/islandora:test_project> .
+                }";
+
+    $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+    $result_count = 0;
+
+    foreach ($query_result as $person) {
+      if ($person['pid']['value'] == 'test_person') {
+        $testSuccess = true; //The test worked, now remove the relationship.
+
+        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+      }
+      else {
+
+        $testSuccess = false;
+      }
+    }
+  }
+
+  public function purgeTestForPersonandProject() {  
+    
+    $this->deleteObject('islandora:test_person', $button = NULL, $safety = TRUE);
+    $this->deleteObject('islandora:test_project', $button = NULL, $safety = TRUE);
+  }
