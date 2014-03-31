@@ -417,10 +417,11 @@ function islandora_bioinformatics_base_menu() {
       'title callback' => 'add_person_title',
       'title arguments' => array(2),
       'description' => 'Adds a person to a project',
-      'page callback' => 'test_people_add',
-      'page arguments' => array(2),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
       'access callback' => TRUE,
+      'file' => 'includes/manage_project.form.inc',
     ),
   );
 }
