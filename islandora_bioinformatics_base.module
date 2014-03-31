@@ -457,7 +457,7 @@ function islandora_bioinformatics_base_menu() {
 function test_people_add($object){
  echo "hello";
  module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
-// drupal_get_form('islandora_project_people_add_form', $object);
+ drupal_get_form('islandora_project_people_add_form', $object);
 }
 
 // LOADERS //
