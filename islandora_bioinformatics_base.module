@@ -324,7 +324,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
 
   // Find the list of related islandora objects.
-  $object = islandora_object_load('islandora:524');
+  //$object = islandora_object_load('islandora:524');
   $related_objects = related_islandora_objects($object, $cmodels, $relationships);
 
   $form_state['object'] = $object;
