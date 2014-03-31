@@ -196,18 +196,14 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  *
  * @author Nolan Phillips ncphillips@upei.ca
  *
- * @todo
- * When the $relationships array is NULL, it will find all objects
- * of type $cmodels regardless of whether or not it's related to
- * the $object. Instead, this should
+ * Dear Paul and Peter,
  *
+ *    If you're reading this function...I am so sorry.
+ *
+ * Sincerely,
+ * Nolan
  */
-function related_islandora_objects(){//$object, $cmodels=null, $relationships=null){
-  // Test Data
-  $object = islandora_object_load('islandora:524');
-  $cmodels = array('islandora:person_cmodel');
-  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
-
+function related_islandora_objects($object, $cmodels=null, $relationships=null){
   /**
    * Example Query:
    *    PREFIX a: <info:fedora/fedora-system:def/relations-external#>
@@ -226,12 +222,16 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
    *    }
    */
 
+  /////Test Data/////
+  //$object = islandora_object_load('islandora:524');
+  //$cmodels = array('islandora:person_cmodel');
+  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
   // Start Function.
   $obj_id = $object->id;
 
-  $cmodel_query = '';
   // Create an array of cmodel tripple queries.
+  $cmodel_query = '';
   if ($cmodels){
     $cmodel_queries = array();
     foreach($cmodels as $cmodel)
@@ -245,12 +245,11 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   // An associative array of namespace => prefix.
   $pre = array('info:fedora/fedora-system:def/relations-external#' => 'fedora-model:');
 
-  // The first prefix being used is a.
-  $prefix = 'a';
-
   // An array of PREFIX definitions
   $pre_defs = array('PREFIX fedora-model: <info:fedora/fedora-system:def/model#>');
 
+  // Besides 'fedora-model', the first prefix being used is 'a'.
+  $prefix = 'a';
   if($relationships){
     foreach($relationships as $ns => $rel){
       $pre[$ns] = $prefix.':';
@@ -297,7 +296,6 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   return $related_objects;
 }
 
-
 /**
  * related_islandora_objects_form
  *
@@ -317,9 +315,8 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
 
   // Find the list of related islandora objects.
-//  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
   $object = islandora_object_load('islandora:524');
-  $related_objects[] = islandora_object_load('islandora:388');
+  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
@@ -427,7 +424,13 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_CALLBACK,
       'page callback' => 'related_islandora_objects',
       'page arguments' => array('a', 'a', 'a' ),
-
+      'access callback' => TRUE,
+    ),
+    'test_related_islandora_objects_form' => array(
+      'title' => 'Test Related Form',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array(),
       'access callback' => TRUE,
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
