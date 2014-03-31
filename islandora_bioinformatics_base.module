@@ -418,7 +418,7 @@ function islandora_bioinformatics_base_menu() {
       'title arguments' => array(2),
       'description' => 'Adds a person to a project',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('islandora_project_people_add_form', 2),
+      'page arguments' => array('islandora_project_people_add_form'),
       'type' => MENU_CALLBACK,
       'access callback' => TRUE,
       'file' => 'includes/manage_project.form.inc',
