@@ -162,7 +162,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
   }
 
   // Set up the table.
-  $form['table3'] = array(
+  $form['table'] = array(
     '#type' => 'tableselect',
     '#header' => $header,
     '#options' => $options,
