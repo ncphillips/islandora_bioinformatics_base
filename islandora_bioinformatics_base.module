@@ -206,7 +206,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   // Test Data
   $object = islandora_object_load('islandora:524');
   //$cmodels = array('islandora:person_cmodel');
-  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
+  $relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
   /**
    * Example Query:
