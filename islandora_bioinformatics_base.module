@@ -398,7 +398,7 @@ function islandora_bioinformatics_base_menu() {
       'page arguments' => array('related_people_form', 2),
       'access callback' => 'islandora_object_access_callback',
       'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
-      'file' => 'includes/manage_project.inc',
+      'file' => 'includes/manage_project.form.inc',
     ),
 
     'islandora/object/%islandora_object/people/add' => array(
@@ -417,7 +417,7 @@ function islandora_bioinformatics_base_menu() {
 }
 
 function test_people_add($object){
- drupal_get_form('includes/manage_projects.form.inc', $object);
+ drupal_get_form('islandora_project_people_add_form', $object);
 }
 
 // LOADERS //
