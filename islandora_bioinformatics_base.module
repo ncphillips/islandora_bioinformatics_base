@@ -251,7 +251,7 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
   //exit();
   $tuque = new IslandoraTuque();
 
-  $result = $tuque->repository->ri->query($query);
+  $result = $tuque->repository->ri->sparqlQuery($query);
 
   echo $result;
   exit();
