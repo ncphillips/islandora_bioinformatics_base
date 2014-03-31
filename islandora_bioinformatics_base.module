@@ -150,32 +150,17 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
     $phone = '';
     if(!isset($person['MADS'])) break;
 
-    echo 'FULL DATASTREAM </br></br>' . $person['MADS']->content . '</br></br>END FULL DATASTREAM';
-
-    $MADS_DATA = $person['MADS']->content;
-    $MADS = new SimpleXMLElement($MADS_DATA);
-    $MADS->registerXPathNamespace('mads', $ns);
-
-    // Parsing the XML isn't working, it just returns empty strings.
-
-    foreach($name_parts as $name_part){
-      if($name_part['type'] == 'given')
-        $first = $name_part;
-      elseif ($name_part['type'] == 'family')
-        $last = $name_part;
-    }
-
-    $phone = $MADS->authority->affiliation->phone;
-    $email = $MADS->authority->affiliation->email;
+    $person_mads = person_mads_to_array($person['MADS']);
 
     $options[$person->id] = array(
-      'first' => $first,
-      'last' => $last,
-      'phone' => $phone,
-      'email' => $email,
+      'first' => $person_mads['name']['first'],
+      'last' => $person_mads['name']['last'],
+      'phone' => $person_mads['contact']['phone'],
+      'email' => $person_mads['contact']['email'],
     );
   }
 
+  $form['table'] = array();
   // Set up the table.
   $form['table'] = array(
     '#type' => 'tableselect',
@@ -365,7 +350,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
     );
   }
 
-  $form['table'] = array();
   $form['table'] = array(
     '#type' => 'tableselect',
     '#header' => $header,
