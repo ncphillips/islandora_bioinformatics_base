@@ -205,8 +205,8 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
 function related_islandora_objects(){//$object, $cmodels=null, $relationships=null){
   // Test Data
   $object = islandora_object_load('islandora:524');
-  //$cmodels = array('islandora:person_cmodel');
-  $relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
+  $cmodels = array('islandora:person_cmodel');
+  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
   /**
    * Example Query:
