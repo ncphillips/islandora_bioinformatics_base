@@ -10,8 +10,6 @@
      */
     function islandora_project_people(AbstractObject $object) {
 
-       // var_dump($object);
-        
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
@@ -43,7 +41,6 @@
     }
     
     function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object){
-    //    var_dump($object);
         
         $tuque = new IslandoraTque();
         $query = "SELECT ?pid
@@ -80,8 +77,6 @@
             '#type' => 'submit',
             '#value' => 'Submit',
         );
-        
-    //    var_dump($render);
         
         return $form;
     }
