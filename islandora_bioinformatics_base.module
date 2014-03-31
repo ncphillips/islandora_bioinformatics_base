@@ -127,7 +127,6 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
 
-  echo $object->id;
 
   // Table of Related Lab Objects.
   $header = array(
@@ -321,6 +320,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
  *
  */
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
+  echo "Creating related_islandora_objects_form";
 
   // Find the list of related islandora objects.
   //$object = islandora_object_load('islandora:524');
