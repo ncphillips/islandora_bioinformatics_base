@@ -73,11 +73,11 @@ function callback_rel_lab_object($object) {
     $related_cmodel = strtok($related_cmodel_pid, ':');
     $object_type = strtok($related_cmodel, '_');
 
-    $form_id = 'related_' . $object_type . '_form'
+    $form_id = 'related_' . $object_type . '_form';
 
     //Add the form array to the render array.
 
-    $render_array[] = drupal_get_form($form_id, $object);
+    $render_array/*[]*/ = drupal_get_form($form_id, $object);
 
   }
 
@@ -400,13 +400,19 @@ function islandora_bioinformatics_base_menu() {
       'title callback' => 'add_person_title',
       'title arguments' => array(2),
       'description' => 'Adds a person to a project',
-      'page callback' => 'drupal_get_form',
+     // 'page callback' => 'drupal_get_form',
+      'page callback' => 'test_people_add',
+      'page arguments' => array(2),
       'type' => MENU_CALLBACK,
-      'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
+      //'page arguments' => array('islandora_bioinformatics_base_assign_person_to_project_form'),
       'access callback' => TRUE,
-      'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
+      //'file' => 'includes/islandora_bioinformatics_base_assign_person_to_project.form.inc',
     ),
   );
+}
+
+function test_people_add($object){
+ drupal_get_form('includes/manage_projects.form.inc', $object);
 }
 
 // LOADERS //
@@ -708,6 +714,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //build person object
 
   //////You're overwriting the Person Content Model, not making a new object of type content model.
+
   $person_object = $tuque->repository->constructObject('islandora');
   $person_object->owner = 'fedoraAdmin';
   $person_object->label = $account->name;
