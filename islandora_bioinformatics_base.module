@@ -218,8 +218,8 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
 
   // Construct the set of prefices
   $prefix = 'a';
-  $pre = array(); // An associative array of namespace => prefix.
-  $pre_defs = array(); // An array of PREFIX definitions
+  $pre = array('info:fedora/fedora-system:def/relations-external#' => 'fedora-model:'); // An associative array of namespace => prefix.
+  $pre_defs = array('PREFIX fedora-model: <info:fedora/fedora-system:def/relations-external#>'); // An array of PREFIX definitions
   foreach($relationships as $ns => $rel){
     $pre[$ns] = $prefix.':';
     $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
