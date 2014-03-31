@@ -195,42 +195,82 @@ function islandora_bioinformatics_base_related_people_form_alter($form, &$form_s
  * @return IslandoraFedoraObject array $related_objects
  *
  * @author Nolan Phillips ncphillips@upei.ca
+ *
+ * @todo
+ * When the $relationships array is NULL, it will find all objects
+ * of type $cmodels regardless of whether or not it's related to
+ * the $object. Instead, this should
+ *
  */
 function related_islandora_objects(){//$object, $cmodels=null, $relationships=null){
   // Test Data
   $object = islandora_object_load('islandora:524');
-  $cmodels = array('islandora:person_cmodel');
-  $relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
+  //$cmodels = array('islandora:person_cmodel');
+  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
 
-  // Start
+  /**
+   * Example Query:
+   *    PREFIX a: <info:fedora/fedora-system:def/relations-external#>
+   *    PREFIX b: <info:fedora/fedora-system:def/model#>
+   *    SELECT *
+   *    FROM <#ri>
+   *    WHERE {
+   *      {
+   *        {?pid b:hasModel <info:fedora/islandora:person_cmodel>}
+   *        UNION
+   *        {?pid b:hasModel <info:fedora/islandora:specimen_cmodel>}
+   *      }
+   *      {
+   *        {?pid a:isMemberOf <info:fedora/islandora:524>}
+   *      }
+   *    }
+   */
+
+
+  // Start Function.
   $obj_id = $object->id;
 
-  // Create an array of tripple queries.
-  $cmodel_queries = array();
-  foreach($cmodels as $cmodel)
-    $cmodel_queries[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
+  $cmodel_query = '';
+  // Create an array of cmodel tripple queries.
+  if ($cmodels){
+    $cmodel_queries = array();
+    foreach($cmodels as $cmodel)
+      $cmodel_queries[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
 
-  // Union all the tripple queries.
-  $cmodel_query = implode(' UNION ', $cmodel_queries);
+    // Union all the cmodel tripple queries.
+    $cmodel_query = implode(' UNION ', $cmodel_queries);
+  }
 
+  // Construct the set of prefix definitions.
+  // An associative array of namespace => prefix.
+  $pre = array('info:fedora/fedora-system:def/relations-external#' => 'fedora-model:');
 
-  // Construct the set of prefices
+  // The first prefix being used is a.
   $prefix = 'a';
-  $pre = array('info:fedora/fedora-system:def/relations-external#' => 'fedora-model:'); // An associative array of namespace => prefix.
-  $pre_defs = array('PREFIX fedora-model: <info:fedora/fedora-system:def/model#>'); // An array of PREFIX definitions
-  foreach($relationships as $ns => $rel){
-    $pre[$ns] = $prefix.':';
-    $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
-  }
-  $pre_def = implode(' ', $pre_defs);
 
-  foreach($relationships as $ns => $rels){
-    foreach($rels as $rel){
-      $nsrel = $pre[$ns].$rel;
-      $rel_clauses[] = "{?pid $nsrel <info:fedora/$obj_id>}";
+  // An array of PREFIX definitions
+  $pre_defs = array('PREFIX fedora-model: <info:fedora/fedora-system:def/model#>');
+
+  if($relationships){
+    foreach($relationships as $ns => $rel){
+      $pre[$ns] = $prefix.':';
+      $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
     }
+    $pre_def = implode(' ', $pre_defs);
+
+    // Create the relationship queries.
+    foreach($relationships as $ns => $rels){
+      foreach($rels as $rel){
+        $nsrel = $pre[$ns].$rel;
+        $rel_clauses[] = "{?pid $nsrel <info:fedora/$obj_id>}";
+      }
+    }
+    // Union all the relationship tripple queries.
+    $rel_clause = implode(' UNION ', $rel_clauses);
   }
-  $rel_clause = implode(' UNION ', $rel_clauses);
+  else {
+    $rel_clause = "{?pid ?any_rel <info:fedora/$obj_id>}";
+  }
 
   $query = "
     $pre_def
@@ -242,19 +282,16 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     }
   ";
 
+  file_put_contents('/tmp/sparqlquery.txt', $query);
+
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
 
   $related_objects = array();
   foreach($result as $related_object) {
     $obj = islandora_object_load($related_object['pid']['value']);
-    echo "Obj ID: " . $obj->id;
     $related_objects[] = $obj ;
   }
-
-  foreach($related_objects as $o) echo $o;
-  exit();
-
 
   return $related_objects;
 }
