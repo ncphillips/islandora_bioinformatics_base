@@ -388,6 +388,7 @@ function islandora_bioinformatics_base_menu() {
       'title' => 'related_islandora_objects',
       'type' => MENU_CALLBACK,
       'page callback' => 'related_islandora_objects',
+      'page arguments' => array('a', 'a', 'a' ),
 
       'access callback' => TRUE,
     ),
