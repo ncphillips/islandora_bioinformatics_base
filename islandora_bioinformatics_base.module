@@ -135,6 +135,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter($form, &$f
     'email' => t('Email'),
   );
 
+  echo "Altering Person form";
+
   $options = array();
 
   $ns = "http://www.loc.gov/mads/v2";
@@ -233,11 +235,6 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   // Start Function.
   $obj_id = $object->id;
-
-  echo "Object ID: $obj_id";
-  echo '<pre>';
-  var_dump($cmodels);
-  echo '</pre>';
 
   // Create an array of cmodel tripple queries.
   $cmodel_query = '';
