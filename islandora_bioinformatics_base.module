@@ -52,7 +52,8 @@ function callback_rel_lab_object($object) {
   //Construct a query which will find all pids adhering to the following two conditions:
   //Condition 1: pid corresponds to a content model that has a data relationship with $object
 
-  $query = "SELECT ?pid
+  $query = "
+            SELECT ?pid
             FROM <#ri>
             WHERE {
               ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
@@ -370,7 +371,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
  *
  * @param $formid
  * @param $args
- * @return mixed
+ * @return $forms
  *
  * @author Nolan Phillips ncphillips@upei.ca
  */
@@ -458,10 +459,9 @@ function islandora_bioinformatics_base_menu() {
       'title' => 'People',
       'type' => MENU_LOCAL_TASK,
       'description' => 'People collaborating on this project.',
-      'page callback' => 'test_add_people',
-      'page arguments' => array(2),
-      'access callback' => 'islandora_object_access_callback',
-      'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('related_people_form', 2),
+      'access callback' => TRUE,
     ),
 
     'islandora/object/%islandora_object/people/add' => array(
