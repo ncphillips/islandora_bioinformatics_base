@@ -397,27 +397,6 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
   return $forms;
 }
 
-function TESTCB(){
-
-  $object = islandora_object_load('islandora:525');
-  $people = islandora_object_load('islandora:388');
-
-  return drupal_get_form('rel_people_form', $object, $people);
-
-  $render_array = array();
-
-  $object = 'Your Mom';
-  $rel_cmodels = array('specimen', 'lcms');
-
-
-  foreach ($rel_cmodels as $rel_cmodel) {
-    $element_name = $rel_cmodel . "_form";
-    $render_array[$element_name] = drupal_get_form('rel_lab_objects_' . $rel_cmodel . '_form', $object, $rel_cmodel);
-    $module_name = "islandora_lab_object_$rel_cmodel";
-  }
-  return $render_array;
-}
-
 /**
  * Implements hook_menu().
  *
@@ -426,12 +405,6 @@ function TESTCB(){
  */
 function islandora_bioinformatics_base_menu() {
   return array(
-    'testing/%' => array(
-      'title' => 'TEST',
-      'type' => MENU_CALLBACK,
-      'page callback' => 'TESTCB',
-      'access callback' => TRUE,
-    ),
     'sparqltest' => array(
       'title' => 'related_islandora_objects',
       'type' => MENU_CALLBACK,
