@@ -430,7 +430,7 @@ function islandora_bioinformatics_base_menu() {
       'title' => 'Test Related Form',
       'type' => MENU_CALLBACK,
       'page callback' => 'drupal_get_form',
-      'page arguments' => array(),
+      'page arguments' => array('related_lab_objects_form'),
       'access callback' => TRUE,
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
