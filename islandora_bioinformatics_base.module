@@ -244,13 +244,15 @@ function related_islandora_objects(){//$object, $cmodels=null, $relationships=nu
     }
   ";
 
+  file_put_contents('/tmp/sparqlquery.txt', $query);
+  exit();
+
+
   //echo "<pre> $query </pre>";
   //exit();
   $tuque = new IslandoraTuque();
 
   $result = $tuque->repository->ri->query($query);
-  echo $result;
-  exit();
   $related_objects = array();
   foreach($result as $related_object) {
     $related_objects[] = islandora_object_load($related_object['pid']['values']);
