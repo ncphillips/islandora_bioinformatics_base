@@ -19,7 +19,12 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 
 
 /**
- * Page Callback rel_lab_object_callback($object)
+ * Page Callback callback_rel_lab_object($object)
+ *
+ * @param $object - We want to find all objects related to this target object.
+ *
+ * @return $render_array - A renderable array, containing forms for each content
+ * model with objects related to the target object.
  *
  * @author Dalton Mackenzie <demackenzie@upei.ca>
  *
@@ -35,7 +40,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
  * These forms will be stored as a elements in a
  * renderable array, which the function will then return.
  */
-function rel_lab_object_callback($object) {
+function callback_rel_lab_object($object) {
   
   $render_array = array();
 
@@ -82,12 +87,39 @@ function rel_lab_object_callback($object) {
 }
 
 /**
+ * Page Callback callback_rel_lab_object_ingest
+ * 
+ * @param $object - This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested.
+ * @param $cmodel - This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with $object.
+ *
+ * @author Dalton Mackenzie <demackenzie@upei.ca>
+ *
+ * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
+ * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
+ *
+ */
+
+function callback_rel_lab_object_ingest($object, $cmodel) {
+
+  //Get the pid of the content model
+  $content_model_pid = $cmodel->id;
+  
+  $first_part_of_pid = strtok($content_model_pid, ':');
+  $subtype_cmodel = strtok($content_model_pid, ':');
+  $subtype = strtok($related_cmodel, '_');
+
+  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
+
+  $callback_to_call($object);
+}
+
+/**
  * Implements hook_related_people_form_alter()
  * @param $form
  * @param $form_state
  * @return mixed
  *
- * @authoer Nolan Phillips ncphillips@upei.ca
+ * @author Nolan Phillips ncphillips@upei.ca
  */
 function islandora_bioinformatics_base_related_people_form_alter($form, &$form_state) {
   $object = $form_state['object'];
