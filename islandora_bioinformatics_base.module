@@ -762,7 +762,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 
   //////You're overwriting the Person Content Model, not making a new object of type content model.
 
-  $person_object = $tuque->repository->constructObject('islandora');
+  //$person_object = $tuque->repository->constructObject('islandora');
+  $person_object = $tuque->repository->constructObject('fake:pid');
   $person_object->owner = 'fedoraAdmin';
   $person_object->label = $account->name;
   $person_object->models = 'islandora:person_cmodel';
@@ -860,8 +861,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person = result[0];
   }  
   */ 
-  
-  dpm($account_person);
   
   //if the Fedora object related to the Drupal account is found, make the desired changes
   if(!empty($account_person)) {
