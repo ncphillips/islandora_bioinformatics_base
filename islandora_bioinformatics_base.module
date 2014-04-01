@@ -754,6 +754,9 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque = new IslandoraTuque();
   
   dpm($account);
+  echo '<pre>';
+  echo var_dump($account->uid);
+  echo '</pre>;
   
   //build person object
 
