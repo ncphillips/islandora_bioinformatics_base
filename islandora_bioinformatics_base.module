@@ -809,7 +809,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
     
   //store uid of Drupal account in person object
   //$person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);    
-  $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);      
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
@@ -889,6 +888,15 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
 
   /*Other possibility is tuque->relationship->get*/
   //$relationship = $person_object->relationships->get(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->id, RELS_TYPE_STRING);
+}
+
+
+/**
+* @author Quintin Dawson qdawson@upei.ca
+* Called when a drupal user is deleted
+*/
+function islandora_bioinformatics_base_user_delete($account) {
+  echo 'User_Delete called';
 }
 
 /**
