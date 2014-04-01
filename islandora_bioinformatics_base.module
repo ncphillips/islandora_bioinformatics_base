@@ -809,6 +809,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
     
   //store uid of Drupal account in person object
   //$person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);    
+  
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
@@ -860,6 +861,8 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   }  
   */ 
   
+  dpm($account_person);
+  
   //if the Fedora object related to the Drupal account is found, make the desired changes
   if(!empty($account_person)) {
     //Modify the xml
@@ -895,7 +898,8 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
 * @author Quintin Dawson qdawson@upei.ca
 * Called when a drupal user is deleted.  This should find and delete the associated Fedora person object from the repository
 */
-function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
+function islandora_bioinformatics_base_user_delete($account) {
+//function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
