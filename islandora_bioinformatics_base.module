@@ -803,7 +803,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:person_collection');
     
   //store uid of Drupal account in person object
-  $person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->id, RELS_TYPE_STRING);    
+  $person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);    
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
