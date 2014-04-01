@@ -832,11 +832,7 @@ function person_mads_to_array($person_object){
   $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
 
   // parse the 'authority' section of mads.
-
-
   foreach ($person_xml->children($ns) as $part){
-
-
     switch ((string) $part->getName()){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
