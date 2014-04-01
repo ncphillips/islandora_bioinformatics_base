@@ -895,8 +895,9 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
 * @author Quintin Dawson qdawson@upei.ca
 * Called when a drupal user is deleted
 */
-function islandora_bioinformatics_base_user_delete($account) {
+function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   echo 'User_Delete called';
+  dpm($account);
 }
 
 /**
