@@ -671,7 +671,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
     
   //store uid of Drupal account in person object
   //$person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);    
-  $person_object->relationships->add(RELS_INT_NS, 'hasPart', $account->uid, RELS_TYPE_INT);   
+  $person_object->relationships->add(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);   
 
     
   //ingest object into fedora
