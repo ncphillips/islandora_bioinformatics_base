@@ -706,13 +706,12 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   foreach($result as $person) {
     //load the current person object
     $person_object = islandora_object_load($person['pid']['value']);
-    
-    dpm($person_object);
-    
+        
     //check if relationship to Drupal user exists
-    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId',  $account->uid, RELS_TYPE_INT);
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
     if(!empty($relation)) {
       $account_person = $person_object;
+      dpm($person_object);
     }
   }  
   
