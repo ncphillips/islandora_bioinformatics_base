@@ -705,7 +705,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
         
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    dpm($relation);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
@@ -733,6 +732,7 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     
     //Modify the xml
     $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
+    $ns = "http://www.loc.gov/mads/v2";
     foreach ($person_xml->children($ns) as $part){
       switch ((string) $part->getName()){
           case 'authority':
@@ -750,7 +750,7 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person['MADS']->mimetype = 'text/xml';
     
     //Save changes object in Fedora
-    $tuque->repository->ingestObject($account_person);
+    //$tuque->repository->ingestObject($account_person);
   }
 }
 
