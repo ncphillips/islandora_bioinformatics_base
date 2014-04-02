@@ -614,7 +614,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {  
   $tuque = new IslandoraTuque();
   
-  dpm($account);
   echo '<pre>';
   echo var_dump($account->uid);
   echo '</pre>';
@@ -686,6 +685,9 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
  *
  */
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
+  echo '<pre>';
+  echo var_dump($account->uid);
+  echo '</pre>';
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
