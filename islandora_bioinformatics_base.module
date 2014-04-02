@@ -726,7 +726,11 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   */ 
   
   //if the Fedora object related to the Drupal account is found, make the desired changes
+  
   if(!empty($account_person)) {
+    //change the label
+    $account_person->label = $account->name;
+    
     //Modify the xml
     $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
     foreach ($person_xml->children($ns) as $part){
