@@ -748,6 +748,9 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person['MADS']->setContentFromString($person_xml->asXML());
     $account_person['MADS']->label = 'MADS Record';
     $account_person['MADS']->mimetype = 'text/xml';
+    
+    //Save changes object in Fedora
+    $tuque->repository->ingestObject($account_person);
   }
 }
 
