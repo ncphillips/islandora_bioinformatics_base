@@ -705,7 +705,7 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $person_object = islandora_object_load($person['pid']['value']);
     
     //check if relationship to Drupal user exists
-    $relation = $person_object->relationships->get(ISLANDORA_RELS_EXT_URI, 'isDrupalID',  $account->uid, RELS_TYPE_STRING);
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId',  $account->uid, RELS_TYPE_INT);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
@@ -718,6 +718,7 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
               ?uid <" . ISLANDORA_RELS_EXT_URI . ":isDrupalID> <info:fedora/" . $account->id . "> .
             }"; 
   $result - $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  
   //only one Fedora object should be related to the Drupal account, so take the first value in the $results array
   if(!empty($result[0])) {
     $account_person = result[0];
@@ -744,14 +745,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person['MADS']->label = 'MADS Record';
     $account_person['MADS']->mimetype = 'text/xml';
   }
-
-  
-  /*Ignore following, used to jot down notes*/
-  //When adding to the RELS=EXT, it should be a literal
-  //$person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);  
-
-  /*Other possibility is tuque->relationship->get*/
-  //$relationship = $person_object->relationships->get(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);
 }
 
 
@@ -781,7 +774,7 @@ function islandora_bioinformatics_base_user_delete($account) {
     $person_object = islandora_object_load($person['pid']['value']);
     
     //check if relationship to Drupal user exists
-    $relation = $person_object->relationships->get(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
@@ -789,9 +782,8 @@ function islandora_bioinformatics_base_user_delete($account) {
   
   //purge object from fedora
   if(!empty($account_person)) {
-    
-    $account_person->delete();
-    $tuque->repository->purgeObject($account_person->id);
+    $account_person->delete();  //flag object as deleted
+    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
   }
 }
 
