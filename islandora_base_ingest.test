@@ -232,3 +232,4 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     $this->deleteObject('islandora:test_person', $button = NULL, $safety = TRUE);
     $this->deleteObject('islandora:test_project', $button = NULL, $safety = TRUE);
   }
+}
