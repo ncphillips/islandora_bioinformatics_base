@@ -727,6 +727,8 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   //if the Fedora object related to the Drupal account is found, make the desired changes
   
   if(!empty($account_person)) {
+    dpm($account);
+    dpm($account_person);
     //change the label
     $account_person->label = $account->name;
     
