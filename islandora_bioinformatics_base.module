@@ -734,12 +734,11 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
     $ns = "http://www.loc.gov/mads/v2";
     foreach ($person_xml->children($ns) as $part){
-      dpm($part);
       switch ((string) $part->getName()){
           case 'authority':
             $part->titleInfo->title = $account->name;
           case 'identifier':
-            $part = $account->name;
+            $part = $account->name;   //NOT WORKING AT THE MOMENT
           case 'affiliation':
             $part->email = $account->mail;
       }   
@@ -790,6 +789,7 @@ function islandora_bioinformatics_base_user_delete($account) {
   
   //purge object from fedora
   if(!empty($account_person)) {
+    dpm($account_person);
     $account_person->delete();  //flag object as deleted
     $tuque->repository->purgeObject($account_person->id); //purge the object from the database
   }
