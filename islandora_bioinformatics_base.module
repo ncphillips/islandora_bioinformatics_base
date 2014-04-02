@@ -686,6 +686,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
  */
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
   echo '<pre>';
+  dpm($account);
   echo var_dump($account->uid);
   echo '</pre>';
   //retrieve Person object related to the Drupal user
@@ -710,6 +711,7 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId',  $account->uid, RELS_TYPE_INT);
     if(!empty($relation)) {
       $account_person = $person_object;
+      dpm($account_person);
     }
   }  
   
