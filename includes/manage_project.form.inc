@@ -42,7 +42,7 @@
     
     function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object){
         
-        $tuque = new IslandoraTque();
+        $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
                     WHERE {

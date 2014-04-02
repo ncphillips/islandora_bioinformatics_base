@@ -5,7 +5,7 @@
   * Hooks and callbacks for the module.
   */
 
-// Permissions.
+// Islandora Definitions
 define('ISLANDORA_VIEW_OBJECTS', 'view fedora repository objects');
 define('ISLANDORA_METADATA_EDIT', 'edit fedora metadata');
 define('ISLANDORA_ADD_DS', 'add fedora datastreams');
@@ -17,7 +17,79 @@ define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
 
+// Fedora Definitions
+define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
+
+///////////////// Menu /////////////////
+/**
+ * Implements hook_menu().
+ *
+ * @author Natasha Squires
+ * @author Nolan Phillips <ncphillups@upei.ca>
+ */
+function islandora_bioinformatics_base_menu() {
+  return array(
+    'sparqltest' => array(
+      'title' => 'related_islandora_objects',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'related_islandora_objects',
+      'page arguments' => array('a', 'a', 'a' ),
+      'access callback' => TRUE,
+    ),
+    'test_related_islandora_objects_form' => array(
+      'title' => 'Test Related Form',
+      'type' => MENU_CALLBACK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('related_islandora_objects_form'),
+      'access callback' => TRUE,
+    ),
+    'islandora/object/%islandora_object/lab_objects/' => array(
+      /*
+       * Lists all lab_objects associated with the %islandora_object.
+       * @TODO
+       */
+    ),
+
+    'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
+      /*
+       * Begins the ingestion process for a new object that will
+       * be of a type %cmodel and related to %islandora_object.
+       * @TODO
+       */
+    ),
+
+    'islandora/object/%islandora_object/people' => array(
+      /**
+       * Creates a tab alongside the Manage and View tabs. This links to a page
+       * listing all of the people in the project.
+       */
+
+      'title' => 'People',
+      'type' => MENU_LOCAL_TASK,
+      'description' => 'People collaborating on this project.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('related_people_form', 2),
+      'access callback' => TRUE,
+    ),
+
+    'islandora/object/%islandora_object/people/add' => array(
+      /**
+       * Displays form for adding/removing people to %islandora_object.
+       */
+      'title callback' => 'add_person_title',
+      'title arguments' => array(2),
+      'description' => 'Adds a person to a project',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_project_people_add_form', 2),
+      'type' => MENU_CALLBACK,
+      'access callback' => TRUE,
+      'file' => 'includes/manage_project.form.inc',
+    ),
+  );
+}
+
+///////////////// Page Callbacks /////////////////
 /**
  * Page Callback callback_rel_lab_object($object)
  *
@@ -51,7 +123,8 @@ function callback_rel_lab_object($object) {
   //Construct a query which will find all pids adhering to the following two conditions:
   //Condition 1: pid corresponds to a content model that has a data relationship with $object
 
-  $query = "SELECT ?pid
+  $query = "
+            SELECT ?pid
             FROM <#ri>
             WHERE {
               ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
@@ -80,8 +153,6 @@ function callback_rel_lab_object($object) {
     $render_array/*[]*/ = drupal_get_form($form_id, $object);
 
   }
-
-
   //Return the renderable array
   return $render_array;
 }
@@ -98,7 +169,6 @@ function callback_rel_lab_object($object) {
  * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
  *
  */
-
 function callback_rel_lab_object_ingest($object, $cmodel) {
 
   //Get the pid of the content model
@@ -113,140 +183,30 @@ function callback_rel_lab_object_ingest($object, $cmodel) {
   $callback_to_call($object);
 }
 
+///////////////// Forms /////////////////
 /**
- * Implements hook_related_people_form_alter()
- * @param $form
- * @param $form_state
- * @return mixed
+ * Implements hook_forms
+ *
+ * @param $formid
+ * @param $args
+ * @return $forms
  *
  * @author Nolan Phillips ncphillips@upei.ca
  */
-function islandora_bioinformatics_base_related_people_form_alter($form, &$form_state) {
-  $object = $form_state['object'];
-  $people = $form_state['related_objects'];
-
-  // Table of Related Lab Objects.
-  $header = array(
-    'first' => t('First Name'),
-    'last' => t('Last Name'),
-    'phone' => t('Phone Number'),
-    'email' => t('Email'),
-  );
-
-  $options = array();
-
-  $ns = "http://www.loc.gov/mads/v2";
-
-  foreach ($people as $person){
-    // Default Values
-    $first = '';
-    $last = '';
-    $email = '';
-    $phone = '';
-    if(!isset($person['MADS'])) break;
-
-    echo 'FULL DATASTREAM </br></br>' . $person['MADS']->content . '</br></br>END FULL DATASTREAM';
-
-    $MADS_DATA = $person['MADS']->content;
-    $MADS = new SimpleXMLElement($MADS_DATA);
-    $MADS->registerXPathNamespace('mads', $ns);
-
-    // Parsing the XML isn't working, it just returns empty strings.
-
-    foreach($name_parts as $name_part){
-      if($name_part['type'] == 'given')
-        $first = $name_part;
-      elseif ($name_part['type'] == 'family')
-        $last = $name_part;
-    }
-
-    $phone = $MADS->authority->affiliation->phone;
-    $email = $MADS->authority->affiliation->email;
-
-    $options[$person->id] = array(
-      'first' => $first,
-      'last' => $last,
-      'phone' => $phone,
-      'email' => $email,
-    );
+function islandora_bioinformatics_base_forms($form_id, $args) {
+  $forms = array();
+  switch($form_id){
+    case 'related_people_form':
+      $args[] = array('islandora:person_cmodel');
+      $args[] = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),);
+      $forms['related_people_form'] = array(
+        'callback' => 'related_islandora_objects_form',
+        'callback arguments' => $args,
+      );
+      break;
   }
-
-  // Set up the table.
-  $form['table'] = array(
-    '#type' => 'tableselect',
-    '#header' => $header,
-    '#options' => $options,
-    '#empty' => t("There is no people related to this object."),
-  );
-
-  return $form;
+  return $forms;
 }
-
-/**
- * related_islandora_objects
- *
- * This function finds al
- *
- * @param IslandoraFedoraObject $object
- * @param string array | null $cmodels
- * An array of strings representing fedora IDs of Content Models.
- * @param array | null $relationships
- * An associative array whose keys are namespaces, and whose values
- * are arrays of relationships in that namespace.
- *
- * @return IslandoraFedoraObject array $related_objects
- *
- * @authoer Nolan Phillips ncphillips@upei.ca
- */
-function related_islandora_objects($object, $cmodels=null, $relationships=null){
-  $object = islandora_object_load('islandora:524');
-  $cmodels = array('islandora:person_cmodel');
-  echo "Cmodels: ";
-  var_dump($cmodels);
-  $relationships = array(FEDORA_RELS_EXT_URI=>'isMemberOf');
-  echo "</br>Rels: ";
-  var_dump($relationships);
-
-  $obj_id = $object->id;
-  echo "</br>Obj: $obj_id";
-
-  $cmodel_clauses = array();
-  foreach($cmodels as $cmodel){
-    $cmodel_clauses[] = "{?pid <fedora-model:hasModel> <info:fedora/islandora:$cmodel>}";
-  }
-  $cmodel_clause = implode(' UNION ', $cmodel_clauses);
-
-  $rel_clauses = array();
-  foreach($relationships as $ns => $rel){
-    $nsrel = $ns.':'.$rel;
-    $rel_clauses[] = "{?pid $nsrel $obj_id}";
-  }
-  $rel_clause = implode(' UNION ', $rel_clauses);
-
-  $query = "
-    SELECT *
-    FROM <#ri>
-    WHERE {
-        { $cmodel_clause }
-        { $rel_clause }
-    }
-  ";
-
-  echo "Query: $query";
-  exit();
-
-  $tuque = new IslandoraTuque();
-
-  $result = $tuque->repository->ri->query($query);
-
-  $related_objects = array();
-  foreach($result as $related_object) {
-    $related_objects[] = islandora_object_load($related_object['pid']['values']);
-  }
-
-  return $related_objects;
-}
-
 
 /**
  * related_islandora_objects_form
@@ -265,11 +225,11 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
  *
  */
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
+  echo "Creating related_islandora_objects_form";
 
   // Find the list of related islandora objects.
-//  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
-  $object = islandora_object_load('islandora:524');
-  $related_objects[] = islandora_object_load('islandora:388');
+  //$object = islandora_object_load('islandora:524');
+  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
@@ -278,6 +238,9 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   // From our form there should be a list of specific operations that can be performed
   // on the objects in the list.
+  $form['banana'] = array(
+    '#markup' => '<h1>OH MY GOD</h1>',
+  );
   $form['selected'] = array(
     '#type' => 'select',
     '#title' => 'Actions',
@@ -295,7 +258,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $header = array(
     'id' => 'ID',
-    'title' => 'Title',
   );
 
   $options = array();
@@ -303,7 +265,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   foreach($related_objects as $related_object) {
     $options[$related_object->id] = array(
       'id' => $related_object->id,
-      'title' => $related_object->title,
     );
   }
 
@@ -318,119 +279,53 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 }
 
 /**
- * Implements hook_forms
- *
- * @param $formid
- * @param $args
+ * Implements hook_related_people_form_alter()
+ * @param $form
+ * @param $form_state
  * @return mixed
  *
  * @author Nolan Phillips ncphillips@upei.ca
  */
-function islandora_bioinformatics_base_forms($form_id, $args) {
-  $forms['related_person_form'] = array(
-    'callback' => 'related_islandora_object_form',
-    'callback arguments' => array(
-      array('islandora:person_cmodel'),
-      array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),),
-    ),
+function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$form_state) {
+  $object = $form_state['object'];
+  $people = $form_state['related_objects'];
+
+  // Table of Related Lab Objects.
+  $header = array(
+    'name' => t('Name'),
+    'phone' => t('Phone Number'),
+    'email' => t('Email'),
   );
-  return $forms;
-}
 
-function TESTCB(){
+  $options = array();
 
-  $object = islandora_object_load('islandora:525');
-  $people = islandora_object_load('islandora:388');
+  foreach ($people as $person){
+    // Default Values
+    if(!isset($person['MADS'])) break;
 
-  return drupal_get_form('rel_people_form', $object, $people);
+    $person_mads = person_mads_to_array($person);
+    echo $person->id;
 
-  $render_array = array();
-
-  $object = 'Your Mom';
-  $rel_cmodels = array('specimen', 'lcms');
-
-
-  foreach ($rel_cmodels as $rel_cmodel) {
-    $element_name = $rel_cmodel . "_form";
-    $render_array[$element_name] = drupal_get_form('rel_lab_objects_' . $rel_cmodel . '_form', $object, $rel_cmodel);
-    $module_name = "islandora_lab_object_$rel_cmodel";
+    $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
+    $options[$person->id] = array(
+      'name' => $name,
+      'phone' => $person_mads['contact']['phone'],
+      'email' => $person_mads['contact']['email'],
+    );
   }
-  return $render_array;
-}
 
-/**
- * Implements hook_menu().
- *
- * @author Natasha Squires
- * @author Nolan Phillips <ncphillups@upei.ca>
- */
-function islandora_bioinformatics_base_menu() {
-  return array(
-    'testing/%' => array(
-      'title' => 'TEST',
-      'type' => MENU_CALLBACK,
-      'page callback' => 'TESTCB',
-      'access callback' => TRUE,
-    ),
-    'sparqltest' => array(
-      'title' => 'related_islandora_objects',
-      'type' => MENU_CALLBACK,
-      'page callback' => 'related_islandora_objects',
-
-      'access callback' => TRUE,
-    ),
-    'islandora/object/%islandora_object/lab_objects/' => array(
-      /*
-       * Lists all lab_objects associated with the %islandora_object.
-       * @TODO
-       */
-    ),
-
-    'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
-      /*
-       * Begins the ingestion process for a new object that will
-       * be of a type %cmodel and related to %islandora_object.
-       * @TODO
-       */
-    ),
-
-    'islandora/object/%islandora_object/people' => array(
-      /**
-       * Creates a tab alongside the Manage and View tabs. This links to a page
-       * listing all of the people in the project.
-       */
-
-      'title' => 'People',
-      'type' => MENU_LOCAL_TASK,
-      'description' => 'People collaborating on this project.',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('related_people_form', 2),
-      'access callback' => 'islandora_object_access_callback',
-      'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
-      'file' => 'includes/manage_project.form.inc',
-    ),
-
-    'islandora/object/%islandora_object/people/add' => array(
-      /**
-       * Displays form for adding/removing people to %islandora_object.
-       */
-      'title callback' => 'add_person_title',
-      'title arguments' => array(2),
-      'description' => 'Adds a person to a project',
-      'page callback' => 'test_people_add',
-      'page arguments' => array(2),
-      'type' => MENU_CALLBACK,
-      'access callback' => TRUE,
-    ),
+  // Set up the table.
+  $form['table'] = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $options,
+    '#empty' => t('There is no people related to ' . $object->id . '.'),
   );
+
+  return $form;
 }
 
-function test_people_add($object){
- module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
- drupal_get_form('islandora_project_people_add_form', $object);
-}
-
-// LOADERS //
+///////////////// Loader Functions/////////////////
 /**
  * cmodel_load
  *
@@ -478,27 +373,8 @@ function rel_cmodel_load($cmodel_id_part, $object) {
   }
   return $cmodel;
 }
-// END LOADERS //
 
-
-function rel_lab_objects_list($object) {
-  /** @TODO
-    Invokes hook_rel_lab_object_list
-    Invokes drupal_alter on
-      hook_rel_lab_object_list_alter
-      get list of all related cmodels, and remove the non lab_object subtypes
-        for each related cmodel, where the cmodel name is TYPE
-          hook_rel_lab_object_TYPE_list_alter
-    See the bottom of the following function for an example of how to do this alter
-    calling https://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_prepare_form/7
-   */
-
-}
-
-function rel_lab_object_ingest($object, $cmodel) {
-
-}
-
+///////////////// Theming /////////////////
 /**
   * Implements hook_theme().
   */
@@ -644,6 +520,11 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   );
 }
 
+///////////////// Islandora Form Builder /////////////////
+/**
+ * Implements hook_islandora_xml_form_builder_forms()
+ * @return array
+ */
 function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
   $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
   return array(
@@ -656,6 +537,10 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
   );
 }
 
+/**
+ * Implements hook_islandora_xml_form_builder_form_associations()
+ * @return array
+ */
 function islandora_bioinformatics_base_islandora_xml_form_builder_form_associations() {
   return array(
     'islandora_bioinformatics_person_form_mads' => array(
@@ -676,8 +561,9 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_form_associati
     ),
   );
 }
-  
- /**
+
+///////////////// Ingest Steps/////////////////
+/**
  * Implements hook_islandora_ingest_steps() for the person_cmodel.
  */
 function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_steps(array $configuration) {
@@ -693,7 +579,7 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_
   );
 }
 
- /**
+/**
  * Implements hook_islandora_ingest_steps() for the project_cmodel.
  */
 function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest_steps(array $configuration) {
@@ -718,13 +604,19 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
   );
 }
 
+///////////////// Drupal User/Fedora Person Synchronization /////////////////
 /**
-* @author Quintin Dawson
-* When a new drupal user is created, this function will create a corresponding Person object in Fedora.
-*
-*/
+ * Implements hook_user_insert()
+ * @author Quintin Dawson
+ * When a new drupal user is created, this function will create a corresponding Person object in Fedora.
+ *
+ */
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {  
   $tuque = new IslandoraTuque();
+  
+  echo '<pre>';
+  echo var_dump($account->uid);
+  echo '</pre>';
   
   //build person object
 
@@ -772,25 +664,138 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $datastream->mimetype = 'text/xml';
   $datastream->setContentFromString($xml);
     
-  dpm($account);
-    
+  //related person object to appriopriate collection  
   $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:person_collection');
+    
+  //store uid of Drupal account in person object
+  //$person_object->relationships->add(ISLANDORA_RELS_EXT_URI, 'isDrupalID', $account->uid, RELS_TYPE_STRING);    
+  $person_object->relationships->add(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);   
+
     
   //ingest object into fedora
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
 }
 
-
 /**
-* @author Quintin Dawson
-* When a Drupal user is modified, update the associated person object with the new values
-*
-*/
+ * Implements hook_user_update()
+ * @author Quintin Dawson
+ * When a Drupal user is modified, update the associated person object with the new values
+ *
+ */
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
-
+  //retrieve Person object related to the Drupal user
+  $tuque = new IslandoraTuque();
+  //this query should retrieve all person_cmodel objects
+  $query = "SELECT ?pid
+          FROM <#ri>
+          WHERE {
+          ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+        }";     
+       
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');  
+  
+  $account_person = NULL;
+  
+  //iterate over all people objects to find the one related to this drupal account
+  foreach($result as $person) {
+    //load the current person object
+    $person_object = islandora_object_load($person['pid']['value']);
+        
+    //check if relationship to Drupal user exists
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
+    if(!empty($relation)) {
+      $account_person = $person_object;
+    }
+  }  
+  
+  /* //This query should retrieve all people objects related to the current drupal user [$account->id]
+  $query = "SELECT ?uid
+            FROM <#ri>
+            WHERE {
+              ?uid <" . ISLANDORA_RELS_EXT_URI . ":isDrupalID> <info:fedora/" . $account->id . "> .
+            }"; 
+  $result - $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  
+  //only one Fedora object should be related to the Drupal account, so take the first value in the $results array
+  if(!empty($result[0])) {
+    $account_person = result[0];
+  }  
+  */ 
+  
+  //if the Fedora object related to the Drupal account is found, make the desired changes
+  
+  if(!empty($account_person)) {
+    //change the label
+    $account_person->label = $account->name;
+    
+    //Modify the xml
+    $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
+    $ns = "http://www.loc.gov/mads/v2";
+    foreach ($person_xml->children($ns) as $part){
+      switch ((string) $part->getName()){
+          case 'authority':
+            $part->titleInfo->title = $account->name;
+          case 'identifier':
+            $part = $account->name;   //NOT WORKING AT THE MOMENT
+          case 'affiliation':
+            $part->email = $account->mail;
+      }   
+    }
+    
+    //Replace the old xml with the modified xml in Fedora
+    $account_person['MADS']->setContentFromString($person_xml->asXML());
+    $account_person['MADS']->label = 'MADS Record';
+    $account_person['MADS']->mimetype = 'text/xml';
+    
+    //Save changes object in Fedora
+    //$tuque->repository->ingestObject($account_person);
+  }
 }
 
+
+/**
+ * Implements hook_user_delete()
+ * @author Quintin Dawson qdawson@upei.ca
+ * Called when a drupal user is deleted.  This should find and delete the associated Fedora person object from the repository
+ */
+function islandora_bioinformatics_base_user_delete($account) {
+//function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
+  dpm($account);
+  //retrieve Person object related to the Drupal user
+  $tuque = new IslandoraTuque();
+  //this query should retrieve all person_cmodel objects
+  $query = "SELECT ?pid
+          FROM <#ri>
+          WHERE {
+          ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+        }";     
+       
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');  
+  
+  $account_person = NULL;
+  
+  //iterate over all people objects to find the one related to this drupal account
+  foreach($result as $person) {
+    //load the current person object
+    $person_object = islandora_object_load($person['pid']['value']);
+    
+    //check if relationship to Drupal user exists
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
+    dpm($relation);
+    if(!empty($relation)) {
+      $account_person = $person_object;
+    }
+  }  
+  
+  //purge object from fedora
+  if(!empty($account_person)) {
+    $account_person->delete();  //flag object as deleted
+    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+  }
+}
+
+///////////////// Helper Functions /////////////////
 /**
  * @author Brent Mitton
  * @param $person_object
@@ -805,11 +810,7 @@ function person_mads_to_array($person_object){
   $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
 
   // parse the 'authority' section of mads.
-
-
   foreach ($person_xml->children($ns) as $part){
-
-
     switch ((string) $part->getName()){
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
@@ -847,4 +848,144 @@ function person_mads_to_array($person_object){
   }
 
   return $person_mads;
+}
+
+/**
+ * function related_islandora_objects
+ *
+ * @param IslandoraFedoraObject $object
+ *
+ * @param string array | null $cmodels
+ * An array of strings representing fedora IDs of Content Models.
+ *
+ * @param array | null $relationships
+ * An associative array whose keys are namespaces, and whose values
+ * are arrays of relationships in that namespace.
+ *
+ * @return IslandoraFedoraObject array $related_objects
+ * An array of IslandoraFedoraObjects that are related to the $object.
+ *
+ * @author Nolan Phillips ncphillips@upei.ca
+ *
+ * Dear Paul and Peter,
+ *
+ *    If you're reading this function...I am so sorry.
+ *
+ * Sincerely,
+ * Nolan
+ */
+function related_islandora_objects($object, $cmodels=null, $relationships=null){
+  /**
+   * Example Query:
+   *    PREFIX a: <info:fedora/fedora-system:def/relations-external#>
+   *    PREFIX b: <info:fedora/fedora-system:def/model#>
+   *    SELECT *
+   *    FROM <#ri>
+   *    WHERE {
+   *      {
+   *        {?pid b:hasModel <info:fedora/islandora:person_cmodel>}
+   *        UNION
+   *        {?pid b:hasModel <info:fedora/islandora:specimen_cmodel>}
+   *      }
+   *      {
+   *        {?pid a:isMemberOf <info:fedora/islandora:524>}
+   *      }
+   *    }
+   */
+
+  /////Test Data/////
+  //$object = islandora_object_load('islandora:524');
+  //$cmodels = array('islandora:person_cmodel');
+  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
+
+
+  $obj_id = $object->id;  // The Fedora PID of $object.
+  $cmodel_query = '';  // A union of CModel tripples.
+
+  $pre = array();  // An associative array of namespace => prefix.
+  $pre_defs = array();  // An array of prefix definitions.
+
+  // Default values for $pre and $pre_defs
+  $pre[FEDORA_MODEL_URI] = 'fedora-model:';
+
+  // Besides 'fedora-model', the first prefix being used is 'a'.
+  $prefix = 'a';$pre_defs[] = 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>';
+
+  /**
+   * If any cmodels were passed in, then we accept an object if any of it's
+   * cmodels is in the list of cmodels.
+   *
+   * else, if no cmodel was passed in, then any kind of object, regardless of cmodel,
+   * will be accepted by the query.
+   */
+  if ($cmodels){
+    $cmodel_tripples= array();
+    foreach($cmodels as $cmodel)
+      $cmodel_tripples[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
+    // Union all the cmodel tripple queries.
+    $cmodel_query = '{'.implode(' UNION ', $cmodel_tripples).'}';
+  }
+
+  // Construct the set of prefix definitions.
+  /**
+   * If a list of relationships is defined, then we accept an object if
+   * it has one of the defined relationships to the $object.
+   *
+   * else, if no relationships are defined, then we accept objects no matter
+   * what kind of relationship it has with the $object.
+   */
+  if($relationships){
+    // Define PREFIX statements
+    foreach($relationships as $ns => $rel){
+      $pre[$ns] = $prefix.':';
+      $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
+    }
+    $pre_def = implode(' ', $pre_defs);
+
+    // Define relationship tripples
+    foreach($relationships as $ns => $rels){
+      foreach($rels as $rel){
+        $nsrel = $pre[$ns] . $rel;
+        $rel_tripples[] = "{?pid $nsrel <info:fedora/$obj_id>}";
+      }
+    }
+    // Union all the relationship tripples
+    $rel_query = '{'.implode(' UNION ', $rel_tripples).'}';
+  }
+  else {
+    $pre_def = $pre_defs[0];
+    $rel_query = "{?pid ?any_rel <info:fedora/$obj_id>}";
+  }
+
+  $query = "
+    $pre_def
+    SELECT ?pid
+    FROM <#ri>
+    WHERE {
+        $cmodel_query
+        $rel_query
+    }
+  ";
+
+  // For testing porpoises.
+  //file_put_contents('/tmp/sparqlquery.txt', $query);
+
+  // Run the query.
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query);
+
+  $related_objects = array();
+  foreach($result as $related_object) {
+    $obj = islandora_object_load($related_object['pid']['value']);
+    $related_objects[] = $obj ;
+  }
+
+  return $related_objects;
+}
+
+///////////////// Test Functions /////////////////
+function test_people_add($object){
+  echo "hello";
+  module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
+  drupal_get_form('islandora_project_people_add_form', $object);
 }
