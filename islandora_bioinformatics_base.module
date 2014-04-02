@@ -782,6 +782,7 @@ function islandora_bioinformatics_base_user_delete($account) {
     
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
+    dpm($relation);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
@@ -789,7 +790,6 @@ function islandora_bioinformatics_base_user_delete($account) {
   
   //purge object from fedora
   if(!empty($account_person)) {
-    dpm($account_person);
     $account_person->delete();  //flag object as deleted
     $tuque->repository->purgeObject($account_person->id); //purge the object from the database
   }
