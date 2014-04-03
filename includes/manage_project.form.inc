@@ -15,6 +15,7 @@
      * @param array array &$form_state
      * the Drupal form state
      * @param AbstractObject $object
+     * the Project object the form is associated with
      *
      * @return
      * $form - the Drupal form definition
