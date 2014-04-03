@@ -786,10 +786,24 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
     }
   }  
   
-  //purge object from fedora
+  
   if(!empty($account_person)) {
-    $account_person->delete();  //flag object as deleted
-    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+    switch($method) {
+      case 'user_cancel_block_unpublish': //account is blocked and information is still accessible to administrators
+        //mark object as deleted in Fedora
+        $account_person->delete();  //flag object as deleted
+        break;
+      case 'user_cancel_reassign':  //account is deleted and information its contents belong to an anonymous user
+        //purge object from fedora
+        $account_person->delete();  //flag object as deleted
+        $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+        break;
+      case: 'user_cancel_delete':   //Account is removed and all information is deleted
+        //purge object from fedora
+        $account_person->delete();  //flag object as deleted
+        $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+        break; 
+    }
   }
 }
 
