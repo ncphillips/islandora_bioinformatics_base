@@ -798,7 +798,7 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
         $account_person->delete();  //flag object as deleted
         $tuque->repository->purgeObject($account_person->id); //purge the object from the database
         break;
-      case: 'user_cancel_delete':   //Account is removed and all information is deleted
+      case 'user_cancel_delete':   //Account is removed and all information is deleted
         //purge object from fedora
         $account_person->delete();  //flag object as deleted
         $tuque->repository->purgeObject($account_person->id); //purge the object from the database
