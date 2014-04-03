@@ -4,42 +4,22 @@
      *
      * @file manage_project.inc
      *
-     * @todo
-     * This should return a page that lists the people associated with the project.
-     * Each person row should link to the person object itself.
+     * Presents a list of People that can be added to a Project
      */
-    function islandora_project_people(AbstractObject $object) {
-
-        $tuque = new IslandoraTuque();
-        $query = "SELECT ?pid
-                    FROM <#ri>
-                    WHERE {
-                    ?pid <datarel_partOf> <info:fedora/islandora:person_cmodel> .
-                    }
-                    ";
-        $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-
-        $people = array();
-        foreach ($result as $person) {
-            $person_object = islandora_object_load($person["pid"]["value"]);
-            
-            
-            //check if relationship exists and add to people array
-            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', "");
-            
-            if (!empty($relationship)) {
-                $people[$person_object->id] = $person_object->label;
-            }
-        }
-
-        $people_string = "";
-        foreach ($people as $person) {
-          $people_string .= $person . "\n";
-        }
-        
-        return $people_string;
-    }
-    
+   
+    /**
+     * The People add form
+     * 
+     * @param array $form
+     * the Drupal form
+     * @param array array &$form_state
+     * the Drupal form state
+     * @param AbstractObject $object
+     *
+     * @return
+     * $form - the Drupal form definition
+     *
+     */
     function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object){
         
         $tuque = new IslandoraTuque();
@@ -81,6 +61,17 @@
         return $form;
     }
     
+    /**
+     * The submit handler for the project_people_add_form
+     *
+     * @param array $form
+     * the Drupal form
+     * @param array &$form_state
+     * the Drupal form state
+     * @param AbstractObject $object
+     * the Project object the form is associated with
+     *
+     */
     function islandora_project_people_add_submit(array $form, array &$form_state, AbstractObject $object) {
         $tuque = new IslandoraTuque();
     
