@@ -761,7 +761,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
  */
 //function islandora_bioinformatics_base_user_delete($account) {
 function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
-  dpm($account);
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -782,7 +781,6 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
     
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    dpm($relation);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
