@@ -41,8 +41,8 @@
             //check if relationship exists and add to people array
             $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
             
-            if(!empty($relationship)){
-                $related_people[$person_object->id] = $person_object->label;
+            if(empty($relationship)){
+                $default_values[$person_object->id] = $person_object->label;
             }
         }
         
@@ -50,7 +50,7 @@
             //list of people
             'people' => array(
                 '#type' => 'checkboxes',
-                '#default_value' => $related_people,
+                '#default_value' => $default_values,
                 '#options' => $people,
             ),
         );
