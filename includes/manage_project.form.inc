@@ -38,8 +38,9 @@
         foreach($result as $person){
             $person_object = islandora_object_load($person["pid"]["value"]);
             
-            //check if relationship exists and add to people array
+            //check if relationship exists and ignore if so
             $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
+            var_dump($relationship);
             
             if(empty($relationship)){
                 $default_values[$person_object->id] = $person_object->label;
