@@ -15,11 +15,8 @@
 //$islandora_content = $islandora_object['PERSON']->content;
 //$path = drupal_get_path('module', 'islandora_bioinformatics_base');
 
-print_r("This is a test");
-
 echo "<pre>";
-print_r($variables['authority']);
-print_r($variables['affiliation']);
+print_r($variables['test']);
 print_r($variables);
 echo "</pre>";
 ?>
