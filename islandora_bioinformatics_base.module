@@ -789,6 +789,9 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   
   if(!empty($account_person)) {
     switch($method) {
+      case 'user_cancel_block':
+        //do nothing
+        break;
       case 'user_cancel_block_unpublish': //account is blocked and information is still accessible to administrators
         //mark object as deleted in Fedora
         $account_person->delete();  //flag object as deleted
