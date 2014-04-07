@@ -640,7 +640,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
                   <mads:title>' . $account->name . ' </mads:title>
                 </mads:titleInfo>
               </mads:authority>
-              <mads:identifier type="u1">' . $account->name . '</mads:identifier>
+              <mads:identifier type="u1"></mads:identifier>
               <mads:affiliation>
                 <mads:phone></mads:phone>
                 <mads:email>' . $account->mail . '</mads:email>
@@ -736,10 +736,13 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
       switch ((string) $part->getName()){
           case 'authority':
             $part->titleInfo->title = $account->name;
+            break;
           case 'identifier':
-            $part = $account->name;   //NOT WORKING AT THE MOMENT
+            //$part = $account->name;   //NOT WORKING AT THE MOMENT
+            break;
           case 'affiliation':
             $part->email = $account->mail;
+            break;
       }   
     }
     
