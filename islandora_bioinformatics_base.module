@@ -147,7 +147,11 @@ function callback_related_lab_objects($object) {
     FROM <#ri>
     WHERE {
         ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel> .
-        ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
+        {
+          {?pid fedora:datarel_isPartOf <info:fedora/$target_pid>}
+            UNION
+          {?pid fedora:datarel_isPartOf <info:fedora/$target_pid>}
+        }
     }";
 
   $render_array['query'] = array(
