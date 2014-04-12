@@ -129,6 +129,12 @@ function callback_related_lab_objects($object) {
 
   $target_pid = $object['models'][0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
 
+  $render_array['cmodel'] = array(
+    '#markup' => "$target_pid",
+    '#prefix' => '<div id="cmodel">',
+    '#suffix' => '</div>',
+  );
+
   $tuque = new IslandoraTuque(); //Establish a tuque object
 
   //Construct a query which will find all pids adhering to the following two conditions:
@@ -140,11 +146,22 @@ function callback_related_lab_objects($object) {
             WHERE {
               ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
               ?pid <datarel_isPartOf> <info:fedora/$target_pid> .
-            }"; 
+            }";
+
+  $render_array['query'] = array(
+    '#markup' => "$query",
+    '#prefix' => '<div id="query"><pre>',
+    '#suffix' => '</pre></div>',
+  );
 
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
-  
+  $render_array['related_cmodels'] = array(
+    '#markup' => "$target_pid",
+    '#prefix' => '<div id="related_cmodels">',
+    '#suffix' => '</div/',
+  );
+
  
   foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,
  
