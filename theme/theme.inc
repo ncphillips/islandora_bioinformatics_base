@@ -7,9 +7,6 @@
 
 function islandora_bioinformatics_person_preprocess_islandora_bioinformatics_person(array &$variables) {
 
-  echo "<pre>";
-    print_r("is this even called?");
-  echo "</pre>";
   $islandora_object = $variables['islandora_object'];
   // Thumbnail.
   if (isset($islandora_object['IMG'])) {
@@ -57,6 +54,7 @@ function islandora_bioinformatics_person_preprocess_islandora_bioinformatics_per
     $variables['affiliation'] = $affiliationTest;
     //$variables['url'] = $url;
     //$variables['note'] = $note;
+    $variables['test'] = "test";
   }
 }
 

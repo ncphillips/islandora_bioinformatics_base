@@ -616,7 +616,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {  
   $tuque = new IslandoraTuque();
   
-  dpm($account);
   echo '<pre>';
   echo var_dump($account->uid);
   echo '</pre>';
@@ -626,7 +625,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //////You're overwriting the Person Content Model, not making a new object of type content model.
 
   $person_object = $tuque->repository->constructObject('islandora');
-  //$person_object = $tuque->repository->constructObject('fake:pid');
   $person_object->owner = 'fedoraAdmin';
   $person_object->label = $account->name;
   $person_object->models = 'islandora:person_cmodel';
@@ -644,7 +642,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
                   <mads:title>' . $account->name . ' </mads:title>
                 </mads:titleInfo>
               </mads:authority>
-              <mads:identifier type="u1">' . $account->name . '</mads:identifier>
+              <mads:identifier type="u1"></mads:identifier>
               <mads:affiliation>
                 <mads:phone></mads:phone>
                 <mads:email>' . $account->mail . '</mads:email>
@@ -705,9 +703,9 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   foreach($result as $person) {
     //load the current person object
     $person_object = islandora_object_load($person['pid']['value']);
-    
+        
     //check if relationship to Drupal user exists
-    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId',  $account->uid, RELS_TYPE_INT);
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
     if(!empty($relation)) {
       $account_person = $person_object;
     }
@@ -735,14 +733,18 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     
     //Modify the xml
     $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
+    $ns = "http://www.loc.gov/mads/v2";
     foreach ($person_xml->children($ns) as $part){
       switch ((string) $part->getName()){
           case 'authority':
             $part->titleInfo->title = $account->name;
+            break;
           case 'identifier':
-            $part = $account->name;
+            //$part = $account->name;   //NOT WORKING AT THE MOMENT
+            break;
           case 'affiliation':
             $part->email = $account->mail;
+            break;
       }   
     }
     
@@ -750,6 +752,9 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person['MADS']->setContentFromString($person_xml->asXML());
     $account_person['MADS']->label = 'MADS Record';
     $account_person['MADS']->mimetype = 'text/xml';
+    
+    //Save changes object in Fedora
+    //$tuque->repository->ingestObject($account_person);
   }
 }
 
@@ -759,8 +764,8 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
  * @author Quintin Dawson qdawson@upei.ca
  * Called when a drupal user is deleted.  This should find and delete the associated Fedora person object from the repository
  */
-function islandora_bioinformatics_base_user_delete($account) {
-//function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
+//function islandora_bioinformatics_base_user_delete($account) {
+function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -786,10 +791,27 @@ function islandora_bioinformatics_base_user_delete($account) {
     }
   }  
   
-  //purge object from fedora
+  
   if(!empty($account_person)) {
-    $account_person->delete();  //flag object as deleted
-    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+    switch($method) {
+      case 'user_cancel_block':
+        //do nothing
+        break;
+      case 'user_cancel_block_unpublish': //account is blocked and information is still accessible to administrators
+        //mark object as deleted in Fedora
+        $account_person->delete();  //flag object as deleted
+        break;
+      case 'user_cancel_reassign':  //account is deleted and information its contents belong to an anonymous user
+        //purge object from fedora
+        $account_person->delete();  //flag object as deleted
+        $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+        break;
+      case 'user_cancel_delete':   //Account is removed and all information is deleted
+        //purge object from fedora
+        $account_person->delete();  //flag object as deleted
+        $tuque->repository->purgeObject($account_person->id); //purge the object from the database
+        break; 
+    }
   }
 }
 
