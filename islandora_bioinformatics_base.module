@@ -128,8 +128,8 @@ function callback_related_lab_objects($object) {
   $render_array = array();
 
   $target_pid = $object['models'][0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
-  var_dump($object);
   var_dump($object['models']);
+  echo $object['models'];
 
   $render_array['cmodel'] = array(
     '#markup' => "$target_pid",
