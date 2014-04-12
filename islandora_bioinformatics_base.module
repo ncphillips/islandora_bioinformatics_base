@@ -151,6 +151,7 @@ function callback_related_lab_objects($object) {
       ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
     }";
    */
+  $query = "";
 
   $render_array['query'] = array(
     '#markup' => "$query",
