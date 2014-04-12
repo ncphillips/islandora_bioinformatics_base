@@ -139,17 +139,18 @@ function callback_related_lab_objects($object) {
 
   //Construct a query which will find all pids adhering to the following two conditions:
   //Condition 1: pid corresponds to a content model that has a data relationship with $object
-  //PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-  //PREFIX fedora: <info:fedora/fedora-system:def/relations-external#>
 
+   $query = "";
+  /**
   $query = "
-
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    PREFIX fedora: <info:fedora/fedora-system:def/relations-external#>
     SELECT ?pid
     FROM <#ri>
     WHERE {
       ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel .
       ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
-    }";
+    }";*/
 
   $render_array['query'] = array(
     '#markup' => "$query",
