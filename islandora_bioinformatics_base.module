@@ -204,6 +204,8 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
         'callback arguments' => $args,
       );
       break;
+    case 'related_project_form':
+
   }
   return $forms;
 }
