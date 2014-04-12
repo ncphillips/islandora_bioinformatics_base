@@ -146,8 +146,8 @@ function callback_related_lab_objects($object) {
     SELECT ?pid
     FROM <#ri>
     WHERE {
-        ?pid fedora-model:has_model <info:fedora/islandora:lab_object> .
-        ?pid fedora:datarel_isPartOf <info:fedora/$target_pid> .
+        ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel> .
+        ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
     }";
 
   $render_array['query'] = array(
@@ -1025,7 +1025,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
  *
  *      PREFIX a: <info:fedora/fedora-system:def/relations-external#>
  *      PREFIX b: <info:fedora/fedora-system:def/model#>
- *  	 SELECT *
+ *  	 SELECT ?pid
  *  	 FROM <#ri>
  *  	 WHERE
  *      {
