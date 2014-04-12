@@ -143,7 +143,7 @@ function callback_related_lab_objects($object) {
   $query = "
     SELECT ?pid
     FROM <#ri>
-    WHERE "."{
+    WHERE {
         ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
         ?pid <datarel_isPartOf> <info:fedora/$target_pid> .
     }";
@@ -157,7 +157,8 @@ function callback_related_lab_objects($object) {
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
   $render_array['related_cmodels'] = array(
-    '#markup' => "$target_pid",
+    '#theme' => 'item_list',
+    '#items' => $related_cmodels,
     '#prefix' => '<div id="related_cmodels"><h1>Related CModels:</h1>',
     '#suffix' => '</div>',
   );
