@@ -150,7 +150,7 @@ function callback_related_lab_objects($object) {
         {
           {?pid fedora:datarel_isPartOf <info:fedora/$target_pid>}
             UNION
-          {?pid fedora:datarel_isPartOf <info:fedora/$target_pid>}
+          {?pid fedora:datarel_isMemberOf<info:fedora/$target_pid>}
         }
     }";
 
