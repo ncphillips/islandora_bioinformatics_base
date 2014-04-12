@@ -1,9 +1,8 @@
 <?php
-
 /**
-  * @file
-  * Hooks and callbacks for the module.
-  */
+ * @file islandora_bioinformatics_base.module
+ * Hooks and callbacks for the module.
+ */
 
 // Islandora Definitions
 define('ISLANDORA_VIEW_OBJECTS', 'view fedora repository objects');
@@ -20,8 +19,6 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
-
-///////////////// Menu /////////////////
 /**
  * Implements hook_menu().
  *
