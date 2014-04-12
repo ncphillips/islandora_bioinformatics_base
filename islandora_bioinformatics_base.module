@@ -1,12 +1,9 @@
-/**
- * @file
- */
-
 <?php
 /**
  * @file
  *
  * islandora_bioinformatics_base.module
+ *
  * Hooks and callbacks for the module.
  */
 
@@ -26,58 +23,69 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
 /**
- * Implements hook_menu().
- *
  * @author Natasha Squires
  * @author Nolan Phillips <ncphillups@upei.ca>
+ *
  */
 function islandora_bioinformatics_base_menu() {
+  /**
+   * Implements hook_menu().
+   *
+   * Provides a list of URLs provided by the Base Solution Pack.
+   */
   return array(
-    'sparqltest' => array(
-      'title' => 'related_islandora_objects',
-      'type' => MENU_CALLBACK,
-      'page callback' => 'related_islandora_objects',
-      'page arguments' => array('a', 'a', 'a' ),
-      'access callback' => TRUE,
-    ),
-    'test_related_islandora_objects_form' => array(
-      'title' => 'Test Related Form',
-      'type' => MENU_CALLBACK,
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('related_islandora_objects_form'),
-      'access callback' => TRUE,
-    ),
-    'islandora/object/%islandora_object/lab_objects/' => array(
-      /*
-       * @TODO
-       * Lists all lab_objects associated with the %islandora_object.
-       */
-    ),
-
-    'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
-      /*
-       * @TODO
-       * Begins the ingestion process for a new object that will
-       * be of a type %cmodel and related to %islandora_object.
-       */
-    ),
-
-    'islandora/object/%islandora_object/people' => array(
+    'islandora/object/%islandora_object/lab_objects' => array(
       /**
-       * Creates a tab alongside the Manage and View tabs. This links to a page
-       * listing all of the people in the project.
+       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/lab_objects
+       * Provides a tab on an Islandora Object page that shows related Lab Object
+       * forms for each type of Lab Object related to the islandora object.
        */
-
+      /**
+       * @todo
+       * Change access so the tab only shows up for objects whose CModel
+       * is be related to Lab Object subtypes.
+       */
+      'title' => 'Lab Objects',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'callback_related_lab_objects',
+      'page arguments' => array(2),
+      /**
+       * @todo Access callback for /lab_objects
+       */
+      'access callback' => TRUE,
+    ),
+    'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
+      /**
+       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/ingest/\%rel_cmodel
+       * Starts the ingestion process for a new object which will be
+       * related to %islandora_object. The new object will be of type
+       * %rel_cmodel. This is only allowed if the CModel
+       */
+      /*
+       * @todo
+       * Menu definition for /ingest/%rel_cmodel
+       */
+    ),
+    'islandora/object/%islandora_object/people' => array(
+       /**
+        * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/ingest/\%rel_cmodel
+        * Provides a tab on an Islandora Object page that shows a
+        * People form.
+        */
       'title' => 'People',
       'type' => MENU_LOCAL_TASK,
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
+      /**
+       * @todo
+       * Access callback for /people
+       */
       'access callback' => TRUE,
     ),
-
     'islandora/object/%islandora_object/people/add' => array(
       /**
+       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/people/add
        * Displays form for adding/removing people to %islandora_object.
        */
       'title callback' => 'add_person_title',
@@ -94,7 +102,7 @@ function islandora_bioinformatics_base_menu() {
 
 ///////////////// Page Callbacks /////////////////
 /**
- * Page Callback callback_rel_lab_object($object)
+ * Page Callback callback_rel_lab_objects($object)
  *
  * @param $object - We want to find all objects related to this target object.
  *
@@ -115,8 +123,8 @@ function islandora_bioinformatics_base_menu() {
  * These forms will be stored as a elements in a
  * renderable array, which the function will then return.
  */
-function callback_rel_lab_object($object) {
-  
+function callback_rel_lab_objects($object) {
+  // @todo test callback_rel_lab_object
   $render_array = array();
 
   $target_pid = $object['models'][0]->id; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
@@ -161,7 +169,7 @@ function callback_rel_lab_object($object) {
 }
 
 /**
- * Page Callback callback_rel_lab_object_ingest
+ * Page Callback callback_rel_lab_objects_ingest
  * 
  * @param $object - This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested.
  * @param $cmodel - This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with $object.
@@ -172,7 +180,8 @@ function callback_rel_lab_object($object) {
  * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
  *
  */
-function callback_rel_lab_object_ingest($object, $cmodel) {
+function callback_rel_lab_objects_ingest($object, $cmodel) {
+  // @todo test callbac_rel_lab_object_ingest
 
   //Get the pid of the content model
   $content_model_pid = $cmodel->id;
@@ -230,8 +239,6 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
  *
  */
 function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
-  echo "Creating related_islandora_objects_form";
-
   // Find the list of related islandora objects.
   //$object = islandora_object_load('islandora:524');
   $related_objects = related_islandora_objects($object, $cmodels, $relationships);
@@ -285,13 +292,17 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
 /**
  * Implements hook_related_people_form_alter()
+ *
  * @param $form
  * @param $form_state
  * @return mixed
  *
  * @author Nolan Phillips ncphillips@upei.ca
+ *
+ * Alters the related_objects_form for displaying related People.
  */
 function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$form_state) {
+  // @todo Make the related people form pretty.
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
 
@@ -338,8 +349,10 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
  * the pattern "islandora:" . $name . "_cmodel"
  *
  * @author Nolan Phillips <ncphillips@upei.ca>
+ *
  * @param String $cmodel_id_part
  * This is a partial ID of an Islandora Content Model.
+ *
  * @return FedoraObject $object | null
  * If a FedoraObject is found and it is a Content Model, return it;
  * else, return NULL.
@@ -357,8 +370,11 @@ function cmodel_load($cmodel_id_part) {
  * rel_cmodel_load
  *
  * @author Nolan Phillips ncphillips@upei.ca
+ *
  * @param string $cmodel_id_part
+ *
  * @param IslandoraFedoraObject $object
+ *
  * @return FedoraObject|null
  * If the cmodel exists and has a datarel_partOf relationship to
  * the cmodel of %object, then it is returned; else return NULL.
@@ -874,8 +890,6 @@ function person_mads_to_array($person_object){
 }
 
 /**
- * function related_islandora_objects
- *
  * @param IslandoraFedoraObject $object
  *
  * @param string array | null $cmodels
@@ -889,38 +903,9 @@ function person_mads_to_array($person_object){
  * An array of IslandoraFedoraObjects that are related to the $object.
  *
  * @author Nolan Phillips ncphillips@upei.ca
- *
- * Dear Paul and Peter,
- *
- *    If you're reading this function...I am so sorry.
- *
- * Sincerely,
- * Nolan
+
  */
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
-  /**
-   * Example Query:
-   *    PREFIX a: <info:fedora/fedora-system:def/relations-external#>
-   *    PREFIX b: <info:fedora/fedora-system:def/model#>
-   *    SELECT *
-   *    FROM <#ri>
-   *    WHERE {
-   *      {
-   *        {?pid b:hasModel <info:fedora/islandora:person_cmodel>}
-   *        UNION
-   *        {?pid b:hasModel <info:fedora/islandora:specimen_cmodel>}
-   *      }
-   *      {
-   *        {?pid a:isMemberOf <info:fedora/islandora:524>}
-   *      }
-   *    }
-   */
-
-  /////Test Data/////
-  //$object = islandora_object_load('islandora:524');
-  //$cmodels = array('islandora:person_cmodel');
-  //$relationships = array(FEDORA_RELS_EXT_URI=> array('isMemberOf'));
-
 
   $obj_id = $object->id;  // The Fedora PID of $object.
   $cmodel_query = '';  // A union of CModel tripples.
@@ -935,11 +920,10 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   $prefix = 'a';$pre_defs[] = 'PREFIX fedora-model: <info:fedora/fedora-system:def/model#>';
 
   /**
-   * If any cmodels were passed in, then we accept an object if any of it's
-   * cmodels is in the list of cmodels.
-   *
-   * else, if no cmodel was passed in, then any kind of object, regardless of cmodel,
-   * will be accepted by the query.
+   * ## CModel Query Construction
+   * If an Fedora Object's CModel set is a subset of $cmodels then the object
+   * may be returned; however, if the set of CModels passed in is empty, then
+   * an object is accepted regardless of it's CModel set.
    */
   if ($cmodels){
     $cmodel_tripples= array();
@@ -951,11 +935,21 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
 
   // Construct the set of prefix definitions.
   /**
-   * If a list of relationships is defined, then we accept an object if
-   * it has one of the defined relationships to the $object.
+   * ## Namespace Prefix Definitions
+   * ### No Namespaces
+   * If no XML Namespaces are provided, then a Fedora Object may be accepted regardless
+   * of the namespace or relationship to the $object.
+   * ### Single Namespace, 0 relationships
+   * @todo doc
    *
-   * else, if no relationships are defined, then we accept objects no matter
-   * what kind of relationship it has with the $object.
+   * ### Single Namespace, n relationships
+   * @todo doc
+   *
+   * ### Multiple namespaces, 0 relationships
+   * @todo doc
+   *
+   * ### Multiple namespaces, n relationships
+   * @todo doc
    */
   if($relationships){
     // Define PREFIX statements
@@ -1002,6 +996,27 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
+
+/**
+ * ## Example Query
+ * Here is an example of query that may be produced within this function.
+ *
+ *      PREFIX a: <info:fedora/fedora-system:def/relations-external#>
+ *      PREFIX b: <info:fedora/fedora-system:def/model#>
+ *  	 SELECT *
+ *  	 FROM <#ri>
+ *  	 WHERE
+ *      {
+ *        {
+ *          {?pid b:hasModel <info:fedora/islandora:person_cmodel>}
+ *          UNION
+ *          {?pid b:hasModel <info:fedora/islandora:specimen_cmodel>}
+ *        }
+ *        {
+ *          {?pid a:isMemberOf <info:fedora/islandora:524>}
+ *        }
+ *      }
+ */
 
   return $related_objects;
 }
