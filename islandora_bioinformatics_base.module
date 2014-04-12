@@ -183,7 +183,7 @@ function callback_related_lab_objects($object) {
 
     //Add the form array to the render array.
 
-    $render_array/*[]*/ = drupal_get_form($form_id, $object);
+    $render_array/*[]*/ //= drupal_get_form($form_id, $object);
  //}
 
   //Return the renderable array
