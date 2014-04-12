@@ -131,7 +131,7 @@ function callback_related_lab_objects($object) {
 
   $render_array['cmodel'] = array(
     '#markup' => "$target_pid",
-    '#prefix' => '<div id="cmodel">',
+    '#prefix' => '<div id="cmodel"><h1>Object\'s CModel</h1>',
     '#suffix' => '</div>',
   );
 
@@ -150,7 +150,7 @@ function callback_related_lab_objects($object) {
 
   $render_array['query'] = array(
     '#markup' => "$query",
-    '#prefix' => '<div id="query"><pre>',
+    '#prefix' => '<div id="query"><h1>Query:</h1><pre>',
     '#suffix' => '</pre></div>',
   );
 
@@ -158,8 +158,8 @@ function callback_related_lab_objects($object) {
 
   $render_array['related_cmodels'] = array(
     '#markup' => "$target_pid",
-    '#prefix' => '<div id="related_cmodels">',
-    '#suffix' => '</div/',
+    '#prefix' => '<div id="related_cmodels"><h1>Related CModels:</h1>',
+    '#suffix' => '</div>',
   );
 
  
