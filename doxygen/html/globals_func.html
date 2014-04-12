@@ -37,7 +37,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -75,7 +74,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,6 +91,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>add_isPartOf()
 : <a class="el" href="base__functions_8inc.html#a6cfaef55391c3f463ef22c797800005b">base_functions.inc</a>
 </li>
+<li>callback_rel_lab_object()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#ae116c209c232779c57d7549e3c3a6356">islandora_bioinformatics_base.module</a>
+</li>
+<li>callback_rel_lab_object_ingest()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a9ee40d1c40d0c67b7a688be2a707e4d1">islandora_bioinformatics_base.module</a>
+</li>
+<li>cmodel_load()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a1f0c9c90de4c35b92c19c63a7cbe74b4">islandora_bioinformatics_base.module</a>
+</li>
 <li>hook_rel_lab_object_list()
 : <a class="el" href="islandora__bioinformatics__base_8api_8php.html#a321ca0d36a66578787468d5e07fc9b6e">islandora_bioinformatics_base.api.php</a>
 </li>
@@ -107,11 +115,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>hook_rel_SUBTYPE_lab_object_list_alter()
 : <a class="el" href="islandora__bioinformatics__base_8api_8php.html#aa8dcab9498fafc8e5482042683c94fe6">islandora_bioinformatics_base.api.php</a>
 </li>
+<li>islandora_bioinformatics_base_form_related_people_form_alter()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a833d478f4f75aec1a655731d56a9524d">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_forms()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a2e95f32f792ce2fcd79c32895fcdbe43">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_steps()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#aefe0d4e7b872b61e1fdf02d44dd11407">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest_steps()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a52dced9b9bf216d349f5974cdcc0ec95">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_islandora_required_objects()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#af49c8c4cdada468ea2f38053c815b8d0">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_islandora_xml_form_builder_form_associations()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#ac6e286f916e9b73cb3188ed36087132b">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_islandora_xml_form_builder_forms()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a991861672652485988688d28b516bd2f">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_menu()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a34856467f23719cd8eaf851f85ccf7e8">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_person_cmodel_islandora_view_object()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a28377c1d1eb3975107460a21b1900eaf">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_project_cmodel_islandora_view_object()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#aebd7ef53bd26dabff33c8d9ed965c355">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_theme()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a76e704c8060620f768f46bd4bacb05e0">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_user_cancel()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#aa5707478f46c88f1840a3d7e341fb5e1">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_user_insert()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a0986c4a58fa2eed5df09ab9bdb7d6f47">islandora_bioinformatics_base.module</a>
+</li>
+<li>islandora_bioinformatics_base_user_update()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a1a3a11905730edcebeb2d8577756ae3e">islandora_bioinformatics_base.module</a>
+</li>
+<li>person_mads_to_array()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a2d88db4e05c753b2fd28042ce12f1d12">islandora_bioinformatics_base.module</a>
+</li>
+<li>rel_cmodel_load()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#abaa5d1481d1ed7e3ca134bb436b0c325">islandora_bioinformatics_base.module</a>
+</li>
+<li>related_islandora_objects()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a1dc5e940beb7a2b30952ce00b01d388e">islandora_bioinformatics_base.module</a>
+</li>
+<li>related_islandora_objects_form()
+: <a class="el" href="islandora__bioinformatics__base_8module.html#a746c0835872899ef0101a8a047c8c505">islandora_bioinformatics_base.module</a>
+</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 12 2014 13:01:06 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 12 2014 15:04:31 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,6 +1,12 @@
+/**
+ * @file
+ */
+
 <?php
 /**
- * @file islandora_bioinformatics_base.module
+ * @file
+ *
+ * islandora_bioinformatics_base.module
  * Hooks and callbacks for the module.
  */
 
@@ -43,16 +49,16 @@ function islandora_bioinformatics_base_menu() {
     ),
     'islandora/object/%islandora_object/lab_objects/' => array(
       /*
-       * Lists all lab_objects associated with the %islandora_object.
        * @TODO
+       * Lists all lab_objects associated with the %islandora_object.
        */
     ),
 
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /*
+       * @TODO
        * Begins the ingestion process for a new object that will
        * be of a type %cmodel and related to %islandora_object.
-       * @TODO
        */
     ),
 
