@@ -141,11 +141,13 @@ function callback_related_lab_objects($object) {
   //Condition 1: pid corresponds to a content model that has a data relationship with $object
 
   $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    PREFIX fedora: <info:fedora/fedora-system:def/relations-external#>
     SELECT ?pid
     FROM <#ri>
     WHERE {
-        ?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object> .
-        ?pid <datarel_isPartOf> <info:fedora/$target_pid> .
+        ?pid fedora-model:has_model <info:fedora/islandora:lab_object> .
+        ?pid fedora:datarel_isPartOf <info:fedora/$target_pid> .
     }";
 
   $render_array['query'] = array(
@@ -155,6 +157,8 @@ function callback_related_lab_objects($object) {
   );
 
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+
+
 
   $render_array['related_cmodels'] = array(
     '#theme' => 'item_list',
