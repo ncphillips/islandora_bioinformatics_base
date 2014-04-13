@@ -23,6 +23,13 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 */
 function has_lab_objects($object){
+  /**
+   * @author Nolan Phillips
+   * @param $object
+   *
+   * This function returns true if the $object passed in might
+   * have Lab Objects related to it.
+   */
   $cmodel_id = $object->models[0];
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
@@ -46,6 +53,13 @@ function has_lab_objects($object){
 }
 
 function has_people($object){
+  /**
+   * @author Nolan Phillips
+   * @param $object
+   *
+   * This function returns true if the $object passed in might
+   * have Lab Objects related to it.
+   */
   $cmodel_id = $object->models[0];
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
@@ -318,6 +332,11 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
+  $form['add'] = array(
+    ''
+
+  );
+
   // From our form there should be a list of specific operations that can be performed
   // on the objects in the list.
   $form['selected'] = array(
@@ -398,7 +417,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     $name_link = "<a href='/islandora/object/$person_id'>$name</a>";
 
     $people_entries[$person_id] = array(
-      'name' => $name_link,
+      'name' => l($name, "/islandora/object/$person_id"),
       'phone' => $person_mads['contact']['phone'],
       'email' => $person_mads['contact']['email'],
     );
