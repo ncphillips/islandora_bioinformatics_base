@@ -172,20 +172,22 @@ function callback_related_lab_objects($object) {
     $form_id = 'related_' . $object_type. '_form';
 
     if(function_exists($form_id)){
+      echo "Has it's own form.";
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
       $args = array($object);
       $forms = module_invoke_all('forms', $form_id, $args );
 
-      if(in_array($form_id, $forms))
+      if(in_array($form_id, $forms)){
+        echo "Uses a base form."
         $render_array[$object_type] = drupal_get_form($form_id, $object);
+      }
       else {
+        echo "Undefined form";
         $render_array[$object_type] = array();
       }
     }
-
-
  }
 
   //Return the renderable array
