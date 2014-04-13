@@ -42,13 +42,11 @@ function has_lab_objects($object){
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
+  var_dump($result);
   if (sizeof($result) > 0)
     return TRUE;
   else
     return FALSE;
-
-
-
 }
 
 function islandora_bioinformatics_base_menu() {
