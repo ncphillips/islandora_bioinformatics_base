@@ -390,19 +390,18 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   $object = $form_state['values']['object'];
   
   $table_values = $form_state['values']['table'];
-  $dump = array();
+  //$dump = array();
   
   foreach($table_values as $lines => $line){
     if($line){
       $related_object = islandora_object_load($line);
-      $dump[] = $related_object;
-     // $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
+     $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
     }
   }
   
-  var_dump($dump);
+  //var_dump($dump);
   
-  exit();
+  //exit();
 }
 
 
