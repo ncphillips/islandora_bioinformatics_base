@@ -62,9 +62,10 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
+            '#executes_submit_callback' = TRUE,
         );
         
-        var_dump($form);
+        //var_dump($form);
         
         return $form;
     }
@@ -94,10 +95,10 @@
               }";
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
     
-        foreach ($result as $person) {
+     /*   foreach ($result as $person) {
           $person_object = islandora_object_load($person['pid']['value']);  //loads object
           $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
-        }
+        }*/
     
         //for each person checked, create a relationship between the person and the project
         foreach ($person_ids as $id)  {
