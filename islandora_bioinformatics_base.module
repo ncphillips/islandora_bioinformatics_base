@@ -49,7 +49,6 @@ function has_lab_objects($object){
 
 function islandora_bioinformatics_base_menu() {
 
-  islandora_object_load()
   /**
    * @author Natasha Squires
    * @author Nolan Phillips <ncphillups@upei.ca>
