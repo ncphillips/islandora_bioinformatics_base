@@ -47,6 +47,29 @@ function has_lab_objects($object){
     return FALSE;
 }
 
+function has_people($object){
+  $cmodel_id = $object->models[0];
+  echo $cmodel_id . "AA";
+  $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    SELECT ?datarel
+    FROM <#ri>
+    WHERE
+    {
+      {<info:fedora/islandora:lab_object_cmodel> ?datarel <info:fedora/$cmodel_id>} .
+    }
+  ";
+
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  var_dump($result);
+  if (sizeof($result) > 0)
+    return TRUE;
+  else
+    return FALSE;
+}
+
 function islandora_bioinformatics_base_menu() {
 
   /**
@@ -65,18 +88,10 @@ function islandora_bioinformatics_base_menu() {
        * Provides a tab on an Islandora Object page that shows related Lab Object
        * forms for each type of Lab Object related to the islandora object.
        */
-      /**
-       * @todo
-       * Change access so the tab only shows up for objects whose CModel
-       * is be related to Lab Object subtypes.
-       */
       'title' => 'Lab Objects',
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'callback_related_lab_objects',
       'page arguments' => array(2),
-      /**
-       * @todo Access callback for /lab_objects
-       */
       'access callback' => 'has_lab_objects',
       'access arguments' => array(2),
     ),
@@ -86,10 +101,6 @@ function islandora_bioinformatics_base_menu() {
        * Starts the ingestion process for a new object which will be
        * related to %islandora_object. The new object will be of type
        * %rel_cmodel. This is only allowed if the CModel
-       */
-      /*
-       * @todo
-       * Menu definition for /ingest/%rel_cmodel
        */
     ),
     'islandora/object/%islandora_object/people' => array(
@@ -103,11 +114,8 @@ function islandora_bioinformatics_base_menu() {
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
-      /**
-       * @todo
-       * Access callback for /people
-       */
-      'access callback' => TRUE,
+      'access callback' => 'has_people',
+      'access arguments' => array(2),
     ),
     'islandora/object/%islandora_object/people/add' => array(
       /**
@@ -120,7 +128,8 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
-      'access callback' => TRUE,
+      'access callback' => 'has_people',
+      'access arguments' => array(2),
       'file' => 'includes/manage_project.form.inc',
     ),
   );
