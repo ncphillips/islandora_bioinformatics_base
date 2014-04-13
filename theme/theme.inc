@@ -23,9 +23,5 @@ function islandora_bioinformatics_base_preprocess_islandora_person(array &$varia
 
   $variables["person"] = person_mads_to_array($islandora_object);
 
-  echo "<pre>";
-  print_r($variables["person"]);
-  echo "</pre>";
-  die;
 }
 
