@@ -62,7 +62,7 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
-            '#executes_submit_callback' => TRUE,
+            '#submit' => array('islandora_project_people_add_submit'),
         );
         
         //var_dump($form);
