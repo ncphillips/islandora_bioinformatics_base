@@ -207,6 +207,9 @@ function callback_related_lab_objects($object) {
 
     $object_type = $match[1]; //Get the cmodel
 
+    $module_name = "islandora_lab_object_" . $object_type;
+
+    module_load_include('module', $module_name, $module_name);
 
     $form_id = 'related_' . $object_type. '_form';
 
@@ -214,16 +217,9 @@ function callback_related_lab_objects($object) {
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-      $args = array($object);
-      $forms = module_invoke_all('forms', $form_id, $args );
-      if(array_key_exists($form_id, $forms)){
-        $render_array[$object_type] = drupal_get_form($form_id, $object);
-      }
-      else {
-        $render_array[$object_type] = array();
-      }
+     return "";
     }
-  }
+ }
   //Return the renderable array
   return $render_array;
 }
@@ -245,7 +241,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
-  // @todo test callback_related_lab_object_ingest
+  // @todo test callbac_related_lab_object_ingest
 
   echo "Hello";
   exit();
@@ -254,13 +250,9 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   
   $first_part_of_pid = strtok($content_model_pid, ':');
   $subtype_cmodel = strtok($content_model_pid, ':');
-  $cmodel_type = strtok($related_cmodel, '_');
+  $subtype = strtok($related_cmodel, '_');
 
-  $module_name = "islandora_lab_object_" . $cmodel_type;
-
-  module_load_include('module', $module_name, $module_name);
-
-  $callback_to_call = "callback_rel_lab_object_" . $cmodel_type . "_ingest";
+  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
 
   $callback_to_call($object);
 }
@@ -397,7 +389,11 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 function related_islandora_objects_submit(array $form, array &$form_state){
   $object = $form_state['values']['object'];
   
-  echo "<pre>hello</pre>";
+  $table_values = $form_state['values']['table'];
+  
+  var_dump($table_values);
+  
+  exit();
 }
 
 
@@ -910,6 +906,9 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   }
 }
 
+
+
+//function islandora_bioinformatics_base_user_delete($account) {
 function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   /**
    * @author Quintin Dawson qdawson@upei.ca
@@ -927,7 +926,7 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   echo '</pre>';
 
   dpm($account);
-
+  
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -973,56 +972,6 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
         $tuque->repository->purgeObject($account_person->id); //purge the object from the database
         break; 
     }
-  }
-}
-
-function islandora_bioinformatics_base_user_delete($account) {
-//function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
-  /**
-   * @author Quintin Dawson qdawson@upei.ca
-   * @param $edit
-   * @param $account
-   * @param $method
-   *
-   * Implements hook_user_delete()
-   *
-   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
-   */
-
-  echo '<pre>';
-  echo var_dump($account);
-  echo '</pre>';
-
-  dpm($account);
-
-  //retrieve Person object related to the Drupal user
-  $tuque = new IslandoraTuque();
-  //this query should retrieve all person_cmodel objects
-  $query = "SELECT ?pid
-          FROM <#ri>
-          WHERE {
-          ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
-        }";
-
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-
-  $account_person = NULL;
-
-  //iterate over all people objects to find the one related to this drupal account
-  foreach($result as $person) {
-    //load the current person object
-    $person_object = islandora_object_load($person['pid']['value']);
-
-    //check if relationship to Drupal user exists
-    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    if(!empty($relation)) {
-      $account_person = $person_object;
-    }
-  }
-
-  if(!empty($account_person)) {
-    $account_person->delete();  //flag object as deleted
-    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
   }
 }
 
@@ -1259,3 +1208,9 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   return $related_objects;
 }
 
+///////////////// Test Functions /////////////////
+function test_people_add($object){
+  echo "hello";
+  module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
+  drupal_get_form('islandora_project_people_add_form', $object);
+}
