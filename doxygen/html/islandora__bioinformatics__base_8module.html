@@ -91,10 +91,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Functions</h2></td></tr>
 <tr class="memitem:a34856467f23719cd8eaf851f85ccf7e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a34856467f23719cd8eaf851f85ccf7e8">islandora_bioinformatics_base_menu</a> ()</td></tr>
 <tr class="separator:a34856467f23719cd8eaf851f85ccf7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fb252ccd00cb091a98a225e9886e4ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a3fb252ccd00cb091a98a225e9886e4ac">callback_rel_lab_objects</a> ($object)</td></tr>
-<tr class="separator:a3fb252ccd00cb091a98a225e9886e4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa70457879f9d4e51f9e8995d2e60b4eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#aa70457879f9d4e51f9e8995d2e60b4eb">callback_rel_lab_objects_ingest</a> ($object, $cmodel)</td></tr>
-<tr class="separator:aa70457879f9d4e51f9e8995d2e60b4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a68c82f4c7760c83fb600e25c7d5a23a3">callback_related_lab_objects</a> ($object)</td></tr>
+<tr class="separator:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c31991c3bd91b6c9c008c69b8fe7f87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a6c31991c3bd91b6c9c008c69b8fe7f87">callback_related_lab_objects_ingest</a> ($object, $cmodel)</td></tr>
+<tr class="separator:a6c31991c3bd91b6c9c008c69b8fe7f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e95f32f792ce2fcd79c32895fcdbe43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a2e95f32f792ce2fcd79c32895fcdbe43">islandora_bioinformatics_base_forms</a> ($form_id, $args)</td></tr>
 <tr class="separator:a2e95f32f792ce2fcd79c32895fcdbe43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a746c0835872899ef0101a8a047c8c505"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a746c0835872899ef0101a8a047c8c505">related_islandora_objects_form</a> ($form, $form_state, $object, $cmodels=null, $relationships=null)</td></tr>
@@ -175,12 +175,12 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
 <div class="textblock"><p><a class="el" href="islandora__bioinformatics__base_8module.html">islandora_bioinformatics_base.module</a></p>
 <p>Hooks and callbacks for the module. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a3fb252ccd00cb091a98a225e9886e4ac"></a>
+<a class="anchor" id="a68c82f4c7760c83fb600e25c7d5a23a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">callback_rel_lab_objects </td>
+          <td class="memname">callback_related_lab_objects </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$object</em></td><td>)</td>
@@ -188,7 +188,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Page Callback callback_rel_lab_objects($object)</p>
+<dl class="section author"><dt>Author</dt><dd>Dalton Mackenzie <a href="#" onclick="location.href='mai'+'lto:'+'dem'+'ac'+'ken'+'zi'+'e@u'+'pe'+'i.c'+'a'; return false;">demac<span style="display: none;">.nosp@m.</span>kenz<span style="display: none;">.nosp@m.</span>ie@up<span style="display: none;">.nosp@m.</span>ei.c<span style="display: none;">.nosp@m.</span>a</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$object</td><td>- We want to find all objects related to this target object.</td></tr>
@@ -196,19 +196,29 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>$render_array - A renderable array, containing forms for each content model with objects related to the target object.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Dalton Mackenzie <a href="#" onclick="location.href='mai'+'lto:'+'dem'+'ac'+'ken'+'zi'+'e@u'+'pe'+'i.c'+'a'; return false;">demac<span style="display: none;">.nosp@m.</span>kenz<span style="display: none;">.nosp@m.</span>ie@up<span style="display: none;">.nosp@m.</span>ei.c<span style="display: none;">.nosp@m.</span>a</a></dd></dl>
+<p>Page Callback callback_related_lab_objects($object)</p>
 <p>This page callback takes an object and determines which lab object content models have a relationship with its content model via SPARQL query.</p>
 <p>From here it should use drupal_get_form once for each content model to generate a form populated with the lab objects of the specified content model related to the given object.</p>
-<p>These forms will be stored as a elements in a renderable array, which the function will then return. </p>
+<p>These forms will be stored as a elements in a renderable array, which the function will then return.</p>
+<p>$query = " PREFIX fedora-model: &lt;info:fedora/fedora-system:def/model#&gt; PREFIX fedora: &lt;info:fedora/fedora-system:def/relations-external#&gt; SELECT ?pid FROM &lt;#ri&gt; WHERE { ?pid fedora-model:hasModel &lt;info:fedora/islandora:lab_object_cmodel . ?pid fedora:datarel_isPartOf &lt;info:fedora/$target_pid&gt; }";</p>
+<p>foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,</p>
+<p>Parse the pid of the related content model to get the form id.</p>
+<p>The format will namespace:objectType_cmodel, so use the strtok function twice with ':' as the delimiter, and then once more with '_' to extract the object_type, which will be used to construct the form id. </p>
+<pre class="fragment">$first_part_of_pid = strtok($related_cmodel_pid, ':');
+$related_cmodel = strtok($related_cmodel_pid, ':');
+$object_type = strtok($related_cmodel, '_');
 
+$form_id = 'related_' . $object_type . '_form';
+</pre><p>Add the form array to the render array. </p>
+<pre class="fragment">$render_array/*[] </pre>
 </div>
 </div>
-<a class="anchor" id="aa70457879f9d4e51f9e8995d2e60b4eb"></a>
+<a class="anchor" id="a6c31991c3bd91b6c9c008c69b8fe7f87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">callback_rel_lab_objects_ingest </td>
+          <td class="memname">callback_related_lab_objects_ingest </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$object</em>, </td>
@@ -226,16 +236,16 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Page Callback callback_rel_lab_objects_ingest</p>
+<dl class="section author"><dt>Author</dt><dd>Dalton Mackenzie <a href="#" onclick="location.href='mai'+'lto:'+'dem'+'ac'+'ken'+'zi'+'e@u'+'pe'+'i.c'+'a'; return false;">demac<span style="display: none;">.nosp@m.</span>kenz<span style="display: none;">.nosp@m.</span>ie@up<span style="display: none;">.nosp@m.</span>ei.c<span style="display: none;">.nosp@m.</span>a</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">$object</td><td>- This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested. </td></tr>
-    <tr><td class="paramname">$cmodel</td><td>- This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with $object.</td></tr>
+    <tr><td class="paramname">$object</td><td>This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested.</td></tr>
+    <tr><td class="paramname">$cmodel</td><td>This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with $object.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Dalton Mackenzie <a href="#" onclick="location.href='mai'+'lto:'+'dem'+'ac'+'ken'+'zi'+'e@u'+'pe'+'i.c'+'a'; return false;">demac<span style="display: none;">.nosp@m.</span>kenz<span style="display: none;">.nosp@m.</span>ie@up<span style="display: none;">.nosp@m.</span>ei.c<span style="display: none;">.nosp@m.</span>a</a></dd></dl>
-<p>This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model. </p>
+<p>Page Callback callback_related_lab_objects_ingest</p>
+<p>This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.</p>
 
 </div>
 </div>
@@ -325,7 +335,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_forms</p>
+<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$formid</td><td></td></tr>
@@ -334,8 +344,15 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>$forms</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a> </dd></dl>
-
+<p>Implements hook_forms($form_id, $args)</p>
+<p>This function is used to associate a new Form ID with an existing form constructor.</p>
+<h2>Related People Form</h2>
+<p><b>Form ID:</b> <code>related_people_form</code></p>
+<p><b>Form Base ID:</b> <code>related_islandora_objects_form</code></p>
+<p>Creates a <code>related_islandora_objects_form</code> with the <code>$cmodel</code> and <code>$relationships</code> arguments set as: </p>
+<pre class="fragment"> $cmodels = array('islandora:person_cmodel');
+ $relationships = array(FEDORA_RELS_EXT_URI =&gt; array('isPartOf', 'isMemberOf'),);
+</pre>
 </div>
 </div>
 <a class="anchor" id="aefe0d4e7b872b61e1fdf02d44dd11407"></a>
@@ -437,7 +454,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
 </div><div class="memdoc">
 <dl class="section author"><dt>Author</dt><dd>Natasha Squires </dd>
 <dd>
-Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llup<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a> </dd></dl>
+Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llup<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <p>Implements hook_menu().</p>
 <p>Provides a list of URLs provided by the Base Solution Pack.</p>
 <h3>www.upeikerrlabs.ca/islandora/object/%islandora_object/lab_objects</h3>
@@ -745,7 +762,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 <p>Here is an example of query that may be produced within this function. </p>
 <pre class="fragment"> PREFIX a: &lt;info:fedora/fedora-system:def/relations-external#&gt;
  PREFIX b: &lt;info:fedora/fedora-system:def/model#&gt;
- SELECT *
+ SELECT ?pid
  FROM &lt;#ri&gt;
  WHERE
  {
@@ -802,26 +819,30 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>related_islandora_objects_form</p>
-<p>Constructs a form which has a select table of islandora objects related to the $object. A related object is listed iff it's cmodel is in $cmodels and the relationship to $object is in $relationships.</p>
+<h2>related_islandora_objects_form</h2>
+<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype"></td><td class="paramname">$form</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">$form_state</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">$object</td><td></td></tr>
-    <tr><td class="paramtype">null</td><td class="paramname">$cmodels</td><td></td></tr>
-    <tr><td class="paramtype">null</td><td class="paramname">$relationships</td><td></td></tr>
+    <tr><td class="paramname">$form</td><td></td></tr>
+    <tr><td class="paramname">$form_state</td><td></td></tr>
+    <tr><td class="paramname">$object</td><td>The Islandora Object whose relatives we are trying to find.</td></tr>
+    <tr><td class="paramname">$cmodels</td><td>An array of CModel PIDs</td></tr>
+    <tr><td class="paramname">$relationships</td><td>An associative array in the form of: <pre class="fragment"> array(
+   'namespace 1' =&gt; array('rel1', 'rel2', 'rel3'),
+   'namespace 2' =&gt; array('rel4'),
+ )
+</pre></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a> </dd></dl>
+<p>Constructs a form which has a select table of islandora objects related to the $object. A related object is listed iff it's cmodel is in $cmodels and the relationship to $object is in $relationships.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 12 2014 16:23:17 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Apr 12 2014 21:28:16 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -6,9 +6,9 @@
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a34856467f23719cd8eaf851f85ccf7e8}{islandora\+\_\+bioinformatics\+\_\+base\+\_\+menu} ()
 \item 
-\hyperlink{islandora__bioinformatics__base_8module_a3fb252ccd00cb091a98a225e9886e4ac}{callback\+\_\+rel\+\_\+lab\+\_\+objects} (\$object)
+\hyperlink{islandora__bioinformatics__base_8module_a68c82f4c7760c83fb600e25c7d5a23a3}{callback\+\_\+related\+\_\+lab\+\_\+objects} (\$object)
 \item 
-\hyperlink{islandora__bioinformatics__base_8module_aa70457879f9d4e51f9e8995d2e60b4eb}{callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest} (\$object, \$cmodel)
+\hyperlink{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest} (\$object, \$cmodel)
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a2e95f32f792ce2fcd79c32895fcdbe43}{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms} (\$form\+\_\+id, \$args)
 \item 
@@ -93,15 +93,16 @@
 Hooks and callbacks for the module. 
 
 \subsection{Function Documentation}
-\hypertarget{islandora__bioinformatics__base_8module_a3fb252ccd00cb091a98a225e9886e4ac}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+rel\+\_\+lab\+\_\+objects@{callback\+\_\+rel\+\_\+lab\+\_\+objects}}
-\index{callback\+\_\+rel\+\_\+lab\+\_\+objects@{callback\+\_\+rel\+\_\+lab\+\_\+objects}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
-\subsubsection[{callback\+\_\+rel\+\_\+lab\+\_\+objects}]{\setlength{\rightskip}{0pt plus 5cm}callback\+\_\+rel\+\_\+lab\+\_\+objects (
+\hypertarget{islandora__bioinformatics__base_8module_a68c82f4c7760c83fb600e25c7d5a23a3}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+related\+\_\+lab\+\_\+objects@{callback\+\_\+related\+\_\+lab\+\_\+objects}}
+\index{callback\+\_\+related\+\_\+lab\+\_\+objects@{callback\+\_\+related\+\_\+lab\+\_\+objects}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
+\subsubsection[{callback\+\_\+related\+\_\+lab\+\_\+objects}]{\setlength{\rightskip}{0pt plus 5cm}callback\+\_\+related\+\_\+lab\+\_\+objects (
 \begin{DoxyParamCaption}
 \item[{}]{\$object}
 \end{DoxyParamCaption}
-)}}\label{islandora__bioinformatics__base_8module_a3fb252ccd00cb091a98a225e9886e4ac}
-Page Callback callback\+\_\+rel\+\_\+lab\+\_\+objects(\$object)
-
+)}}\label{islandora__bioinformatics__base_8module_a68c82f4c7760c83fb600e25c7d5a23a3}
+\begin{DoxyAuthor}{Author}
+Dalton Mackenzie \href{mailto:demackenzie@upei.ca}{\tt demackenzie@upei.\+ca}
+\end{DoxyAuthor}
 
 \begin{DoxyParams}{Parameters}
 {\em \$object} & -\/ We want to find all objects related to this target object.\\
@@ -110,34 +111,50 @@ Page Callback callback\+\_\+rel\+\_\+lab\+\_\+objects(\$object)
 \begin{DoxyReturn}{Returns}
 \$render\+\_\+array -\/ A renderable array, containing forms for each content model with objects related to the target object.
 \end{DoxyReturn}
-\begin{DoxyAuthor}{Author}
-Dalton Mackenzie \href{mailto:demackenzie@upei.ca}{\tt demackenzie@upei.\+ca}
-\end{DoxyAuthor}
+Page Callback callback\+\_\+related\+\_\+lab\+\_\+objects(\$object)
+
 This page callback takes an object and determines which lab object content models have a relationship with its content model via S\+P\+A\+R\+Q\+L query.
 
 From here it should use drupal\+\_\+get\+\_\+form once for each content model to generate a form populated with the lab objects of the specified content model related to the given object.
 
-These forms will be stored as a elements in a renderable array, which the function will then return. \hypertarget{islandora__bioinformatics__base_8module_aa70457879f9d4e51f9e8995d2e60b4eb}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest}}
-\index{callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
-\subsubsection[{callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest}]{\setlength{\rightskip}{0pt plus 5cm}callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest (
+These forms will be stored as a elements in a renderable array, which the function will then return.
+
+\$query = " P\+R\+E\+F\+I\+X fedora-\/model\+: $<$info\+:fedora/fedora-\/system\+:def/model\#$>$ P\+R\+E\+F\+I\+X fedora\+: $<$info\+:fedora/fedora-\/system\+:def/relations-\/external\#$>$ S\+E\+L\+E\+C\+T ?pid F\+R\+O\+M $<$\#ri$>$ W\+H\+E\+R\+E \{ ?pid fedora-\/model\+:has\+Model $<$info\+:fedora/islandora\+:lab\+\_\+object\+\_\+cmodel . ?pid fedora\+:datarel\+\_\+is\+Part\+Of $<$info\+:fedora/\$target\+\_\+pid$>$ \}";
+
+foreach (\$related\+\_\+cmodels as \$related\+\_\+cmodel\+\_\+pid) \{ //\+For each of the content models returned by the query,
+
+Parse the pid of the related content model to get the form id.
+
+The format will namespace\+:object\+Type\+\_\+cmodel, so use the strtok function twice with '\+:' as the delimiter, and then once more with '\+\_\+' to extract the object\+\_\+type, which will be used to construct the form id. \begin{DoxyVerb}$first_part_of_pid = strtok($related_cmodel_pid, ':');
+$related_cmodel = strtok($related_cmodel_pid, ':');
+$object_type = strtok($related_cmodel, '_');
+
+$form_id = 'related_' . $object_type . '_form';
+\end{DoxyVerb}
+
+
+Add the form array to the render array. \begin{DoxyVerb}$render_array/*[] \end{DoxyVerb}
+\hypertarget{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}}
+\index{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
+\subsubsection[{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}]{\setlength{\rightskip}{0pt plus 5cm}callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest (
 \begin{DoxyParamCaption}
 \item[{}]{\$object, }
 \item[{}]{\$cmodel}
 \end{DoxyParamCaption}
-)}}\label{islandora__bioinformatics__base_8module_aa70457879f9d4e51f9e8995d2e60b4eb}
-Page Callback callback\+\_\+rel\+\_\+lab\+\_\+objects\+\_\+ingest
-
-
-\begin{DoxyParams}{Parameters}
-{\em \$object} & -\/ This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested. \\
-\hline
-{\em \$cmodel} & -\/ This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with \$object.\\
-\hline
-\end{DoxyParams}
+)}}\label{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}
 \begin{DoxyAuthor}{Author}
 Dalton Mackenzie \href{mailto:demackenzie@upei.ca}{\tt demackenzie@upei.\+ca}
 \end{DoxyAuthor}
-This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model the cmodel is, and it will call callback\+\_\+rel\+\_\+lab\+\_\+object\+\_\+\+S\+U\+B\+T\+Y\+P\+E\+\_\+ingest(\$object) where S\+U\+B\+T\+Y\+P\+E is the type of the content model. \hypertarget{islandora__bioinformatics__base_8module_a1f0c9c90de4c35b92c19c63a7cbe74b4}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!cmodel\+\_\+load@{cmodel\+\_\+load}}
+
+\begin{DoxyParams}{Parameters}
+{\em \$object} & This is an object which we wish to relate a new object to. The new object will be of type cmodel, and will need to be ingested.\\
+\hline
+{\em \$cmodel} & This is the actual content model object of the type of object we would like to create (and ingest) and then establish some form of relationship with \$object.\\
+\hline
+\end{DoxyParams}
+Page Callback callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest
+
+This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model the cmodel is, and it will call callback\+\_\+rel\+\_\+lab\+\_\+object\+\_\+\+S\+U\+B\+T\+Y\+P\+E\+\_\+ingest(\$object) where S\+U\+B\+T\+Y\+P\+E is the type of the content model.\hypertarget{islandora__bioinformatics__base_8module_a1f0c9c90de4c35b92c19c63a7cbe74b4}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!cmodel\+\_\+load@{cmodel\+\_\+load}}
 \index{cmodel\+\_\+load@{cmodel\+\_\+load}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{cmodel\+\_\+load}]{\setlength{\rightskip}{0pt plus 5cm}cmodel\+\_\+load (
 \begin{DoxyParamCaption}
@@ -190,8 +207,9 @@ Alters the related\+\_\+objects\+\_\+form for displaying related People. \hypert
 \item[{}]{\$args}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a2e95f32f792ce2fcd79c32895fcdbe43}
-Implements hook\+\_\+forms
-
+\begin{DoxyAuthor}{Author}
+Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
+\end{DoxyAuthor}
 
 \begin{DoxyParams}{Parameters}
 {\em \$formid} & \\
@@ -202,9 +220,19 @@ Implements hook\+\_\+forms
 \begin{DoxyReturn}{Returns}
 \$forms
 \end{DoxyReturn}
-\begin{DoxyAuthor}{Author}
-Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca} 
-\end{DoxyAuthor}
+Implements hook\+\_\+forms(\$form\+\_\+id, \$args)
+
+This function is used to associate a new Form I\+D with an existing form constructor.
+
+\subsubsection*{Related People Form}
+
+{\bfseries Form I\+D\+:} {\ttfamily related\+\_\+people\+\_\+form}
+
+{\bfseries Form Base I\+D\+:} {\ttfamily related\+\_\+islandora\+\_\+objects\+\_\+form}
+
+Creates a {\ttfamily related\+\_\+islandora\+\_\+objects\+\_\+form} with the {\ttfamily \$cmodel} and {\ttfamily \$relationships} arguments set as\+: \begin{DoxyVerb} $cmodels = array('islandora:person_cmodel');
+ $relationships = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),);
+\end{DoxyVerb}
 \hypertarget{islandora__bioinformatics__base_8module_aefe0d4e7b872b61e1fdf02d44dd11407}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+person\+\_\+cmodel\+\_\+islandora\+\_\+ingest\+\_\+steps (
@@ -256,7 +284,7 @@ array
 \begin{DoxyAuthor}{Author}
 Natasha Squires 
 
-Nolan Phillips \href{mailto:ncphillups@upei.ca}{\tt ncphillups@upei.\+ca} 
+Nolan Phillips \href{mailto:ncphillups@upei.ca}{\tt ncphillups@upei.\+ca}
 \end{DoxyAuthor}
 Implements hook\+\_\+menu().
 
@@ -449,7 +477,7 @@ If no X\+M\+L Namespaces are provided, then a Fedora Object may be accepted rega
 
 Here is an example of query that may be produced within this function. \begin{DoxyVerb} PREFIX a: <info:fedora/fedora-system:def/relations-external#>
  PREFIX b: <info:fedora/fedora-system:def/model#>
- SELECT *
+ SELECT ?pid
  FROM <#ri>
  WHERE
  {
@@ -474,23 +502,27 @@ Here is an example of query that may be produced within this function. \begin{Do
 \item[{}]{\$relationships = {\ttfamily null}}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a746c0835872899ef0101a8a047c8c505}
-related\+\_\+islandora\+\_\+objects\+\_\+form
+\subsubsection*{related\+\_\+islandora\+\_\+objects\+\_\+form}
 
-Constructs a form which has a select table of islandora objects related to the \$object. A related object is listed iff it's cmodel is in \$cmodels and the relationship to \$object is in \$relationships.
-
-
-\begin{DoxyParams}[1]{Parameters}
- & {\em \$form} & \\
-\hline
- & {\em \$form\+\_\+state} & \\
-\hline
- & {\em \$object} & \\
-\hline
-null & {\em \$cmodels} & \\
-\hline
-null & {\em \$relationships} & \\
-\hline
-\end{DoxyParams}
 \begin{DoxyAuthor}{Author}
 Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca} 
 \end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em \$form} & \\
+\hline
+{\em \$form\+\_\+state} & \\
+\hline
+{\em \$object} & The Islandora Object whose relatives we are trying to find.\\
+\hline
+{\em \$cmodels} & An array of C\+Model P\+I\+Ds\\
+\hline
+{\em \$relationships} & An associative array in the form of\+: \begin{DoxyVerb} array(
+   'namespace 1' => array('rel1', 'rel2', 'rel3'),
+   'namespace 2' => array('rel4'),
+ )
+\end{DoxyVerb}
+\\
+\hline
+\end{DoxyParams}
+Constructs a form which has a select table of islandora objects related to the \$object. A related object is listed iff it's cmodel is in \$cmodels and the relationship to \$object is in \$relationships.
