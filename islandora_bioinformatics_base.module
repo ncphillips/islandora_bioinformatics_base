@@ -211,7 +211,11 @@ function callback_related_lab_objects($object) {
     $related_cmodel_pid = $related_cmodel_object->id;
     preg_match($pattern, $related_cmodel_pid, $match);
 
-    $object_type = $match[1];
+    $object_type = $match[1]; //Get the cmodel
+
+    $module_name = "islandora_lab_object_" . $object_type;
+
+    module_load_include('module', $module_name, $module_name);
 
     $form_id = 'related_' . $object_type. '_form';
 
@@ -219,14 +223,7 @@ function callback_related_lab_objects($object) {
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-      $args = array($object);
-      $forms = module_invoke_all('forms', $form_id, $args );
-      if(array_key_exists($form_id, $forms)){
-        $render_array[$object_type] = drupal_get_form($form_id, $object);
-      }
-      else {
-        $render_array[$object_type] = array();
-      }
+     return "";
     }
  }
   //Return the renderable array
@@ -250,6 +247,10 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
+  // @todo test callbac_related_lab_object_ingest
+
+  echo "Hello";
+  exit();
   //Get the pid of the content model
   $content_model_pid = $cmodel->id;
   
@@ -257,7 +258,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   $subtype_cmodel = strtok($content_model_pid, ':');
   $subtype = strtok($related_cmodel, '_');
 
-  $callback_to_call = "callback_rel_lab_object_" . $subtype . "ingest";
+  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
 
   $callback_to_call($object);
 }
@@ -360,6 +361,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['submit'] =  array(
     '#type' => 'submit',
     '#value' => 'Submit',
+    '#submit' => array('related_islandora_objects_submit'),
   );
 
   $header = array(
@@ -380,8 +382,20 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
     '#options' => $options,
     '#empty' => t("Null."),
   );
+  
+  //adds object to the form
+  $form['object'] = array(
+    '#type' => 'value',
+    '#value' => $object,
+  );
 
   return $form;
+}
+
+function related_islandora_objects_submit(array $form, array &$form_state){
+  $object = $form_state['values']['object'];
+  
+  //$var_dump($object);
 }
 
 
@@ -908,6 +922,13 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
    *
    * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
    */
+
+  echo '<pre>';
+  echo var_dump($account);
+  echo '</pre>';
+
+  dpm($account);
+  
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
