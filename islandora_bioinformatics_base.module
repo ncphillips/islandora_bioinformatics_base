@@ -160,6 +160,7 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</pre></div>',
   );
 
+  exit();
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
   // Testing Porpoises.
