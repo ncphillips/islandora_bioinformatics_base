@@ -953,19 +953,37 @@ function project_mads_to_array($project_object){
 
     switch ((string) $part->getName()){
       case "authority":
-
+        $project_mads["title"] = ($part->titleInfo->title) ? $part->titleInfo->title:"";
         break;
       case "affiliation":
+        $project_mads["organization"] = ($part->organization) ? $part->organization:"";
+
+        $project_mads["address"]["city"] = ($part->address->city) ? $part->address->city:"";
+        $project_mads["address"]["street"] = ($part->address->street) ? $part->address->street:"";
+        $project_mads["address"]["country"] = ($part->address->country) ? $part->address->country:"";
+        $project_mads["address"]["postcode"] = ($part->address->postcode) ? $part->address->postcode:"";
+
+        $project_mads["email"] = ($part->email) ? $part->email:"";
+        $project_mads["phone"] = ($part->phone) ? $part->phone:"";
+
+        $project_mads["startdate"] = ($part->dateValid[0]) ? $part->dateValid[0]:"";
+        $project_mads["enddate"] = ($part->dateValid[1]) ? $part->dateValid[1]:"";
+
         break;
       case "note":
+        // add these in when needed
         break;
       case "fieldOfActivity":
         break;
     };
 
   }
+  echo "<pre>";
+  print_r($project_mads);
+  echo "</pre>";
 
 
+  return $project_mads;
 }
 
 
