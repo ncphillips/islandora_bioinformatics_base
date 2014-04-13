@@ -1051,7 +1051,7 @@ function related_cmodels($object, $abstract_cmodels=None) {
   else
     $cmodel = $object;
 
-  $cmodels = array($target_id) + $abstract_cmodels;
+  $cmodels = array($target->id) + $abstract_cmodels;
   $relationships = array();
 
   $related_cmodels = related_islandora_objects($cmodel, $cmodels, $relationships);
