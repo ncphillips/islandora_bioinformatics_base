@@ -3,6 +3,7 @@
     /**
      *
      * @file manage_project.inc
+     * @author Natasha Squires <nsquires@upei.ca>
      *
      * Presents a list of People that can be added to a Project
      */
@@ -62,7 +63,7 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
-            '#submit' => array('islandora_project_people_add_submit', $object),
+            '#submit' => array('islandora_project_people_add_submit'),
         );
         
         $form['project_object'] = array(
