@@ -910,9 +910,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   }
 }
 
-
-
-//function islandora_bioinformatics_base_user_delete($account) {
 function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   /**
    * @author Quintin Dawson qdawson@upei.ca
