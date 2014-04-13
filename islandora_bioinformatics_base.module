@@ -928,8 +928,6 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
 
   dpm($account);
 
-  exit();
-
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -996,8 +994,6 @@ function islandora_bioinformatics_base_user_delete($account) {
   echo '</pre>';
 
   dpm($account);
-
-  exit();
 
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
