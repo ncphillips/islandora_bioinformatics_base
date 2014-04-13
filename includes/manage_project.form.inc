@@ -62,7 +62,7 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
-            '#submit' => array('islandora_project_people_add_submit'),
+            '#submit' => array('islandora_project_people_add_submit', $object),
         );
         
         //var_dump($form);
