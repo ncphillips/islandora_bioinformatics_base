@@ -16,8 +16,7 @@
 //$path = drupal_get_path('module', 'islandora_bioinformatics_base');
 
 echo "<pre>";
-print_r($variables['test']);
-print_r($variables);
+print_r($variables['project']);
 echo "</pre>";
 ?>
 
