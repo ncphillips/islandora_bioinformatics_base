@@ -171,7 +171,6 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</div>',
   );
 
- /**
   foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,
  
     //Parse the pid of the related content model to get the form id.
@@ -187,8 +186,8 @@ function callback_related_lab_objects($object) {
 
     //Add the form array to the render array.
 
-    $render_array/*[]*/ //= drupal_get_form($form_id, $object);
- //}
+    $render_array[$object_type] = drupal_get_form($form_id, $object);
+ }
 
   //Return the renderable array
   return $render_array;
