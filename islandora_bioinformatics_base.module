@@ -103,8 +103,13 @@ function islandora_bioinformatics_base_menu() {
 }
 
 ///////////////// Page Callbacks /////////////////
-
 function callback_related_lab_objects($object) {
+
+  return "Wat";
+}
+
+
+function callback_related_lab_objects_not working($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -127,7 +132,6 @@ function callback_related_lab_objects($object) {
    * These forms will be stored as a elements in a
    * renderable array, which the function will then return.
    */
-  exit();
   $render_array = array();
   $target_pid = $object->models[0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
 
