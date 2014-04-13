@@ -22,8 +22,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
-$test = islandora_object_load("islandora:639");
-project_mads_to_array($test);
+
 
 function islandora_bioinformatics_base_menu() {
   /**
@@ -978,9 +977,7 @@ function project_mads_to_array($project_object){
     };
 
   }
-  echo "<pre>";
-  print_r($project_mads);
-  echo "</pre>";
+
 
 
   return $project_mads;
