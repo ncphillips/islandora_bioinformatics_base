@@ -396,7 +396,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 function related_islandora_objects_submit(array $form, array &$form_state){
   $object = $form_state['values']['object'];
   
-  //$var_dump($object);
+  echo "<pre>hello</pre>";
 }
 
 
