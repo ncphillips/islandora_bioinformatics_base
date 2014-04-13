@@ -251,7 +251,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   $subtype_cmodel = strtok($content_model_pid, ':');
   $subtype = strtok($related_cmodel, '_');
 
-  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
+  $callback_to_call = "callback_rel_lab_object_" . $subtype . "ingest";
 
   $callback_to_call($object);
 }
