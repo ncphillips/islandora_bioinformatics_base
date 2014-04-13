@@ -14,7 +14,6 @@
  *
  *
  */
-
 function islandora_object_has_lab_objects($object){
   /**
    * @author Nolan Phillips
@@ -145,13 +144,8 @@ function islandora_bioinformatics_base_menu() {
 }
 
 function ingest_rel_cmodel_title($cmodel){
-  /**
-   * @param $cmodel
-   *
-   * Returns a string of format "Add Cmodel"
-   */
   $cmodel_id = $cmodel->id;
-  return t("Add $cmodel_id");
+  return "Add $cmodel_id";
 }
 
 
@@ -395,7 +389,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 function related_islandora_objects_submit(array $form, array &$form_state){
   $object = $form_state['values']['object'];
   
-  //$var_dump($object);
+  var_dump($object);
 }
 
 
