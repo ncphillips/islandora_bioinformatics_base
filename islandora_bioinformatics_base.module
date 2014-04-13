@@ -171,12 +171,14 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</div>',
   );
 
-  foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,
+  foreach ($related_cmodels as $related_cmodel_object) { //For each of the content models returned by the query,
  
     //Parse the pid of the related content model to get the form id.
 
     //The format will namespace:objectType_cmodel, so use the strtok function twice with ':' as the delimiter,
     //and then once more with '_' to extract the object_type, which will be used to construct the form id.
+
+    $related_cmodel_pid = $related_cmodel_object->id;
 
     $first_part_of_pid = strtok($related_cmodel_pid, ':');
     $related_cmodel = strtok($related_cmodel_pid, ':');
