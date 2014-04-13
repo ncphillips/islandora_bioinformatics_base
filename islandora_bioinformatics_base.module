@@ -117,7 +117,7 @@ function islandora_bioinformatics_base_menu() {
        */
       'title callback' => 'ingest_rel_cmodel_title',
       'title arguments' => array(4),
-      'type' => MENU_TASK,
+      'type' => MENU_CALLBACK,
       'page callback' => 'callback_ingest_related_lab_objects',
       'page arguments' => array(2, 4),
       'access callback' => TRUE,
