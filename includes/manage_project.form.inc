@@ -40,7 +40,7 @@
             $person_object = islandora_object_load($person["pid"]["value"]);
             
             //check if relationship exists and ignore if so
-            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
+            $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
             
             if(empty($relationship)){
                 $values[$person_object->id] = $person_object->label;
@@ -101,7 +101,7 @@
         foreach ($person_ids as $id)  {
           //create a relationship within the current person object to the project
           $person_object = islandora_object_load($id); //loads object
-          $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
+          $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
         }
         
     }
