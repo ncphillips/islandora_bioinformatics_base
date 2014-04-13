@@ -1059,16 +1059,11 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
    * A Fedora Object may be accepted if it has any relationship to the
    * target $object that is defined within any of the namespaces provided.
    *
-   * ### Namespace with relationships
+   * ### Namespaces with relationships
    * A Fedora Object may be accepted if it has any relationship to the
    * target $object that is defined within any of the namespaces provided,
-   * with the restriction that if relationships provided along with the
-   * namespace, it
-   * The relationships
-   *
-   * ### Multiple namespaces
-   * A Fedora Object may be accepted if it has any one of the relationships
-   *
+   * with the added restriction that the relationship must be in that
+   * namespace's associated array.
    */
   if($relationships){
     // Define PREFIX statements
