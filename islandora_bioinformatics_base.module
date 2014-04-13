@@ -500,7 +500,7 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
     'islandora_person' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora_person',
-      'pattern' => 'islandora_person__',
+      'pattern' => 'islandora_bioinformatics__',
       'variables' => array(
         'object' => NULL,
       ),
@@ -508,7 +508,7 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
     'islandora_project' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora_project',
-      'pattern' => 'islandora_project__',
+      'pattern' => 'islandora_bioinformatics__',
       'variables' => array(
         'object' => NULL,
       ),
