@@ -1047,7 +1047,7 @@ function related_cmodels($object, $abstract_cmodels=None) {
 
   // Check if it has a datarel to the target object.
   if (!islandora_object_has_relationship($object, $pred_uri, $pred, $target, $type))
-    $cmodel = islandora_object_load($object->cmodels[0]);
+    $cmodel = islandora_object_load($object['cmodels'][0]);
   else
     $cmodel = $object;
 
