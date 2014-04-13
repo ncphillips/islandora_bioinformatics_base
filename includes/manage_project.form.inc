@@ -63,7 +63,7 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
-            '#submit' => array('islandora_project_people_add_submit', $object),
+            '#submit' => array('islandora_project_people_add_submit'),
         );
         
         $form['project_object'] = array(
@@ -94,7 +94,7 @@
         $person_ids = array_filter($form_state['values']['people']);
         
         //get the saved object
-       // $object = $form_state['values']['project_object'];
+        $object = $form_state['values']['project_object'];
     
         //iterate over every person and remove their relationship (if it exists) with the project.
         $query = "SELECT ?pid
