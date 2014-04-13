@@ -23,6 +23,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 */
 function has_lab_objects($object){
+  var_dump($object);
   $cmodel_id = $object['models'][0];
   var_dump($object['models']);
   echo "hello " . $cmodel_id;
