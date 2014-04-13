@@ -2,7 +2,7 @@
 
     /**
      *
-     * @file manage_project.inc
+     * @file manage_project.form.inc
      * @author Natasha Squires <nsquires@upei.ca>
      *
      * Presents a list of People that can be added to a Project
