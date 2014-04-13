@@ -1,0 +1,23 @@
+\hypertarget{_2_users_2n_2_desktop_2_islandora_modules_2islandora_bioinformatics_base_2islandora_bioinformatics_base_8module-example}{\section{/\+Users/n/\+Desktop/\+Islandora\+Modules/islandora\+\_\+bioinformatics\+\_\+base/islandora\+\_\+bioinformatics\+\_\+base.\+module}
+}
+
+\begin{DoxyParams}[1]{Parameters}
+Islandora\+Fedora\+Object & {\em \$object} & \\
+\hline
+ & {\em string} & array $\vert$ null \$cmodels An array of strings representing fedora I\+Ds of Content Models.\\
+\hline
+array  |  null & {\em \$relationships} & An associative array whose keys are namespaces, and whose values are arrays of relationships in that namespace.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Islandora\+Fedora\+Object array \$related\+\_\+objects An array of Islandora\+Fedora\+Objects that are related to the \$object.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
+\end{DoxyAuthor}
+P\+R\+E\+F\+I\+X a\+: $<$info\+:fedora/fedora-\/system\+:def/relations-\/external\#$>$ P\+R\+E\+F\+I\+X b\+: $<$info\+:fedora/fedora-\/system\+:def/model\#$>$ S\+E\+L\+E\+C\+T $\ast$ F\+R\+O\+M $<$\#ri$>$ W\+H\+E\+R\+E \{ \{ \{?pid b\+:has\+Model $<$info\+:fedora/islandora\+:person\+\_\+cmodel$>$\} U\+N\+I\+O\+N \{?pid b\+:has\+Model $<$info\+:fedora/islandora\+:specimen\+\_\+cmodel$>$\} \} \{ \{?pid a\+:is\+Member\+Of $<$info\+:fedora/islandora\+:524$>$\} \} \}
+
+
+\begin{DoxyCodeInclude}
+\end{DoxyCodeInclude}
+ 
