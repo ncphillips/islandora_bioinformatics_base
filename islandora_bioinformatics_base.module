@@ -163,7 +163,6 @@ function callback_related_lab_objects($object) {
   );
 
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
-  return "wat";
 
   // Testing Porpoises.
   $render_array['related_cmodels'] = array(
