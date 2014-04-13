@@ -221,8 +221,9 @@ function callback_related_lab_objects($object) {
       }
       else {
         $render_array[$object_type] = array();
+      }
     }
- }
+  }
   //Return the renderable array
   return $render_array;
 }
@@ -1265,9 +1266,3 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   return $related_objects;
 }
 
-///////////////// Test Functions /////////////////
-function test_people_add($object){
-  echo "hello";
-  module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
-  drupal_get_form('islandora_project_people_add_form', $object);
-}
