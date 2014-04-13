@@ -5,7 +5,9 @@
   * Theme file for Base solution pack. Includes preprocess functions.
   */
 
-function islandora_person_preprocess(array &$variables) {
+
+
+function template_preprocess_islandora_person(array &$variables) {
 
 
   echo "there is no way it's making it here"; die;
