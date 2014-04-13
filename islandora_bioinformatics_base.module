@@ -390,8 +390,15 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   $object = $form_state['values']['object'];
   
   $table_values = $form_state['values']['table'];
+  $dump = array();
   
-  var_dump($table_values);
+  foreach($table_values as $lines => $line){
+    if($line){
+      $dump[] = $line;
+    }
+  }
+  
+  var_dump($dump);
   
   exit();
 }
