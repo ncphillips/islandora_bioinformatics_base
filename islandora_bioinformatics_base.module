@@ -161,7 +161,12 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</pre></div>',
   );
 
-  $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+  $results = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+
+  $related_cmodels = array();
+  foreach($results as $cmodel){
+   $related_cmodels[] = islandora_object_load($cmodel['pid']['value']);
+  }
 
   // Testing Porpoises.
   $render_array['related_cmodels'] = array(
