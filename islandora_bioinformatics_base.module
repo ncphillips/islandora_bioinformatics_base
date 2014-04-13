@@ -538,6 +538,7 @@ function islandora_bioinformatics_base__theme($existing, $type, $theme, $path) {
 
 
 function islandora_bioinformatics_base_islandora_person_cmodel_islandora_view_object($object, $page_number, $page_size) {
+  die;
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for Person.
    */
