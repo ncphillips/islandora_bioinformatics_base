@@ -177,7 +177,7 @@ function callback_related_lab_objects($object) {
         $render_array[$object_type] = drupal_get_form($form_id, $object);
       }
       else {
-        echo "D"
+        echo "D";
         $render_array[$object_type] = array();
       }
     }
