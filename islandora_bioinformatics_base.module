@@ -162,19 +162,15 @@ function callback_related_lab_objects($object) {
     $form_id = 'related_' . $object_type. '_form';
 
     if(function_exists($form_id)){
-      echo "A";
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-      echo "B";
       $args = array($object);
       $forms = module_invoke_all('forms', $form_id, $args );
       if(array_key_exists($form_id, $forms)){
-        echo "C";
         $render_array[$object_type] = drupal_get_form($form_id, $object);
       }
       else {
-        echo "D";
         $render_array[$object_type] = array();
       }
     }
