@@ -550,6 +550,7 @@ function islandora_bioinformatics_base_project_cmodel_islandora_view_object($obj
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for project.
    */
+  die;
   $output = theme('islandora_project', array('islandora_object' => $object));
   return array('islandora_project' => $output);
 }
