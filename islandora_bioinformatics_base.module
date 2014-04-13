@@ -941,7 +941,15 @@ function person_mads_to_array($person_object){
   return $person_mads;
 }
 
-
+/**
+ * Takes a project object and returns a simple array of the data in the MADS stream.
+ * I'm not sure what data we need from this right now.
+ * @author Brent Mitton
+ * @param $project_object
+ *  An islandora object for the project
+ * @return array
+ *  an array of information needed pertaining to the projcet
+ */
 function project_mads_to_array($project_object){
   $ns = "http://www.loc.gov/mads/v2";
 
