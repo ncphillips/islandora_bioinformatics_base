@@ -3,6 +3,7 @@
     /**
      *
      * @file manage_project.inc
+     * @author Natasha Squires <nsquires@upei.ca>
      *
      * Presents a list of People that can be added to a Project
      */
@@ -93,7 +94,7 @@
         $person_ids = array_filter($form_state['values']['people']);
         
         //get the saved object
-        $object = $form_state['values']['project_object'];
+       // $object = $form_state['values']['project_object'];
     
         //iterate over every person and remove their relationship (if it exists) with the project.
         $query = "SELECT ?pid
