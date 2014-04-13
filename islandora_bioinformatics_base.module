@@ -365,12 +365,9 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     $person_id = $person->id;
 
     $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
+    $name_link = "<a href='137.149.157.10/islandora/object/$person_id'>$name</a>"
     $options[$person_id] = array(
-      'name' => array(
-        '#prefix' => "<a href='137.149.157.10/islandora/object/$person_id'>",
-        '#markdown' => $name,
-        '#suffix' => '</a>',
-      ),
+      'name' => $name_link,
       'phone' => $person_mads['contact']['phone'],
       'email' => $person_mads['contact']['email'],
     );
