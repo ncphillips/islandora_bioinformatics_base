@@ -140,6 +140,7 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</div>',
   );
 
+   return "wat";
   $tuque = new IslandoraTuque(); //Establish a tuque object
 
   //Construct a query which will find all pids adhering to the following two conditions:
