@@ -26,6 +26,7 @@ function has_lab_objects($object){
 
   $cmodel_id = $object['cmodels'][0];
 
+  echo $cmodel_id;
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
     SELECT ?pid
