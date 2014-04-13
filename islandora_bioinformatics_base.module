@@ -946,9 +946,21 @@ function project_mads_to_array($project_object){
 
   $project_xml = new SimpleXMLElement($project_object["MADS"]->content);
 
+  $project_mads = array();
+
   foreach ($project_xml->children($ns) as $part){
 
-    echo (string) $part->getName();
+    switch ((string) $part->getName()){
+      case "authority":
+
+        break;
+      case "affiliation":
+        break;
+      case "note":
+        break;
+      case "fieldOfActivity":
+        break;
+    };
 
   }
 
