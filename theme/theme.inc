@@ -7,7 +7,7 @@
 
 
 
-function template_preprocess_islandora_person(array &$variables) {
+function islandora_bioinformatics_base_preprocess(array &$variables) {
 
 
   echo "there is no way it's making it here"; die;
