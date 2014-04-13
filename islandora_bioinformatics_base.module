@@ -244,10 +244,6 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
-  // @todo test callbac_related_lab_object_ingest
-
-  echo "Hello";
-  exit();
   //Get the pid of the content model
   $content_model_pid = $cmodel->id;
   
