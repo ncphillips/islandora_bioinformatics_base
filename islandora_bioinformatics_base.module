@@ -112,6 +112,12 @@ function islandora_bioinformatics_base_menu() {
        * related to %islandora_object. The new object will be of type
        * %rel_cmodel. This is only allowed if the CModel
        */
+      'title callback' => 'ingest_rel_cmodel_title',
+      'title arguments' => array(4),
+      'type' => MENU_TASK,
+      'page callback' => 'callback_ingest_related_lab_objects',
+      'page arguments' => array(2, 4),
+      'access callback' => TRUE,
     ),
     'islandora/object/%islandora_object/people' => array(
        /**
@@ -144,6 +150,12 @@ function islandora_bioinformatics_base_menu() {
     ),
   );
 }
+
+function ingest_rel_cmodel_title($cmodel){
+  $cmodel_id = $cmodel->id;
+  return "Add $cmodel_id";
+}
+
 
 ///////////////// Page Callbacks /////////////////
 function callback_related_lab_objects($object) {
