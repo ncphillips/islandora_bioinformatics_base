@@ -1028,7 +1028,7 @@ function related_cmodels($object, $abstract_cmodels=None) {
 
 
   $CM_cmodel = 'fedora-system:ContentModel-3.0';
-  $cmodels = array($CM_cmodel) + $abstract_cmodels;
+  $cmodels = array($CM_cmodel);
   $relationships = array();
 
   $related_cmodels = related_islandora_objects($object, $cmodels, $relationships);
