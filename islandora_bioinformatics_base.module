@@ -7,7 +7,7 @@
  * Hooks and callbacks for the module.
  */
 
-// Islandora Definitions
+/* Islandora Definitions
 define('ISLANDORA_VIEW_OBJECTS', 'view fedora repository objects');
 define('ISLANDORA_METADATA_EDIT', 'edit fedora metadata');
 define('ISLANDORA_ADD_DS', 'add fedora datastreams');
@@ -21,7 +21,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
-
+*/
 function has_lab_objects($object){
 
   $cmodel_id = $object['cmodels'][0]->id;
@@ -37,6 +37,17 @@ function has_lab_objects($object){
       {?pid ?datarel <info:fedora/$cmodel_id>} .
     }
   ";
+
+
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  if (sizeof($result) > 0)
+    return TRUE;
+  else
+    return FALSE;
+
+
 
 }
 
@@ -1119,8 +1130,6 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
-  file_put_contents('/tmp/islandora.txt', $query);
-
 /**
  * ## Example Query
  * Here is an example of query that may be produced within this function.
