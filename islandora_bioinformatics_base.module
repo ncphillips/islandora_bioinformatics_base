@@ -23,12 +23,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 */
 function has_lab_objects($object){
-
-  echo $object->id;
-  var_dump($object->models);
   $cmodel_id = $object['models'][0];
-
-  echo $cmodel_id;
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
     SELECT ?pid
@@ -40,7 +35,6 @@ function has_lab_objects($object){
       {?pid ?datarel <info:fedora/$cmodel_id>} .
     }
   ";
-
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
