@@ -207,9 +207,6 @@ function callback_related_lab_objects($object) {
 
     $object_type = $match[1]; //Get the cmodel
 
-    $module_name = "islandora_lab_object_" . $object_type;
-
-    module_load_include('module', $module_name, $module_name);
 
     $form_id = 'related_' . $object_type. '_form';
 
@@ -217,7 +214,13 @@ function callback_related_lab_objects($object) {
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-     return "";
+      $args = array($object);
+      $forms = module_invoke_all('forms', $form_id, $args );
+      if(array_key_exists($form_id, $forms)){
+        $render_array[$object_type] = drupal_get_form($form_id, $object);
+      }
+      else {
+        $render_array[$object_type] = array();
     }
  }
   //Return the renderable array
@@ -241,7 +244,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
-  // @todo test callbac_related_lab_object_ingest
+  // @todo test callback_related_lab_object_ingest
 
   echo "Hello";
   exit();
@@ -250,9 +253,13 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   
   $first_part_of_pid = strtok($content_model_pid, ':');
   $subtype_cmodel = strtok($content_model_pid, ':');
-  $subtype = strtok($related_cmodel, '_');
+  $cmodel_type = strtok($related_cmodel, '_');
 
-  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
+  $module_name = "islandora_lab_object_" . $cmodel_type;
+
+  module_load_include('module', $module_name, $module_name);
+
+  $callback_to_call = "callback_rel_lab_object_" . $cmodel_type . "_ingest";
 
   $callback_to_call($object);
 }
