@@ -358,7 +358,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['submit'] =  array(
     '#type' => 'submit',
     '#value' => 'Submit',
-    '#submit' => array('related_islandora_objects_submit');
+    '#submit' => array('related_islandora_objects_submit'),
   );
 
   $header = array(
