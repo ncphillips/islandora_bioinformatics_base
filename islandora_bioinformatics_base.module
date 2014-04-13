@@ -1049,7 +1049,7 @@ function related_cmodels($object, $abstract_cmodels=None) {
   $cmodels = array($CM_cmodel) + $abstract_cmodels;
   $relationships = array();
 
-  $related_cmodels = related_islandora_objects($object->id, $cmodels, $relationships);
+  $related_cmodels = related_islandora_objects($object, $cmodels, $relationships);
 
   return $related_cmodels;
 }
