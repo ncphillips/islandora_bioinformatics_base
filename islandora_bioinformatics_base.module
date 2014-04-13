@@ -1158,6 +1158,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $related_objects[] = $obj ;
   }
 
+  file_put_contents('/tmp/sqarql', $query);
 /**
  * ## Example Query
  * Here is an example of query that may be produced within this function.
