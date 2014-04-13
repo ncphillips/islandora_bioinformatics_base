@@ -333,8 +333,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
   $form['add'] = array(
-    ''
-
+    '#type' => 'hidden',
+    '#markup' =>  l('Add', ''),
   );
 
   // From our form there should be a list of specific operations that can be performed
@@ -414,8 +414,6 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
      * @todo
      * The name link to the Person Object is hardcoded. This must be changed to be relative.
      */
-    $name_link = "<a href='/islandora/object/$person_id'>$name</a>";
-
     $people_entries[$person_id] = array(
       'name' => l($name, "islandora/object/$person_id"),
       'phone' => $person_mads['contact']['phone'],
