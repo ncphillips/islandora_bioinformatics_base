@@ -185,12 +185,13 @@ function callback_related_lab_objects($object) {
 
     $pattern = '/islandora:(.*)_cmodel/';
     $related_cmodel_pid = $related_cmodel_object->id;
-    $object_type = array();
-
 
     preg_match($pattern, $related_cmodel_pid, $object_type);
 
-    $form_id = 'related_' . $object_type[1] . '_form';
+    $object_type = $match[1];
+
+    $form_id = 'related_' . $object_type. '_form';
+
 
     //Add the form array to the render array.
 
