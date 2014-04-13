@@ -496,6 +496,7 @@ function islandora_bioinformatics_base_person_theme($existing, $type, $theme, $p
   /**
   * Implements hook_theme().
   */
+  echo "hey"; die;
   return array(
     'islandora_person' => array(
       'file' => 'theme/theme.inc',
