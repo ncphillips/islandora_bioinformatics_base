@@ -24,8 +24,6 @@
      */
     function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object){
         
-       // var_dump($object);
-        
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
                     FROM <#ri>
@@ -40,19 +38,17 @@
         
         foreach($result as $person){
             $person_object = islandora_object_load($person["pid"]["value"]);
-            //var_dump($person_object);
             
             //check if relationship exists and ignore if so
             $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
-           // var_dump($relationship);
             
             if(empty($relationship)){
                 $values[$person_object->id] = $person_object->label;
             }
         }
         
+        //list of people
         $form = array(
-            //list of people
             'people' => array(
                 '#type' => 'checkboxes',
                 '#options' => $values,
@@ -66,12 +62,11 @@
             '#submit' => array('islandora_project_people_add_submit'),
         );
         
+        //saving the project object in the form
         $form['project_object'] = array(
             '#type' => 'value',
             '#value' => $object,
         );
-        
-        //var_dump($form);
         
         return $form;
     }
@@ -83,8 +78,6 @@
      * the Drupal form
      * @param array &$form_state
      * the Drupal form state
-     * @param AbstractObject $object
-     * the Project object the form is associated with
      *
      */
     function islandora_project_people_add_submit(array $form, array &$form_state) {
@@ -93,7 +86,7 @@
         //get the checkboxes submitted (only those checked are submitted)  
         $person_ids = array_filter($form_state['values']['people']);
         
-        //get the saved object
+        //get the saved project object that will have people added to it
         $object = $form_state['values']['project_object'];
     
         //iterate over every person and remove their relationship (if it exists) with the project.
@@ -103,11 +96,6 @@
                   ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
               }";
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-    
-     /*   foreach ($result as $person) {
-          $person_object = islandora_object_load($person['pid']['value']);  //loads object
-          $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $object->id);
-        }*/
     
         //for each person checked, create a relationship between the person and the project
         foreach ($person_ids as $id)  {
