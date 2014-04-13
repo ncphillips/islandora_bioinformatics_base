@@ -542,7 +542,7 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_view_ob
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for Person.
    */
-  $output = theme('islandora_bioinformatics_base_person', array('object' => $person));
+  $output = theme('islandora_bioinformatics_base_person', array('object' => $object));
   return array(
     'islandora_person' => $output,
   );
