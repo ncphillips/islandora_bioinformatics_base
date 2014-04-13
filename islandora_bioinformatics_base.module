@@ -23,7 +23,7 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 */
 function has_lab_objects($object){
-  $cmodel_id = $object['models'];
+  $cmodel_id = $object->models[0];
   echo $cmodel_id . "AA";
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
@@ -48,6 +48,8 @@ function has_lab_objects($object){
 }
 
 function islandora_bioinformatics_base_menu() {
+
+  islandora_object_load()
   /**
    * @author Natasha Squires
    * @author Nolan Phillips <ncphillups@upei.ca>
