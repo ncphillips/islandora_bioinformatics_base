@@ -1045,16 +1045,12 @@ function related_cmodels($object, $abstract_cmodels=None) {
   $target = islandora_object_load('fedora-system:ContentModel-3.0');
   $type = FALSE; // Don't know why.
 
-  // Check if it has a datarel to the target object.
-  if (!islandora_object_has_relationship($object, $pred_uri, $pred, $target, $type))
-    $cmodel = islandora_object_load($object['cmodels'][0]);
-  else
-    $cmodel = $object;
 
-  $cmodels = array($target->id) + $abstract_cmodels;
+
+  //$cmodels = array($target->id) + $abstract_cmodels;
   $relationships = array();
 
-  $related_cmodels = related_islandora_objects($cmodel, $cmodels, $relationships);
+  $related_cmodels = related_islandora_objects($object->id, $cmodels, $relationships);
 
   return $related_cmodels;
 }
