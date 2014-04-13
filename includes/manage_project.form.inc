@@ -62,7 +62,7 @@
         $form['submit'] = array(
             '#type' => 'submit',
             '#value' => 'Submit',
-            '#executes_submit_callback' = TRUE,
+            '#executes_submit_callback' => TRUE,
         );
         
         //var_dump($form);
