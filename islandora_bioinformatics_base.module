@@ -103,8 +103,13 @@ function islandora_bioinformatics_base_menu() {
 }
 
 ///////////////// Page Callbacks /////////////////
-
 function callback_related_lab_objects($object) {
+
+  return "Wat";
+}
+
+
+function callback_related_lab_objects_not working($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
