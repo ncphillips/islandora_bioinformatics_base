@@ -244,6 +244,10 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
+  // @todo test callbac_related_lab_object_ingest
+
+  echo "Hello";
+  exit();
   //Get the pid of the content model
   $content_model_pid = $cmodel->id;
   
@@ -251,7 +255,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   $subtype_cmodel = strtok($content_model_pid, ':');
   $subtype = strtok($related_cmodel, '_');
 
-  $callback_to_call = "callback_rel_lab_object_" . $subtype . "ingest";
+  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
 
   $callback_to_call($object);
 }
@@ -354,6 +358,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['submit'] =  array(
     '#type' => 'submit',
     '#value' => 'Submit',
+    '#submit' => array('related_islandora_objects_submit');
   );
 
   $header = array(
@@ -374,8 +379,20 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
     '#options' => $options,
     '#empty' => t("Null."),
   );
+  
+  //adds object to the form
+  $form['object'] = array(
+    '#type' => 'value',
+    '#value' => $object,
+  );
 
   return $form;
+}
+
+function related_islandora_objects_submit(array $form, array &$form_state){
+  $object = $form_state['values']['object'];
+  
+  $var_dump($form_state);
 }
 
 
@@ -843,11 +860,11 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   }  
   
   /* //This query should retrieve all people objects related to the current drupal user [$account->id]
-  $query = 'SELECT ?uid
+  $query = "SELECT ?uid
             FROM <#ri>
             WHERE {
-              ?uid <' . ISLANDORA_RELS_EXT_URI . ':isDrupalID> <info:fedora/' . $account->id . '> .
-            }';
+              ?uid <" . ISLANDORA_RELS_EXT_URI . ":isDrupalID> <info:fedora/" . $account->id . "> .
+            }"; 
   $result - $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
   //only one Fedora object should be related to the Drupal account, so take the first value in the $results array
@@ -900,12 +917,8 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
    *
    * Implements hook_user_delete()
    *
-   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository.
-   * This hook will not be called on user_cancel_delete method, so hook_user_delete must be implemented to handle that case.
+   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
    */
-
-  dpm(@account);
-
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
