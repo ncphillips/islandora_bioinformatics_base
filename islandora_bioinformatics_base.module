@@ -53,7 +53,7 @@ function has_people($object){
     FROM <#ri>
     WHERE
     {
-      {<info:fedora/islandora:lab_object_cmodel> ?datarel <info:fedora/$cmodel_id>} .
+      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
     }
   ";
 
