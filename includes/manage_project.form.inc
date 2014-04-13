@@ -29,12 +29,14 @@
         $query = "SELECT ?pid
                     FROM <#ri>
                     WHERE {
-                    ?pid <datarel_partOf><info:fedora/islandora:person_cmodel> .
+                    ?pid <fedora-model:hasModel><info:fedora/islandora:person_cmodel> .
                     }
                     ";
         $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
         
         $people = array();
+        $values = array();
+        
         foreach($result as $person){
             $person_object = islandora_object_load($person["pid"]["value"]);
             
@@ -43,7 +45,7 @@
             var_dump($relationship);
             
             if(empty($relationship)){
-                $people[$person_object->id] = $person_object->label;
+                $values[$person_object->id] = $person_object->label;
             }
         }
         
@@ -51,7 +53,7 @@
             //list of people
             'people' => array(
                 '#type' => 'checkboxes',
-                '#default_value' => $people,
+                '#default_value' => $values,
                 '#options' => $people,
             ),
         );
