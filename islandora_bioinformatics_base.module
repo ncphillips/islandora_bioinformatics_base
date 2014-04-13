@@ -7,7 +7,7 @@
  * Hooks and callbacks for the module.
  */
 
-// Islandora Definitions
+/* Islandora Definitions
 define('ISLANDORA_VIEW_OBJECTS', 'view fedora repository objects');
 define('ISLANDORA_METADATA_EDIT', 'edit fedora metadata');
 define('ISLANDORA_ADD_DS', 'add fedora datastreams');
@@ -21,19 +21,67 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
-
+*/
 function has_lab_objects($object){
-  $related_cmodels = related_cmodels($object, array('islandora:lab_object_cmodel'));
-  echo '<pre>';
-  var_dump($related_cmodels);
-  echo '</pre>';
-  if (sizeof($related_cmodels) > 0)
+  /**
+   * @author Nolan Phillips
+   * @param $object
+   *
+   * This function returns true if the $object passed in might
+   * have Lab Objects related to it.
+   */
+  $cmodel_id = $object->models[0];
+  $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    SELECT ?pid
+    FROM <#ri>
+    WHERE
+    {
+      {?pid fedora-model:hasModel <info:fedora/fedora-system:ContentModel-3.0>} .
+      {?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel>} .
+      {?pid ?datarel <info:fedora/$cmodel_id>} .
+    }
+  ";
+
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  if (sizeof($result) > 0)
+    return TRUE;
+  else
+    return FALSE;
+}
+
+function has_people($object){
+  /**
+   * @author Nolan Phillips
+   * @param $object
+   *
+   * This function returns true if the $object passed in might
+   * have Lab Objects related to it.
+   */
+  $cmodel_id = $object->models[0];
+  $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    SELECT ?datarel
+    FROM <#ri>
+    WHERE
+    {
+      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
+    }
+  ";
+
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  if (sizeof($result) > 0)
     return TRUE;
   else
     return FALSE;
 }
 
 function islandora_bioinformatics_base_menu() {
+
   /**
    * @author Natasha Squires
    * @author Nolan Phillips <ncphillups@upei.ca>
@@ -50,18 +98,10 @@ function islandora_bioinformatics_base_menu() {
        * Provides a tab on an Islandora Object page that shows related Lab Object
        * forms for each type of Lab Object related to the islandora object.
        */
-      /**
-       * @todo
-       * Change access so the tab only shows up for objects whose CModel
-       * is be related to Lab Object subtypes.
-       */
       'title' => 'Lab Objects',
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'callback_related_lab_objects',
       'page arguments' => array(2),
-      /**
-       * @todo Access callback for /lab_objects
-       */
       'access callback' => 'has_lab_objects',
       'access arguments' => array(2),
     ),
@@ -71,10 +111,6 @@ function islandora_bioinformatics_base_menu() {
        * Starts the ingestion process for a new object which will be
        * related to %islandora_object. The new object will be of type
        * %rel_cmodel. This is only allowed if the CModel
-       */
-      /*
-       * @todo
-       * Menu definition for /ingest/%rel_cmodel
        */
     ),
     'islandora/object/%islandora_object/people' => array(
@@ -88,11 +124,8 @@ function islandora_bioinformatics_base_menu() {
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
-      /**
-       * @todo
-       * Access callback for /people
-       */
-      'access callback' => TRUE,
+      'access callback' => 'has_people',
+      'access arguments' => array(2),
     ),
     'islandora/object/%islandora_object/people/add' => array(
       /**
@@ -105,7 +138,8 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
-      'access callback' => TRUE,
+      'access callback' => 'has_people',
+      'access arguments' => array(2),
       'file' => 'includes/manage_project.form.inc',
     ),
   );
@@ -298,6 +332,11 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
+  $form['add'] = array(
+    '#type' => 'hidden',
+    '#markup' =>  l('Add', ''),
+  );
+
   // From our form there should be a list of specific operations that can be performed
   // on the objects in the list.
   $form['selected'] = array(
@@ -352,12 +391,18 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
    */
 
   $object = $form_state['object'];
+  $object_id = $object->id;
   $people = $form_state['related_objects'];
 
   $header = array(
     'name' => t('Name'),
     'phone' => t('Phone Number'),
     'email' => t('Email'),
+  );
+
+  $form['add'] = array(
+    '#type' => 'markup',
+    '#markup' => l('Add Person', "islandora/object/$object_id/people/add")
   );
 
   $people_rows = array();
@@ -375,10 +420,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
      * @todo
      * The name link to the Person Object is hardcoded. This must be changed to be relative.
      */
-    $name_link = "<a href='/islandora/object/$person_id'>$name</a>";
-
     $people_entries[$person_id] = array(
-      'name' => $name_link,
+      'name' => l($name, "islandora/object/$person_id"),
       'phone' => $person_mads['contact']['phone'],
       'email' => $person_mads['contact']['email'],
     );
@@ -1008,51 +1051,6 @@ function project_mads_to_array($project_object){
   return $project_mads;
 }
 
-function related_cmodels($object, $abstract_cmodels=None) {
-  /**
-   * @todo Implement related_cmodels() function.
-   *
-   * @param $object
-   * A fedora object. May be either a Data Object or a Content Model. If it's a
-   * Data Object, then this function will use it's first CModel.
-   *
-   * @param $abstract_cmodel
-   * If set, the query will filter out CModels unless they have a fedora:hasModel
-   * relationship to this $abstract_cmodel.
-   *
-   * @return $cmodels
-   */
-  $pred_uri = FEDORA_MODEL_URI; // There is currently no pred_uri
-  $pred = 'hasModel';
-  $type = FALSE; // Don't know why.
-
-
-  $CM_cmodel = 'fedora-system:ContentModel-3.0';
-  $cmodels = array($CM_cmodel);
-  $relationships = array();
-
-  $related_cmodels = related_islandora_objects($object, $cmodels, $relationships);
-
-  return $related_cmodels;
-}
-
-
-function related_lab_object_cmodels($object) {
-  /**
-   * @todo Implement related_lab_object_cmodels() function.
-   *
-   * Implements related_ABSTRACT_CMODEL_cmodels().
-   * @param $cmodel
-   *
-   * @return $cmodels
-   */
-
-  /**
-   * Calls related_cmodels with $abstract_cmodel = "islandora:lab_object_cmodel"
-   */
-
-  return array();
-}
 
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   /**
@@ -1157,8 +1155,6 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
-  file_put_contents('/tmp/islandora.txt', $query);
-
 /**
  * ## Example Query
  * Here is an example of query that may be produced within this function.
