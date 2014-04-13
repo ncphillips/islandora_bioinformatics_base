@@ -62,6 +62,13 @@
             '#submit' => array('islandora_project_people_add_submit'),
         );
         
+        //back button
+        $form['back'] = array(
+            '#type' => 'submit',
+            '#value' => 'Cancel',
+            '#submit' => array('islandora_project_people_add_cancel'),
+        );
+        
         //saving the project object in the form
         $form['project_object'] = array(
             '#type' => 'value',
@@ -108,5 +115,21 @@
         $form_state['redirect'] = array(
           'islandora/object/'.$object->id.'/people'
         );
-        
     }
+    
+    /**
+     * The handler for the cancel button
+     *
+     * @param array $form
+     * the Drupal form
+     *
+     * @param array &$form_state
+     * the Drupal form state
+     *
+     */
+     function islandora_project_people_add_cancel(array $form, array &$form_state){
+        $object = $form_state['values']['project_object'];
+        $form_state['redirect'] = array(
+            'islandora/object/'.$object->id.'/people'
+        );
+     }
