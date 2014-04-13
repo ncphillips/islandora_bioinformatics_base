@@ -54,8 +54,7 @@
             //list of people
             'people' => array(
                 '#type' => 'checkboxes',
-                '#default_value' => $values,
-                '#options' => $people,
+                '#options' => $values,
             ),
         );
         
