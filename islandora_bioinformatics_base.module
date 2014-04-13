@@ -394,7 +394,7 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   
   foreach($table_values as $lines => $line){
     if($line){
-      $dump[] = $line;
+      $dump[] = $line->label;
     }
   }
   
