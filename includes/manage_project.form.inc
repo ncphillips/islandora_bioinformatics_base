@@ -62,6 +62,13 @@
             '#submit' => array('islandora_project_people_add_submit'),
         );
         
+        //back button
+        $form['back'] = array(
+            '#type' => 'submit',
+            '#value' => 'Cancel',
+            '#submit' => array('islandora_project_people_add_cancel'),
+        );
+        
         //saving the project object in the form
         $form['project_object'] = array(
             '#type' => 'value',
