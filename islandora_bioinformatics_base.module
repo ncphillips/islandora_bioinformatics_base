@@ -1157,8 +1157,9 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
+  echo $query;
+  exit();
 
-  file_put_contents('/tmp/sqarql', $query);
 /**
  * ## Example Query
  * Here is an example of query that may be produced within this function.
