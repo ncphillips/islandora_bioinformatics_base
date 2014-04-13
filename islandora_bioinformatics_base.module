@@ -45,6 +45,7 @@ function has_lab_objects($object){
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  echo sizeof($result);
 
   if (sizeof($result) > 0)
     return TRUE;
@@ -73,8 +74,8 @@ function has_people($object){
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-  
-  $var_dump(sizeof($result));
+
+  echo sizeof($result);
 
   if (sizeof($result) > 0)
     return TRUE;
