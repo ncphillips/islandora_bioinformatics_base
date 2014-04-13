@@ -185,9 +185,9 @@ function callback_related_lab_objects($object) {
 
     $related_cmodel_pid = $related_cmodel_object->id;
 
-    $first_part_of_pid = strtok($related_cmodel_pid, ':');
-    $related_cmodel = strtok($related_cmodel_pid, ':');
-    $object_type = strtok($related_cmodel, '_');
+    strtok($related_cmodel_pid, ':');
+    strtok($related_cmodel_pid, '_');
+    $object_type = strtok($related_cmodel_pid, '_');
 
     $form_id = 'related_' . $object_type . '_form';
 
