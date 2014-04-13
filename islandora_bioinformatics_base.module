@@ -14,6 +14,7 @@
  *
  *
  */
+
 function islandora_object_has_lab_objects($object){
   /**
    * @author Nolan Phillips
@@ -144,8 +145,13 @@ function islandora_bioinformatics_base_menu() {
 }
 
 function ingest_rel_cmodel_title($cmodel){
+  /**
+   * @param $cmodel
+   *
+   * Returns a string of format "Add Cmodel"
+   */
   $cmodel_id = $cmodel->id;
-  return "Add $cmodel_id";
+  return t("Add $cmodel_id");
 }
 
 
