@@ -24,6 +24,7 @@ define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#
 */
 function has_lab_objects($object){
   $cmodel_id = $object['models'][0];
+  var_dump($object['models']);
   echo "hello " . $cmodel_id;
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
