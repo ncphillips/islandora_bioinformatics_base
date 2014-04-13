@@ -22,7 +22,13 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
-
+function has_lab_objects($object){
+  $related_cmodels = related_cmodels($object, array('islandora:lab_object_cmodel'));
+  if (sizeof($related_cmodels) > 0)
+    return TRUE;
+  else
+    return FALSE;
+}
 
 function islandora_bioinformatics_base_menu() {
   /**
@@ -32,7 +38,7 @@ function islandora_bioinformatics_base_menu() {
   /**
    * Implements hook_menu().
    *
-   * Provides a list of URLs provided by the Base Solution Pack.
+   * Defines a list of URLs provided by the Base Solution Pack.
    */
   return array(
     'islandora/object/%islandora_object/lab_objects' => array(
@@ -53,7 +59,8 @@ function islandora_bioinformatics_base_menu() {
       /**
        * @todo Access callback for /lab_objects
        */
-      'access callback' => TRUE,
+      'access callback' => 'has_lab_objects',
+      'access arguments' => array(2),
     ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /**
@@ -99,6 +106,27 @@ function islandora_bioinformatics_base_menu() {
       'file' => 'includes/manage_project.form.inc',
     ),
   );
+}
+
+function has_related_lab_objects($object) {
+  $target_pid = $object->models[0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
+
+  $tuque = new IslandoraTuque(); //Establish a tuque object
+
+  //Construct a query which will find all pids adhering to the following two conditions:
+  //Condition 1: pid corresponds to a content model that has a data relationship with $object
+
+  $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    PREFIX fedora: <info:fedora/fedora-system:def/relations-external#>
+    SELECT ?pid
+    FROM <#ri>
+    WHERE {
+      ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel> .
+      ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
+    }";
+
+  $results = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 }
 
 ///////////////// Page Callbacks /////////////////
@@ -175,7 +203,6 @@ function callback_related_lab_objects($object) {
       }
     }
  }
-
   //Return the renderable array
   return $render_array;
 }
@@ -387,22 +414,21 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 }
 
 ///////////////// Loader Functions/////////////////
-/**
- * cmodel_load
- *
- * This function assumes that Content Model IDs follow
- * the pattern "islandora:" . $name . "_cmodel"
- *
- * @author Nolan Phillips <ncphillips@upei.ca>
- *
- * @param String $cmodel_id_part
- * This is a partial ID of an Islandora Content Model.
- *
- * @return FedoraObject $object | null
- * If a FedoraObject is found and it is a Content Model, return it;
- * else, return NULL.
- */
+
 function cmodel_load($cmodel_id_part) {
+  /**
+   * @author Nolan Phillips <ncphillips@upei.ca>
+   *
+   * @param String $cmodel_id_part
+   * This is a partial ID of an Islandora Content Model.
+   *
+   * @return FedoraObject $object | null
+   * If a FedoraObject is found and it is a Content Model, return it;
+   * else, return NULL.
+   *
+   * This function assumes that Content Model IDs follow
+   * the pattern "islandora:" . $name . "_cmodel"
+   */
   $cmodel_id = "islandora:" . $cmodel_id_part . "_cmodel";
   $cmodel = islandora_object_load($cmodel_id);
   if ($cmodel && !in_array('fedora-system:ContentModel-3.0', $cmodel->models)) {
@@ -411,20 +437,19 @@ function cmodel_load($cmodel_id_part) {
   return $cmodel;
 }
 
-/**
- * rel_cmodel_load
- *
- * @author Nolan Phillips ncphillips@upei.ca
- *
- * @param string $cmodel_id_part
- *
- * @param IslandoraFedoraObject $object
- *
- * @return FedoraObject|null
- * If the cmodel exists and has a datarel_partOf relationship to
- * the cmodel of %object, then it is returned; else return NULL.
- */
+
 function rel_cmodel_load($cmodel_id_part, $object) {
+  /**
+   * @author Nolan Phillips ncphillips@upei.ca
+   *
+   * @param string $cmodel_id_part
+   *
+   * @param IslandoraFedoraObject $object
+   *
+   * @return FedoraObject|null
+   * If the cmodel exists and has a datarel_partOf relationship to
+   * the cmodel of %object, then it is returned; else return NULL.
+   */
   $cmodel = cmodel_load($cmodel_id_part);
   // If a cmodel FedoraObject is found.
   if ($object) {
@@ -466,36 +491,33 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
   );
 }
 
-/**
-  * Implements hook_CMODEL_PID_islandora_view_object() for Person.
-  */
-function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
 
+function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+  /**
+   * Implements hook_CMODEL_PID_islandora_view_object() for Person.
+   */
   $output = theme('islandora_bioinformatics_base', array('object' => $person));
   return array(
     'islandora_person' => $output,
   );
 }
 
-/**
-  * Implements hook_CMODEL_PID_islandora_view_object() for Project.
-  */
+
 function islandora_bioinformatics_base_project_cmodel_islandora_view_object(AbstractObject $project) {
+  /**
+   * Implements hook_CMODEL_PID_islandora_view_object() for Project.
+   */
   $output = theme('islandora_bioinformatics_base', array('object' => $project));
   return array(
     'islandora_project' => $output,
   );
 }
 
-/**
-  * Implements hook_islandora_required_objects().
-  */
-function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
-  /*
-   * @TODO Add datarel from Person to Project.
-   * @TODO Add datarel from Lab Object to Project.
-   */
 
+function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
+  /**
+   * Implements hook_islandora_required_objects().
+   */
   $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
 
   //---------Project Content Model------------------------------------------------------------------------------------//
@@ -676,18 +698,18 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 
 
 ///////////////// Drupal User/Fedora Person Synchronization /////////////////
-/**
- * @author Quintin Dawson
- * @param &$edit
- * @param $account
- * @param $category
- *
- * Implements hook_user_insert()
- *
- * When a new drupal user is created, this function will create a corresponding Person object in Fedora.
- *
- */
-function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {  
+function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
+  /**
+   * @author Quintin Dawson
+   * @param &$edit
+   * @param $account
+   * @param $category
+   *
+   * Implements hook_user_insert()
+   *
+   * When a new drupal user is created, this function will create a corresponding Person object in Fedora.
+   *
+   */
   $tuque = new IslandoraTuque();
   
   echo '<pre>';
@@ -754,17 +776,18 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 }
 
 
-/**
- * @author Quintin Dawson
- * @param &$edit
- * @param $account
- * @param $category
- *
- * Implements hook_user_update()
- *
- * When a Drupal user is modified, update the associated person object with the new values
- */
+
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
+  /**
+   * @author Quintin Dawson
+   * @param &$edit
+   * @param $account
+   * @param $category
+   *
+   * Implements hook_user_update()
+   *
+   * When a Drupal user is modified, update the associated person object with the new values
+   */
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -837,18 +860,19 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
 }
 
 
-/**
- * @author Quintin Dawson qdawson@upei.ca
- * @param $edit
- * @param $account
- * @param $method
- *
- * Implements hook_user_delete()
- *
- * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
- */
+
 //function islandora_bioinformatics_base_user_delete($account) {
 function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
+  /**
+   * @author Quintin Dawson qdawson@upei.ca
+   * @param $edit
+   * @param $account
+   * @param $method
+   *
+   * Implements hook_user_delete()
+   *
+   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
+   */
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -899,13 +923,14 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
 
 
 ///////////////// Helper Functions /////////////////
-/**
- * @author Brent Mitton
- * @param $person_object
- * @return An array with person information
- * Takes in an islandora person object and returns a simple array of the MADS data
- */
 function person_mads_to_array($person_object){
+  /**
+   * @author Brent Mitton
+   * @param $person_object
+   * @return An array with person information
+   *
+   * Takes in an islandora person object and returns a simple array of the MADS data
+   */
   $ns = "http://www.loc.gov/mads/v2";
 
   $person_mads = array();
@@ -952,17 +977,18 @@ function person_mads_to_array($person_object){
 }
 
 
-/**
- * @author Brent Mitton
- * @param $project_object
- *  An islandora object for the project
- * @return array
- *  an array of information needed pertaining to the projcet
- *
- * Takes a project object and returns a simple array of the data in the MADS stream.
- * I'm not sure what data we need from this right now.
- */
+
 function project_mads_to_array($project_object){
+  /**
+   * @author Brent Mitton
+   * @param $project_object
+   *  An islandora object for the project
+   * @return array
+   *  an array of information needed pertaining to the projcet
+   *
+   * Takes a project object and returns a simple array of the data in the MADS stream.
+   * I'm not sure what data we need from this right now.
+   */
   $ns = "http://www.loc.gov/mads/v2";
 
   $project_xml = new SimpleXMLElement($project_object["MADS"]->content);
@@ -1000,24 +1026,75 @@ function project_mads_to_array($project_object){
   return $project_mads;
 }
 
+function related_cmodels($object, $abstract_cmodels=None) {
+  /**
+   * @todo Implement related_cmodels() function.
+   *
+   * @param $object
+   * A fedora object. May be either a Data Object or a Content Model. If it's a
+   * Data Object, then this function will use it's first CModel.
+   *
+   * @param $abstract_cmodel
+   * If set, the query will filter out CModels unless they have a fedora:hasModel
+   * relationship to this $abstract_cmodel.
+   *
+   * @return $cmodels
+   */
+  $pred_uri = FEDORA_MODEL_URI; // There is currently no pred_uri
+  $pred = 'hasModel';
+  $target_id = 'fedora-system:ContentModel-3.0';
+  $type = FALSE; // Don't know why.
 
-/**
- * @param IslandoraFedoraObject $object
- *
- * @param string array | null $cmodels
- * An array of strings representing fedora IDs of Content Models.
- *
- * @param array | null $relationships
- * An associative array whose keys are namespaces, and whose values
- * are arrays of relationships in that namespace.
- *
- * @return IslandoraFedoraObject array $related_objects
- * An array of IslandoraFedoraObjects that are related to the $object.
- *
- * @author Nolan Phillips ncphillips@upei.ca
+  // Check if it has a datarel to the target object.
+  if (!islandora_object_has_relationship($object, $pred_uri, $pred, $target_id, $type))
+    $cmodel = islandora_object_load($object->cmodels[0]);
+  else
+    $cmodel = $object;
 
- */
+  $cmodels = array($target_id) + $abstract_cmodels;
+  $relationships = array();
+
+  $related_cmodels = related_islandora_objects($cmodel, $cmodels, $relationships);
+
+  return $related_cmodels;
+}
+
+
+function related_lab_object_cmodels($object) {
+  /**
+   * @todo Implement related_lab_object_cmodels() function.
+   *
+   * Implements related_ABSTRACT_CMODEL_cmodels().
+   * @param $cmodel
+   *
+   * @return $cmodels
+   */
+
+  /**
+   * Calls related_cmodels with $abstract_cmodel = "islandora:lab_object_cmodel"
+   */
+
+  return array();
+}
+
+
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
+  /**
+   * @author Nolan Phillips ncphillips@upei.ca
+   *
+   * @param $object
+   *
+   * @param $cmodels
+   * An array of strings representing fedora IDs of Content Models.
+   *
+   * @param $relationships
+   * An associative array whose keys are namespaces, and whose values
+   * are arrays of relationships in that namespace.
+   *
+   * @return $related_objects
+   * An array of IslandoraFedoraObjects that are related to the $object.
+   *
+   */
 
   $obj_id = $object->id;  // The Fedora PID of $object.
   $cmodel_query = '';  // A union of CModel tripples.
@@ -1056,10 +1133,8 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
    * target $object that is defined within any of the namespaces provided.
    *
    * ### Namespaces with relationships
-   * A Fedora Object may be accepted if it has any relationship to the
-   * target $object that is defined within any of the namespaces provided,
-   * with the added restriction that the relationship must be in that
-   * namespace's associated array.
+   * A Fedora Object may be accepted if it has a relationship to the
+   * target $object that is listed in that namespaces associative array.
    */
   if($relationships){
     // Define PREFIX statements

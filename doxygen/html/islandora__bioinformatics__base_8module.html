@@ -91,6 +91,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Functions</h2></td></tr>
 <tr class="memitem:a34856467f23719cd8eaf851f85ccf7e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a34856467f23719cd8eaf851f85ccf7e8">islandora_bioinformatics_base_menu</a> ()</td></tr>
 <tr class="separator:a34856467f23719cd8eaf851f85ccf7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bc2170d2deb3df2af507fb22571e0f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bc2170d2deb3df2af507fb22571e0f4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>has_related_lab_objects</b> ($object)</td></tr>
+<tr class="separator:a8bc2170d2deb3df2af507fb22571e0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a68c82f4c7760c83fb600e25c7d5a23a3">callback_related_lab_objects</a> ($object)</td></tr>
 <tr class="separator:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c31991c3bd91b6c9c008c69b8fe7f87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a6c31991c3bd91b6c9c008c69b8fe7f87">callback_related_lab_objects_ingest</a> ($object, $cmodel)</td></tr>
@@ -131,6 +134,10 @@ Functions</h2></td></tr>
 <tr class="separator:a2d88db4e05c753b2fd28042ce12f1d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a44fbb60fa898cede4db18005cd8602"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a8a44fbb60fa898cede4db18005cd8602">project_mads_to_array</a> ($project_object)</td></tr>
 <tr class="separator:a8a44fbb60fa898cede4db18005cd8602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a042f57d3aea3c501198ded2f31193f6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a042f57d3aea3c501198ded2f31193f6c">related_cmodels</a> ($objectj, $abstract_cmodel=None)</td></tr>
+<tr class="separator:a042f57d3aea3c501198ded2f31193f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae0f40af714fe2b8b0435eeabbb00152"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#aae0f40af714fe2b8b0435eeabbb00152">related_lab_object_cmodels</a> ($object)</td></tr>
+<tr class="separator:aae0f40af714fe2b8b0435eeabbb00152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a1dc5e940beb7a2b30952ce00b01d388e">related_islandora_objects</a> ($object, $cmodels=null, $relationships=null)</td></tr>
 <tr class="separator:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b5ea81575c95fda8879358c2ea0999"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99b5ea81575c95fda8879358c2ea0999"></a>
@@ -254,8 +261,6 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
         </tr>
       </table>
 </div><div class="memdoc">
-<p>cmodel_load</p>
-<p>This function assumes that Content Model IDs follow the pattern "islandora:" . $name . "_cmodel"</p>
 <dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -263,7 +268,8 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FedoraObject $object | null If a FedoraObject is found and it is a Content Model, return it; else, return NULL. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FedoraObject $object | null If a FedoraObject is found and it is a Content Model, return it; else, return NULL.</dd></dl>
+<p>This function assumes that Content Model IDs follow the pattern "islandora:" . $name . "_cmodel"</p>
 
 </div>
 </div>
@@ -395,7 +401,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_islandora_required_objects(). </p>
+<p>Implements hook_islandora_required_objects().</p>
 
 </div>
 </div>
@@ -449,7 +455,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
 <dd>
 Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llup<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <p>Implements hook_menu().</p>
-<p>Provides a list of URLs provided by the Base Solution Pack.</p>
+<p>Defines a list of URLs provided by the Base Solution Pack.</p>
 <h3>www.upeikerrlabs.ca/islandora/object/%islandora_object/lab_objects</h3>
 <p>Provides a tab on an Islandora Object page that shows related Lab Object forms for each type of Lab Object related to the islandora object.</p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Change access so the tab only shows up for objects whose CModel is be related to Lab Object subtypes. </dd></dl>
@@ -477,7 +483,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_CMODEL_PID_islandora_view_object() for Person. </p>
+<p>Implements hook_CMODEL_PID_islandora_view_object() for Person.</p>
 
 </div>
 </div>
@@ -494,7 +500,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_CMODEL_PID_islandora_view_object() for Project. </p>
+<p>Implements hook_CMODEL_PID_islandora_view_object() for Project.</p>
 
 </div>
 </div>
@@ -575,7 +581,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<p>Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository </p>
+<p>Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository</p>
 
 </div>
 </div>
@@ -617,7 +623,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<p>When a new drupal user is created, this function will create a corresponding Person object in Fedora. </p>
+<p>When a new drupal user is created, this function will create a corresponding Person object in Fedora.</p>
 
 </div>
 </div>
@@ -659,7 +665,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<p>When a Drupal user is modified, update the associated person object with the new values </p>
+<p>When a Drupal user is modified, update the associated person object with the new values</p>
 
 </div>
 </div>
@@ -683,7 +689,8 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An array with person information Takes in an islandora person object and returns a simple array of the MADS data </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An array with person information</dd></dl>
+<p>Takes in an islandora person object and returns a simple array of the MADS data</p>
 
 </div>
 </div>
@@ -708,7 +715,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>array an array of information needed pertaining to the projcet</dd></dl>
-<p>Takes a project object and returns a simple array of the data in the MADS stream. I'm not sure what data we need from this right now. </p>
+<p>Takes a project object and returns a simple array of the data in the MADS stream. I'm not sure what data we need from this right now.</p>
 
 </div>
 </div>
@@ -735,7 +742,6 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>rel_cmodel_load</p>
 <dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -744,7 +750,42 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>FedoraObject|null If the cmodel exists and has a datarel_partOf relationship to the cmodel of object, then it is returned; else return NULL. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FedoraObject|null If the cmodel exists and has a datarel_partOf relationship to the cmodel of object, then it is returned; else return NULL.</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a042f57d3aea3c501198ded2f31193f6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">related_cmodels </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$objectj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$abstract_cmodel</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Implement <a class="el" href="islandora__bioinformatics__base_8module.html#a042f57d3aea3c501198ded2f31193f6c">related_cmodels()</a> function.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$object</td><td>A fedora object. May be either a Data Object or a Content Model. If it's a Data Object, then this function will use it's first CModel.</td></tr>
+    <tr><td class="paramname">$abstract_cmodel</td><td>If set, the query will filter out CModels unless they have a fedora:hasModel relationship to this $abstract_cmodel.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>$cmodels</dd></dl>
 
 </div>
 </div>
@@ -777,29 +818,25 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">IslandoraFedoraObject</td><td class="paramname">$object</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">string</td><td>array | null $cmodels An array of strings representing fedora IDs of Content Models.</td></tr>
-    <tr><td class="paramtype">array &#160;|&#160; null</td><td class="paramname">$relationships</td><td>An associative array whose keys are namespaces, and whose values are arrays of relationships in that namespace.</td></tr>
+    <tr><td class="paramname">$object</td><td></td></tr>
+    <tr><td class="paramname">$cmodels</td><td>An array of strings representing fedora IDs of Content Models.</td></tr>
+    <tr><td class="paramname">$relationships</td><td>An associative array whose keys are namespaces, and whose values are arrays of relationships in that namespace.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>IslandoraFedoraObject array $related_objects An array of IslandoraFedoraObjects that are related to the $object.</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>$related_objects An array of IslandoraFedoraObjects that are related to the $object.</dd></dl>
 <h2>CModel Query Construction</h2>
 <p>If an Fedora Object's CModel set is a subset of $cmodels then the object may be returned; however, if the set of CModels passed in is empty, then an object is accepted regardless of it's CModel set.</p>
 <h2>Namespace Prefix Definitions</h2>
-<h3>No Namespaces</h3>
-<p>If no XML Namespaces are provided, then a Fedora Object may be accepted regardless of the namespace or relationship to the $object. </p>
-<h3>Single Namespace, 0 relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>doc</dd></dl>
-<h3>Single Namespace, n relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>doc</dd></dl>
-<h3>Multiple namespaces, 0 relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>doc</dd></dl>
-<h3>Multiple namespaces, n relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>doc </dd></dl>
+<h3>Without Namespaces</h3>
+<p>A Fedora Object may be accepted if it has any relationship to the target $object.</p>
+<h3>Namespaces without relationships</h3>
+<p>A Fedora Object may be accepted if it has any relationship to the target $object that is defined within any of the namespaces provided.</p>
+<h3>Namespaces with relationships</h3>
+<p>A Fedora Object may be accepted if it has a relationship to the target $object that is listed in that namespaces associative array.</p>
 <h2>Example Query</h2>
 <p>Here is an example of query that may be produced within this function. </p>
 <pre class="fragment"> PREFIX a: &lt;info:fedora/fedora-system:def/relations-external#&gt;
@@ -881,10 +918,36 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 
 </div>
 </div>
+<a class="anchor" id="aae0f40af714fe2b8b0435eeabbb00152"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">related_lab_object_cmodels </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Implement <a class="el" href="islandora__bioinformatics__base_8module.html#aae0f40af714fe2b8b0435eeabbb00152">related_lab_object_cmodels()</a> function.</dd></dl>
+<p>Implements related_ABSTRACT_CMODEL_cmodels(). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$cmodel</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>$cmodels</dd></dl>
+<p>Calls related_cmodels with $abstract_cmodel = "islandora:lab_object_cmodel"</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 13 2014 01:02:04 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 13 2014 03:23:19 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

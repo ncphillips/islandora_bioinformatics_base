@@ -6,6 +6,9 @@
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a34856467f23719cd8eaf851f85ccf7e8}{islandora\+\_\+bioinformatics\+\_\+base\+\_\+menu} ()
 \item 
+\hypertarget{islandora__bioinformatics__base_8module_a8bc2170d2deb3df2af507fb22571e0f4}{{\bfseries has\+\_\+related\+\_\+lab\+\_\+objects} (\$object)}\label{islandora__bioinformatics__base_8module_a8bc2170d2deb3df2af507fb22571e0f4}
+
+\item 
 \hyperlink{islandora__bioinformatics__base_8module_a68c82f4c7760c83fb600e25c7d5a23a3}{callback\+\_\+related\+\_\+lab\+\_\+objects} (\$object)
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest} (\$object, \$cmodel)
@@ -45,6 +48,10 @@
 \hyperlink{islandora__bioinformatics__base_8module_a2d88db4e05c753b2fd28042ce12f1d12}{person\+\_\+mads\+\_\+to\+\_\+array} (\$person\+\_\+object)
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}{project\+\_\+mads\+\_\+to\+\_\+array} (\$project\+\_\+object)
+\item 
+\hyperlink{islandora__bioinformatics__base_8module_a042f57d3aea3c501198ded2f31193f6c}{related\+\_\+cmodels} (\$objectj, \$abstract\+\_\+cmodel=None)
+\item 
+\hyperlink{islandora__bioinformatics__base_8module_aae0f40af714fe2b8b0435eeabbb00152}{related\+\_\+lab\+\_\+object\+\_\+cmodels} (\$object)
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a1dc5e940beb7a2b30952ce00b01d388e}{related\+\_\+islandora\+\_\+objects} (\$object, \$cmodels=null, \$relationships=null)
 \item 
@@ -146,10 +153,6 @@ This callback will take an object and a cmodel object as parameters. The callbac
 \item[{}]{\$cmodel\+\_\+id\+\_\+part}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a1f0c9c90de4c35b92c19c63a7cbe74b4}
-cmodel\+\_\+load
-
-This function assumes that Content Model I\+Ds follow the pattern \char`\"{}islandora\+:\char`\"{} . \$name . \char`\"{}\+\_\+cmodel\char`\"{}
-
 \begin{DoxyAuthor}{Author}
 Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
 \end{DoxyAuthor}
@@ -159,9 +162,9 @@ String & {\em \$cmodel\+\_\+id\+\_\+part} & This is a partial I\+D of an Islando
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Fedora\+Object \$object $\vert$ null If a Fedora\+Object is found and it is a Content Model, return it; else, return N\+U\+L\+L. 
+Fedora\+Object \$object $\vert$ null If a Fedora\+Object is found and it is a Content Model, return it; else, return N\+U\+L\+L.
 \end{DoxyReturn}
-\hypertarget{islandora__bioinformatics__base_8module_a833d478f4f75aec1a655731d56a9524d}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter}}
+This function assumes that Content Model I\+Ds follow the pattern \char`\"{}islandora\+:\char`\"{} . \$name . \char`\"{}\+\_\+cmodel\char`\"{}\hypertarget{islandora__bioinformatics__base_8module_a833d478f4f75aec1a655731d56a9524d}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+form\+\_\+related\+\_\+people\+\_\+form\+\_\+alter (
 \begin{DoxyParamCaption}
@@ -243,7 +246,7 @@ Implements hook\+\_\+islandora\+\_\+ingest\+\_\+steps() for the project\+\_\+cmo
 \item[{Islandora\+Tuque}]{\$connection}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_af49c8c4cdada468ea2f38053c815b8d0}
-Implements hook\+\_\+islandora\+\_\+required\+\_\+objects(). \hypertarget{islandora__bioinformatics__base_8module_ac6e286f916e9b73cb3188ed36087132b}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations}}
+Implements hook\+\_\+islandora\+\_\+required\+\_\+objects().\hypertarget{islandora__bioinformatics__base_8module_ac6e286f916e9b73cb3188ed36087132b}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+islandora\+\_\+xml\+\_\+form\+\_\+builder\+\_\+form\+\_\+associations (
 \begin{DoxyParamCaption}
@@ -277,7 +280,7 @@ Nolan Phillips \href{mailto:ncphillups@upei.ca}{\tt ncphillups@upei.\+ca}
 \end{DoxyAuthor}
 Implements hook\+\_\+menu().
 
-Provides a list of U\+R\+Ls provided by the Base Solution Pack.
+Defines a list of U\+R\+Ls provided by the Base Solution Pack.
 
 \paragraph*{www.\+upeikerrlabs.\+ca/islandora/object/\%islandora\+\_\+object/lab\+\_\+objects}
 
@@ -312,14 +315,14 @@ Displays form for adding/removing people to islandora\+\_\+object.\hypertarget{i
 \item[{Abstract\+Object}]{\$person}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a28377c1d1eb3975107460a21b1900eaf}
-Implements hook\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+\+P\+I\+D\+\_\+islandora\+\_\+view\+\_\+object() for Person. \hypertarget{islandora__bioinformatics__base_8module_aebd7ef53bd26dabff33c8d9ed965c355}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object}}
+Implements hook\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+\+P\+I\+D\+\_\+islandora\+\_\+view\+\_\+object() for Person.\hypertarget{islandora__bioinformatics__base_8module_aebd7ef53bd26dabff33c8d9ed965c355}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+project\+\_\+cmodel\+\_\+islandora\+\_\+view\+\_\+object (
 \begin{DoxyParamCaption}
 \item[{Abstract\+Object}]{\$project}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_aebd7ef53bd26dabff33c8d9ed965c355}
-Implements hook\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+\+P\+I\+D\+\_\+islandora\+\_\+view\+\_\+object() for Project. \hypertarget{islandora__bioinformatics__base_8module_a76e704c8060620f768f46bd4bacb05e0}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme}}
+Implements hook\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+\+P\+I\+D\+\_\+islandora\+\_\+view\+\_\+object() for Project.\hypertarget{islandora__bioinformatics__base_8module_a76e704c8060620f768f46bd4bacb05e0}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+theme (
 \begin{DoxyParamCaption}
@@ -350,7 +353,7 @@ Quintin Dawson \href{mailto:qdawson@upei.ca}{\tt qdawson@upei.\+ca}
 {\em \$method} & Implements hook\+\_\+user\+\_\+delete()\\
 \hline
 \end{DoxyParams}
-Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository \hypertarget{islandora__bioinformatics__base_8module_a0986c4a58fa2eed5df09ab9bdb7d6f47}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert}}
+Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository\hypertarget{islandora__bioinformatics__base_8module_a0986c4a58fa2eed5df09ab9bdb7d6f47}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+insert (
 \begin{DoxyParamCaption}
@@ -371,7 +374,7 @@ Quintin Dawson
 {\em \$category} & Implements hook\+\_\+user\+\_\+insert()\\
 \hline
 \end{DoxyParams}
-When a new drupal user is created, this function will create a corresponding Person object in Fedora. \hypertarget{islandora__bioinformatics__base_8module_a1a3a11905730edcebeb2d8577756ae3e}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update}}
+When a new drupal user is created, this function will create a corresponding Person object in Fedora.\hypertarget{islandora__bioinformatics__base_8module_a1a3a11905730edcebeb2d8577756ae3e}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+update (
 \begin{DoxyParamCaption}
@@ -392,7 +395,7 @@ Quintin Dawson
 {\em \$category} & Implements hook\+\_\+user\+\_\+update()\\
 \hline
 \end{DoxyParams}
-When a Drupal user is modified, update the associated person object with the new values \hypertarget{islandora__bioinformatics__base_8module_a2d88db4e05c753b2fd28042ce12f1d12}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!person\+\_\+mads\+\_\+to\+\_\+array@{person\+\_\+mads\+\_\+to\+\_\+array}}
+When a Drupal user is modified, update the associated person object with the new values\hypertarget{islandora__bioinformatics__base_8module_a2d88db4e05c753b2fd28042ce12f1d12}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!person\+\_\+mads\+\_\+to\+\_\+array@{person\+\_\+mads\+\_\+to\+\_\+array}}
 \index{person\+\_\+mads\+\_\+to\+\_\+array@{person\+\_\+mads\+\_\+to\+\_\+array}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{person\+\_\+mads\+\_\+to\+\_\+array}]{\setlength{\rightskip}{0pt plus 5cm}person\+\_\+mads\+\_\+to\+\_\+array (
 \begin{DoxyParamCaption}
@@ -408,9 +411,9 @@ Brent Mitton
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-An array with person information Takes in an islandora person object and returns a simple array of the M\+A\+D\+S data 
+An array with person information
 \end{DoxyReturn}
-\hypertarget{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!project\+\_\+mads\+\_\+to\+\_\+array@{project\+\_\+mads\+\_\+to\+\_\+array}}
+Takes in an islandora person object and returns a simple array of the M\+A\+D\+S data\hypertarget{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!project\+\_\+mads\+\_\+to\+\_\+array@{project\+\_\+mads\+\_\+to\+\_\+array}}
 \index{project\+\_\+mads\+\_\+to\+\_\+array@{project\+\_\+mads\+\_\+to\+\_\+array}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{project\+\_\+mads\+\_\+to\+\_\+array}]{\setlength{\rightskip}{0pt plus 5cm}project\+\_\+mads\+\_\+to\+\_\+array (
 \begin{DoxyParamCaption}
@@ -428,7 +431,7 @@ Brent Mitton
 \begin{DoxyReturn}{Returns}
 array an array of information needed pertaining to the projcet
 \end{DoxyReturn}
-Takes a project object and returns a simple array of the data in the M\+A\+D\+S stream. I'm not sure what data we need from this right now. \hypertarget{islandora__bioinformatics__base_8module_abaa5d1481d1ed7e3ca134bb436b0c325}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!rel\+\_\+cmodel\+\_\+load@{rel\+\_\+cmodel\+\_\+load}}
+Takes a project object and returns a simple array of the data in the M\+A\+D\+S stream. I'm not sure what data we need from this right now.\hypertarget{islandora__bioinformatics__base_8module_abaa5d1481d1ed7e3ca134bb436b0c325}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!rel\+\_\+cmodel\+\_\+load@{rel\+\_\+cmodel\+\_\+load}}
 \index{rel\+\_\+cmodel\+\_\+load@{rel\+\_\+cmodel\+\_\+load}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{rel\+\_\+cmodel\+\_\+load}]{\setlength{\rightskip}{0pt plus 5cm}rel\+\_\+cmodel\+\_\+load (
 \begin{DoxyParamCaption}
@@ -436,8 +439,6 @@ Takes a project object and returns a simple array of the data in the M\+A\+D\+S 
 \item[{}]{\$object}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_abaa5d1481d1ed7e3ca134bb436b0c325}
-rel\+\_\+cmodel\+\_\+load
-
 \begin{DoxyAuthor}{Author}
 Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
 \end{DoxyAuthor}
@@ -449,7 +450,29 @@ Islandora\+Fedora\+Object & {\em \$object} & \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Fedora\+Object$\vert$null If the cmodel exists and has a datarel\+\_\+part\+Of relationship to the cmodel of object, then it is returned; else return N\+U\+L\+L. 
+Fedora\+Object$\vert$null If the cmodel exists and has a datarel\+\_\+part\+Of relationship to the cmodel of object, then it is returned; else return N\+U\+L\+L.
+\end{DoxyReturn}
+\hypertarget{islandora__bioinformatics__base_8module_a042f57d3aea3c501198ded2f31193f6c}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!related\+\_\+cmodels@{related\+\_\+cmodels}}
+\index{related\+\_\+cmodels@{related\+\_\+cmodels}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
+\subsubsection[{related\+\_\+cmodels}]{\setlength{\rightskip}{0pt plus 5cm}related\+\_\+cmodels (
+\begin{DoxyParamCaption}
+\item[{}]{\$objectj, }
+\item[{}]{\$abstract\+\_\+cmodel = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}}\label{islandora__bioinformatics__base_8module_a042f57d3aea3c501198ded2f31193f6c}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000005}{Todo}]Implement \hyperlink{islandora__bioinformatics__base_8module_a042f57d3aea3c501198ded2f31193f6c}{related\+\_\+cmodels()} function.\end{DoxyRefDesc}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em \$object} & A fedora object. May be either a Data Object or a Content Model. If it's a Data Object, then this function will use it's first C\+Model.\\
+\hline
+{\em \$abstract\+\_\+cmodel} & If set, the query will filter out C\+Models unless they have a fedora\+:has\+Model relationship to this \$abstract\+\_\+cmodel.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\$cmodels
 \end{DoxyReturn}
 \hypertarget{islandora__bioinformatics__base_8module_a1dc5e940beb7a2b30952ce00b01d388e}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!related\+\_\+islandora\+\_\+objects@{related\+\_\+islandora\+\_\+objects}}
 \index{related\+\_\+islandora\+\_\+objects@{related\+\_\+islandora\+\_\+objects}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
@@ -460,52 +483,38 @@ Fedora\+Object$\vert$null If the cmodel exists and has a datarel\+\_\+part\+Of r
 \item[{}]{\$relationships = {\ttfamily null}}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a1dc5e940beb7a2b30952ce00b01d388e}
+\begin{DoxyAuthor}{Author}
+Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
+\end{DoxyAuthor}
 
-\begin{DoxyParams}[1]{Parameters}
-Islandora\+Fedora\+Object & {\em \$object} & \\
+\begin{DoxyParams}{Parameters}
+{\em \$object} & \\
 \hline
- & {\em string} & array $\vert$ null \$cmodels An array of strings representing fedora I\+Ds of Content Models.\\
+{\em \$cmodels} & An array of strings representing fedora I\+Ds of Content Models.\\
 \hline
-array  |  null & {\em \$relationships} & An associative array whose keys are namespaces, and whose values are arrays of relationships in that namespace.\\
+{\em \$relationships} & An associative array whose keys are namespaces, and whose values are arrays of relationships in that namespace.\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Islandora\+Fedora\+Object array \$related\+\_\+objects An array of Islandora\+Fedora\+Objects that are related to the \$object.
+\$related\+\_\+objects An array of Islandora\+Fedora\+Objects that are related to the \$object.
 \end{DoxyReturn}
-\begin{DoxyAuthor}{Author}
-Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca} 
-\end{DoxyAuthor}
 \subsubsection*{C\+Model Query Construction}
 
 If an Fedora Object's C\+Model set is a subset of \$cmodels then the object may be returned; however, if the set of C\+Models passed in is empty, then an object is accepted regardless of it's C\+Model set.
 
 \subsubsection*{Namespace Prefix Definitions}
 
-\paragraph*{No Namespaces}
+\paragraph*{Without Namespaces}
 
-If no X\+M\+L Namespaces are provided, then a Fedora Object may be accepted regardless of the namespace or relationship to the \$object. \paragraph*{Single Namespace, 0 relationships}
+A Fedora Object may be accepted if it has any relationship to the target \$object.
 
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000005}{Todo}]doc\end{DoxyRefDesc}
+\paragraph*{Namespaces without relationships}
 
+A Fedora Object may be accepted if it has any relationship to the target \$object that is defined within any of the namespaces provided.
 
-\paragraph*{Single Namespace, n relationships}
+\paragraph*{Namespaces with relationships}
 
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000006}{Todo}]doc\end{DoxyRefDesc}
-
-
-\paragraph*{Multiple namespaces, 0 relationships}
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000007}{Todo}]doc\end{DoxyRefDesc}
-
-
-\paragraph*{Multiple namespaces, n relationships}
-
-\begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000008}{Todo}]doc \end{DoxyRefDesc}
-
+A Fedora Object may be accepted if it has a relationship to the target \$object that is listed in that namespaces associative array.
 
 \subsubsection*{Example Query}
 
@@ -559,4 +568,23 @@ Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
 \\
 \hline
 \end{DoxyParams}
-Constructs a form which has a select table of islandora objects related to the \$object. A related object is listed iff it's cmodel is in \$cmodels and the relationship to \$object is in \$relationships.
+Constructs a form which has a select table of islandora objects related to the \$object. A related object is listed iff it's cmodel is in \$cmodels and the relationship to \$object is in \$relationships.\hypertarget{islandora__bioinformatics__base_8module_aae0f40af714fe2b8b0435eeabbb00152}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!related\+\_\+lab\+\_\+object\+\_\+cmodels@{related\+\_\+lab\+\_\+object\+\_\+cmodels}}
+\index{related\+\_\+lab\+\_\+object\+\_\+cmodels@{related\+\_\+lab\+\_\+object\+\_\+cmodels}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
+\subsubsection[{related\+\_\+lab\+\_\+object\+\_\+cmodels}]{\setlength{\rightskip}{0pt plus 5cm}related\+\_\+lab\+\_\+object\+\_\+cmodels (
+\begin{DoxyParamCaption}
+\item[{}]{\$object}
+\end{DoxyParamCaption}
+)}}\label{islandora__bioinformatics__base_8module_aae0f40af714fe2b8b0435eeabbb00152}
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000006}{Todo}]Implement \hyperlink{islandora__bioinformatics__base_8module_aae0f40af714fe2b8b0435eeabbb00152}{related\+\_\+lab\+\_\+object\+\_\+cmodels()} function.\end{DoxyRefDesc}
+
+
+Implements related\+\_\+\+A\+B\+S\+T\+R\+A\+C\+T\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+cmodels(). 
+\begin{DoxyParams}{Parameters}
+{\em \$cmodel} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\$cmodels
+\end{DoxyReturn}
+Calls related\+\_\+cmodels with \$abstract\+\_\+cmodel = \char`\"{}islandora\+:lab\+\_\+object\+\_\+cmodel\char`\"{}
