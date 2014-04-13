@@ -22,6 +22,8 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 // Fedora Definitions
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
+$test = islandora_object_load("islandora:639");
+project_mads_to_array($test);
 
 function islandora_bioinformatics_base_menu() {
   /**
@@ -898,7 +900,6 @@ function person_mads_to_array($person_object){
 
   $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
 
-  // parse the 'authority' section of mads.
   foreach ($person_xml->children($ns) as $part){
     switch ((string) $part->getName()){
       case "authority":
@@ -938,6 +939,22 @@ function person_mads_to_array($person_object){
 
   return $person_mads;
 }
+
+
+function project_mads_to_array($project_object){
+  $ns = "http://www.loc.gov/mads/v2";
+
+  $project_xml = new SimpleXMLElement($project_object["MADS"]->content);
+
+  foreach ($project_xml->children($ns) as $part){
+
+    echo (string) $part-getName();
+
+  }
+
+
+}
+
 
 /**
  * @param IslandoraFedoraObject $object
