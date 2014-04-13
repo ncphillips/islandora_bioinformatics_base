@@ -544,7 +544,7 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_view_ob
    */
   $output = theme('islandora_bioinformatics_base_person', array('object' => $object));
   return array(
-    'islandora_person' => $output,
+    '' => $output,
   );
 }
 
