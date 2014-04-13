@@ -24,7 +24,6 @@ define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#
 
 
 function islandora_bioinformatics_base_menu() {
-  echo "what";
   /**
    * @author Natasha Squires
    * @author Nolan Phillips <ncphillups@upei.ca>
@@ -35,26 +34,26 @@ function islandora_bioinformatics_base_menu() {
    * Provides a list of URLs provided by the Base Solution Pack.
    */
   return array(
-    'islandora/object/%islandora_object/lab_objects' => array(
-      /**
-       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/lab_objects
-       * Provides a tab on an Islandora Object page that shows related Lab Object
-       * forms for each type of Lab Object related to the islandora object.
-       */
-      /**
-       * @todo
-       * Change access so the tab only shows up for objects whose CModel
-       * is be related to Lab Object subtypes.
-       */
-      'title' => 'Lab Objects',
-      'type' => MENU_LOCAL_TASK,
-      'page callback' => 'callback_related_lab_objects',
-      'page arguments' => array(2),
-      /**
-       * @todo Access callback for /lab_objects
-       */
-      'access callback' => TRUE,
-    ),
+//    'islandora/object/%islandora_object/lab_objects' => array(
+//      /**
+//       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/lab_objects
+//       * Provides a tab on an Islandora Object page that shows related Lab Object
+//       * forms for each type of Lab Object related to the islandora object.
+//       */
+//      /**
+//       * @todo
+//       * Change access so the tab only shows up for objects whose CModel
+//       * is be related to Lab Object subtypes.
+//       */
+//      'title' => 'Lab Objects',
+//      'type' => MENU_LOCAL_TASK,
+//      'page callback' => 'callback_related_lab_objects',
+//      'page arguments' => array(2),
+//      /**
+//       * @todo Access callback for /lab_objects
+//       */
+//      'access callback' => TRUE,
+//    ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /**
        * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/ingest/\%rel_cmodel
@@ -127,7 +126,6 @@ function callback_related_lab_objects($object) {
    * renderable array, which the function will then return.
    */
   $render_array = array();
-  exit();
   $target_pid = $object->models[0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
 
 
@@ -150,8 +148,6 @@ function callback_related_lab_objects($object) {
     FROM <#ri>
     WHERE {
       ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel .
-     }";
-    echo "
       ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
     }";
 
@@ -162,7 +158,6 @@ function callback_related_lab_objects($object) {
     '#suffix' => '</pre></div>',
   );
 
-  exit();
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
   // Testing Porpoises.
