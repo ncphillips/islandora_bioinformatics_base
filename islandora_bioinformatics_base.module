@@ -24,6 +24,7 @@ define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#
 
 
 function islandora_bioinformatics_base_menu() {
+  echo "what";
   /**
    * @author Natasha Squires
    * @author Nolan Phillips <ncphillups@upei.ca>
