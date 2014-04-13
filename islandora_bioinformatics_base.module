@@ -47,6 +47,7 @@ function has_lab_objects($object){
 
 function has_people($object){
   $cmodel_id = $object->models[0];
+  echo $cmodel_id;
   $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
     SELECT ?datarel
