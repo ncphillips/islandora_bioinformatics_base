@@ -919,6 +919,13 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
    *
    * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
    */
+
+  echo '<pre>';
+  echo var_dump($account);
+  echo '</pre>';
+
+  dpm($account);
+  
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
