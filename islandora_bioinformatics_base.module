@@ -131,14 +131,6 @@ function callback_related_lab_objects($object) {
   $render_array = array();
   $target_pid = $object->models[0]; //Get the pid for the input object's content model, we'll want to see if any lab objects have an isPartOf relationship with this pid.
 
-
-  // Testing Porpoises.
-  $render_array['cmodel'] = array(
-    '#markup' => "$target_pid",
-    '#prefix' => '<div id="cmodel"><h1>Object\'s CModel</h1>',
-    '#suffix' => '</div>',
-  );
-
   $tuque = new IslandoraTuque(); //Establish a tuque object
 
   //Construct a query which will find all pids adhering to the following two conditions:
@@ -154,13 +146,6 @@ function callback_related_lab_objects($object) {
       ?pid fedora:datarel_isPartOf <info:fedora/$target_pid>
     }";
 
-  // Testing Porpoises.
-  $render_array['query'] = array(
-    '#markup' => "$query",
-    '#prefix' => '<div id="query"><h1>Query:</h1><pre>',
-    '#suffix' => '</pre></div>',
-  );
-
   $results = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
   $related_cmodels = array();
@@ -169,13 +154,6 @@ function callback_related_lab_objects($object) {
   }
 
   // Testing Porpoises.
-  $render_array['related_cmodels'] = array(
-    '#theme' => 'item_list',
-    '#items' => $related_cmodels,
-    '#prefix' => '<div id="related_cmodels"><h1>Related CModels:</h1>',
-    '#suffix' => '</div>',
-  );
-
   foreach ($related_cmodels as $related_cmodel_object) { //For each of the content models returned by the query,
  
     //Parse the pid of the related content model to get the form id.
@@ -186,16 +164,28 @@ function callback_related_lab_objects($object) {
     $pattern = '/islandora:(.*)_cmodel/';
     $related_cmodel_pid = $related_cmodel_object->id;
 
+
     preg_match($pattern, $related_cmodel_pid, $match);
 
     $object_type = $match[1];
 
     $form_id = 'related_' . $object_type. '_form';
 
+    if(function_exists($form_id)){
+      $render_array[$object_type] = drupal_get_form($form_id, $object);
+    }
+    else {
+      $args = array($object);
+      $forms = module_invoke_all('forms', $form_id, $args );
 
-    //Add the form array to the render array.
+      if(in_array($form_id, $forms))
+        $render_array[$object_type] = drupal_get_form($form_id, $object);
+      else {
+        $render_array[$object_type] = array();
+      }
+    }
 
-    $render_array[$object_type] = drupal_get_form($form_id, $object);
+
  }
 
   //Return the renderable array
