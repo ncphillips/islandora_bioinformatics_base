@@ -370,7 +370,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
      * @todo
      * The name link to the Person Object is hardcoded. This must be changed to be relative.
      */
-    $name_link = "<a href='137.149.157.10/islandora/object/$person_id'>$name</a>";
+    $name_link = "<a href='/islandora/object/$person_id'>$name</a>";
 
     $people_entries[$person_id] = array(
       'name' => $name_link,
@@ -1052,20 +1052,23 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   // Construct the set of prefix definitions.
   /**
    * ## Namespace Prefix Definitions
-   * ### No Namespaces
-   * If no XML Namespaces are provided, then a Fedora Object may be accepted regardless
-   * of the namespace or relationship to the $object.
-   * ### Single Namespace, 0 relationships
-   * @todo doc
+   * ### Without Namespaces
+   * A Fedora Object may be accepted if it has any relationship to the target $object.
    *
-   * ### Single Namespace, n relationships
-   * @todo doc
+   * ### Namespaces without relationships
+   * A Fedora Object may be accepted if it has any relationship to the
+   * target $object that is defined within any of the namespaces provided.
    *
-   * ### Multiple namespaces, 0 relationships
-   * @todo doc
+   * ### Namespace with relationships
+   * A Fedora Object may be accepted if it has any relationship to the
+   * target $object that is defined within any of the namespaces provided,
+   * with the restriction that if relationships provided along with the
+   * namespace, it
+   * The relationships
    *
-   * ### Multiple namespaces, n relationships
-   * @todo doc
+   * ### Multiple namespaces
+   * A Fedora Object may be accepted if it has any one of the relationships
+   *
    */
   if($relationships){
     // Define PREFIX statements
