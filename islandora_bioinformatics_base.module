@@ -228,7 +228,7 @@ function callback_related_lab_objects($object) {
 }
 
 
-function callback_related_lab_objects_ingest($object, $cmodel) {
+function callback_ingest_related_lab_objects($object, $cmodel) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
