@@ -843,11 +843,11 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   }  
   
   /* //This query should retrieve all people objects related to the current drupal user [$account->id]
-  $query = "SELECT ?uid
+  $query = 'SELECT ?uid
             FROM <#ri>
             WHERE {
-              ?uid <" . ISLANDORA_RELS_EXT_URI . ":isDrupalID> <info:fedora/" . $account->id . "> .
-            }"; 
+              ?uid <' . ISLANDORA_RELS_EXT_URI . ':isDrupalID> <info:fedora/' . $account->id . '> .
+            }';
   $result - $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
   //only one Fedora object should be related to the Drupal account, so take the first value in the $results array
@@ -900,8 +900,12 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
    *
    * Implements hook_user_delete()
    *
-   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
+   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository.
+   * This hook will not be called on user_cancel_delete method, so hook_user_delete must be implemented to handle that case.
    */
+
+  dpm(@account);
+
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
