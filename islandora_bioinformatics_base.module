@@ -929,7 +929,9 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   echo '</pre>';
 
   dpm($account);
-  
+
+  exit();
+
   //retrieve Person object related to the Drupal user
   $tuque = new IslandoraTuque();
   //this query should retrieve all person_cmodel objects
@@ -975,6 +977,58 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
         $tuque->repository->purgeObject($account_person->id); //purge the object from the database
         break; 
     }
+  }
+}
+
+function islandora_bioinformatics_base_user_delete($account) {
+//function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
+  /**
+   * @author Quintin Dawson qdawson@upei.ca
+   * @param $edit
+   * @param $account
+   * @param $method
+   *
+   * Implements hook_user_delete()
+   *
+   * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
+   */
+
+  echo '<pre>';
+  echo var_dump($account);
+  echo '</pre>';
+
+  dpm($account);
+
+  exit();
+
+  //retrieve Person object related to the Drupal user
+  $tuque = new IslandoraTuque();
+  //this query should retrieve all person_cmodel objects
+  $query = "SELECT ?pid
+          FROM <#ri>
+          WHERE {
+          ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
+        }";
+
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  $account_person = NULL;
+
+  //iterate over all people objects to find the one related to this drupal account
+  foreach($result as $person) {
+    //load the current person object
+    $person_object = islandora_object_load($person['pid']['value']);
+
+    //check if relationship to Drupal user exists
+    $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
+    if(!empty($relation)) {
+      $account_person = $person_object;
+    }
+  }
+
+  if(!empty($account_person)) {
+    $account_person->delete();  //flag object as deleted
+    $tuque->repository->purgeObject($account_person->id); //purge the object from the database
   }
 }
 
