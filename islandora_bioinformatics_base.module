@@ -34,26 +34,26 @@ function islandora_bioinformatics_base_menu() {
    * Provides a list of URLs provided by the Base Solution Pack.
    */
   return array(
-//    'islandora/object/%islandora_object/lab_objects' => array(
-//      /**
-//       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/lab_objects
-//       * Provides a tab on an Islandora Object page that shows related Lab Object
-//       * forms for each type of Lab Object related to the islandora object.
-//       */
-//      /**
-//       * @todo
-//       * Change access so the tab only shows up for objects whose CModel
-//       * is be related to Lab Object subtypes.
-//       */
-//      'title' => 'Lab Objects',
-//      'type' => MENU_LOCAL_TASK,
-//      'page callback' => 'callback_related_lab_objects',
-//      'page arguments' => array(2),
-//      /**
-//       * @todo Access callback for /lab_objects
-//       */
-//      'access callback' => TRUE,
-//    ),
+    'islandora/object/%islandora_object/lab_objects' => array(
+      /**
+       * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/lab_objects
+       * Provides a tab on an Islandora Object page that shows related Lab Object
+       * forms for each type of Lab Object related to the islandora object.
+       */
+      /**
+       * @todo
+       * Change access so the tab only shows up for objects whose CModel
+       * is be related to Lab Object subtypes.
+       */
+      'title' => 'Lab Objects',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'callback_related_lab_objects',
+      'page arguments' => array(2),
+      /**
+       * @todo Access callback for /lab_objects
+       */
+      'access callback' => TRUE,
+    ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /**
        * ### www.upeikerrlabs.ca/islandora/object/\%islandora_object/ingest/\%rel_cmodel
