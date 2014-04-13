@@ -182,7 +182,7 @@ function callback_related_lab_objects($object) {
       var_dump($forms);
       echo"</pre>";
 
-      if(in_array($form_id, $forms)){
+      if(array_key_exists($form_id, $forms)){
         echo "Uses a base form.";
         $render_array[$object_type] = drupal_get_form($form_id, $object);
       }
