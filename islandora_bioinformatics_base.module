@@ -183,7 +183,7 @@ function callback_related_lab_objects($object) {
     //The format will namespace:objectType_cmodel, so use the strtok function twice with ':' as the delimiter,
     //and then once more with '_' to extract the object_type, which will be used to construct the form id.
 
-    $pattern = '/islandora:(.*)_cmodel/';
+    $pattern = '/^islandora:(.*)_cmodel$/';
     $related_cmodel_pid = $related_cmodel_object->id;
     $object_type = array();
 
