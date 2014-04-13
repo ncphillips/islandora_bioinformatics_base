@@ -186,7 +186,7 @@ function callback_related_lab_objects($object) {
     $pattern = '/islandora:(.*)_cmodel/';
     $related_cmodel_pid = $related_cmodel_object->id;
 
-    preg_match($pattern, $match, $object_type);
+    preg_match($pattern, $related_cmodel_pid, $match);
 
     $object_type = $match[1];
 
