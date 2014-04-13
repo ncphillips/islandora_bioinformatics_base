@@ -566,8 +566,16 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_user_delete() </p>
-<dl class="section author"><dt>Author</dt><dd>Quintin Dawson <a href="#" onclick="location.href='mai'+'lto:'+'qda'+'ws'+'on@'+'up'+'ei.'+'ca'; return false;">qdaws<span style="display: none;">.nosp@m.</span>on@u<span style="display: none;">.nosp@m.</span>pei.c<span style="display: none;">.nosp@m.</span>a</a> Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Quintin Dawson <a href="#" onclick="location.href='mai'+'lto:'+'qda'+'ws'+'on@'+'up'+'ei.'+'ca'; return false;">qdaws<span style="display: none;">.nosp@m.</span>on@u<span style="display: none;">.nosp@m.</span>pei.c<span style="display: none;">.nosp@m.</span>a</a> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$edit</td><td></td></tr>
+    <tr><td class="paramname">$account</td><td></td></tr>
+    <tr><td class="paramname">$method</td><td>Implements hook_user_delete()</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository </p>
 
 </div>
 </div>
@@ -600,8 +608,16 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_user_insert() </p>
-<dl class="section author"><dt>Author</dt><dd>Quintin Dawson When a new drupal user is created, this function will create a corresponding Person object in Fedora. </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Quintin Dawson </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;$edit</td><td></td></tr>
+    <tr><td class="paramname">$account</td><td></td></tr>
+    <tr><td class="paramname">$category</td><td>Implements hook_user_insert()</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>When a new drupal user is created, this function will create a corresponding Person object in Fedora. </p>
 
 </div>
 </div>
@@ -634,8 +650,16 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_user_update() </p>
-<dl class="section author"><dt>Author</dt><dd>Quintin Dawson When a Drupal user is modified, update the associated person object with the new values </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Quintin Dawson </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&amp;$edit</td><td></td></tr>
+    <tr><td class="paramname">$account</td><td></td></tr>
+    <tr><td class="paramname">$category</td><td>Implements hook_user_update()</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>When a Drupal user is modified, update the associated person object with the new values </p>
 
 </div>
 </div>
@@ -676,7 +700,6 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Takes a project object and returns a simple array of the data in the MADS stream. I'm not sure what data we need from this right now. </p>
 <dl class="section author"><dt>Author</dt><dd>Brent Mitton </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -684,7 +707,8 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>array an array of information needed pertaining to the projcet </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>array an array of information needed pertaining to the projcet</dd></dl>
+<p>Takes a project object and returns a simple array of the data in the MADS stream. I'm not sure what data we need from this right now. </p>
 
 </div>
 </div>
@@ -860,7 +884,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Apr 13 2014 00:56:37 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 13 2014 01:02:04 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
