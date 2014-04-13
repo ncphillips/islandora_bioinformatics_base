@@ -7,6 +7,8 @@
 
 function islandora_bioinformatics_base_preprocess_islandora_bioinformatics_person(array &$variables) {
 
+
+  echo "there is no way it's making it here"; die;
   $islandora_object = $variables['islandora_object'];
   // Thumbnail.
   if (isset($islandora_object['TN'])) {
