@@ -23,14 +23,21 @@ define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object
 define('FEDORA_RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 
 function has_lab_objects($object){
-  $related_cmodels = related_cmodels($object, array('islandora:lab_object_cmodel'));
-  echo '<pre>';
-  var_dump($related_cmodels);
-  echo '</pre>';
-  if (sizeof($related_cmodels) > 0)
-    return TRUE;
-  else
-    return FALSE;
+
+  $cmodel_id = $object['cmodels'][0]->id;
+
+  $query = "
+    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+    SELECT ?pid
+    FROM <#ri>
+    WHERE
+    {
+      {?pid fedora-model:hasModel <info:fedora/fedora-system:ContentModel-3.0>} .
+      {?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel>} .
+      {?pid ?datarel <info:fedora/$cmodel_id>} .
+    }
+  ";
+
 }
 
 function islandora_bioinformatics_base_menu() {
@@ -1008,51 +1015,6 @@ function project_mads_to_array($project_object){
   return $project_mads;
 }
 
-function related_cmodels($object, $abstract_cmodels=None) {
-  /**
-   * @todo Implement related_cmodels() function.
-   *
-   * @param $object
-   * A fedora object. May be either a Data Object or a Content Model. If it's a
-   * Data Object, then this function will use it's first CModel.
-   *
-   * @param $abstract_cmodel
-   * If set, the query will filter out CModels unless they have a fedora:hasModel
-   * relationship to this $abstract_cmodel.
-   *
-   * @return $cmodels
-   */
-  $pred_uri = FEDORA_MODEL_URI; // There is currently no pred_uri
-  $pred = 'hasModel';
-  $type = FALSE; // Don't know why.
-
-
-  $CM_cmodel = 'fedora-system:ContentModel-3.0';
-  $cmodels = array($CM_cmodel);
-  $relationships = array();
-
-  $related_cmodels = related_islandora_objects($object, $cmodels, $relationships);
-
-  return $related_cmodels;
-}
-
-
-function related_lab_object_cmodels($object) {
-  /**
-   * @todo Implement related_lab_object_cmodels() function.
-   *
-   * Implements related_ABSTRACT_CMODEL_cmodels().
-   * @param $cmodel
-   *
-   * @return $cmodels
-   */
-
-  /**
-   * Calls related_cmodels with $abstract_cmodel = "islandora:lab_object_cmodel"
-   */
-
-  return array();
-}
 
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   /**
