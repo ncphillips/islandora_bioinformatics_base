@@ -1045,7 +1045,7 @@ function related_cmodels($object, $abstract_cmodels=None) {
   $type = FALSE; // Don't know why.
 
 
-  $CM_cmodel = 'fedora-system:ContentModel-3.0');
+  $CM_cmodel = 'fedora-system:ContentModel-3.0';
   $cmodels = array($CM_cmodel) + $abstract_cmodels;
   $relationships = array();
 
@@ -1070,11 +1070,6 @@ function related_lab_object_cmodels($object) {
    */
 
   return array();
-}
-
-function islandora_object_has_relationship($sub, $pred_uri, $pred, $object, $type) {
-  $relationships = $sub->relationships->get($pred_uri, $pred, $object, $type);
-  return !empty($relationships);
 }
 
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
