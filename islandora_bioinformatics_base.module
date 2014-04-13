@@ -109,7 +109,7 @@ function callback_related_lab_objects($object) {
 }
 
 
-function callback_related_lab_objects_not working($object) {
+function callback_related_lab_objects_not_working($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
