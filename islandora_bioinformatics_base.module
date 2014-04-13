@@ -145,8 +145,6 @@ function callback_related_lab_objects($object) {
   //Construct a query which will find all pids adhering to the following two conditions:
   //Condition 1: pid corresponds to a content model that has a data relationship with $object
 
-  return "fa";
-
    $query = "
     PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
     PREFIX fedora: <info:fedora/fedora-system:def/relations-external#>
@@ -165,6 +163,7 @@ function callback_related_lab_objects($object) {
   );
 
   $related_cmodels = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
+  return "wat";
 
   // Testing Porpoises.
   $render_array['related_cmodels'] = array(
