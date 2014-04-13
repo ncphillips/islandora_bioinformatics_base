@@ -129,6 +129,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa5707478f46c88f1840a3d7e341fb5e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d88db4e05c753b2fd28042ce12f1d12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a2d88db4e05c753b2fd28042ce12f1d12">person_mads_to_array</a> ($person_object)</td></tr>
 <tr class="separator:a2d88db4e05c753b2fd28042ce12f1d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a44fbb60fa898cede4db18005cd8602"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a8a44fbb60fa898cede4db18005cd8602">project_mads_to_array</a> ($project_object)</td></tr>
+<tr class="separator:a8a44fbb60fa898cede4db18005cd8602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a1dc5e940beb7a2b30952ce00b01d388e">related_islandora_objects</a> ($object, $cmodels=null, $relationships=null)</td></tr>
 <tr class="separator:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b5ea81575c95fda8879358c2ea0999"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99b5ea81575c95fda8879358c2ea0999"></a>
@@ -200,17 +202,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
 <p>This page callback takes an object and determines which lab object content models have a relationship with its content model via SPARQL query.</p>
 <p>From here it should use drupal_get_form once for each content model to generate a form populated with the lab objects of the specified content model related to the given object.</p>
 <p>These forms will be stored as a elements in a renderable array, which the function will then return.</p>
-<p>$query = " PREFIX fedora-model: &lt;info:fedora/fedora-system:def/model#&gt; PREFIX fedora: &lt;info:fedora/fedora-system:def/relations-external#&gt; SELECT ?pid FROM &lt;#ri&gt; WHERE { ?pid fedora-model:hasModel &lt;info:fedora/islandora:lab_object_cmodel . ?pid fedora:datarel_isPartOf &lt;info:fedora/$target_pid&gt; }";</p>
-<p>foreach ($related_cmodels as $related_cmodel_pid) { //For each of the content models returned by the query,</p>
-<p>Parse the pid of the related content model to get the form id.</p>
-<p>The format will namespace:objectType_cmodel, so use the strtok function twice with ':' as the delimiter, and then once more with '_' to extract the object_type, which will be used to construct the form id. </p>
-<pre class="fragment">$first_part_of_pid = strtok($related_cmodel_pid, ':');
-$related_cmodel = strtok($related_cmodel_pid, ':');
-$object_type = strtok($related_cmodel, '_');
 
-$form_id = 'related_' . $object_type . '_form';
-</pre><p>Add the form array to the render array. </p>
-<pre class="fragment">$render_array/*[] </pre>
 </div>
 </div>
 <a class="anchor" id="a6c31991c3bd91b6c9c008c69b8fe7f87"></a>
@@ -298,7 +290,7 @@ $form_id = 'related_' . $object_type . '_form';
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_related_people_form_alter()</p>
+<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$form</td><td></td></tr>
@@ -306,9 +298,10 @@ $form_id = 'related_' . $object_type . '_form';
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>mixed</dd></dl>
-<dl class="section author"><dt>Author</dt><dd>Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'lli'+'ps'+'@up'+'ei'+'.ca'; return false;">ncphi<span style="display: none;">.nosp@m.</span>llip<span style="display: none;">.nosp@m.</span>s@upe<span style="display: none;">.nosp@m.</span>i.ca</a></dd></dl>
-<p>Alters the related_objects_form for displaying related People. </p>
+<dl class="section return"><dt>Returns</dt><dd>form array $form</dd></dl>
+<p>Implements hook_related_people_form_alter()</p>
+<p>Alters the related_objects_form for displaying related People.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>The name link to the Person Object is hardcoded. This must be changed to be relative. </dd></dl>
 
 </div>
 </div>
@@ -540,7 +533,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Implements hook_theme(). </p>
+<p>Implements hook_theme().</p>
 
 </div>
 </div>
@@ -670,6 +663,31 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 
 </div>
 </div>
+<a class="anchor" id="a8a44fbb60fa898cede4db18005cd8602"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">project_mads_to_array </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$project_object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Takes a project object and returns a simple array of the data in the MADS stream. I'm not sure what data we need from this right now. </p>
+<dl class="section author"><dt>Author</dt><dd>Brent Mitton </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$project_object</td><td>An islandora object for the project </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>array an array of information needed pertaining to the projcet </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="abaa5d1481d1ed7e3ca134bb436b0c325"></a>
 <div class="memitem">
 <div class="memproto">
@@ -751,13 +769,13 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 <h3>No Namespaces</h3>
 <p>If no XML Namespaces are provided, then a Fedora Object may be accepted regardless of the namespace or relationship to the $object. </p>
 <h3>Single Namespace, 0 relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>doc</dd></dl>
-<h3>Single Namespace, n relationships</h3>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>doc</dd></dl>
-<h3>Multiple namespaces, 0 relationships</h3>
+<h3>Single Namespace, n relationships</h3>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>doc</dd></dl>
+<h3>Multiple namespaces, 0 relationships</h3>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>doc</dd></dl>
 <h3>Multiple namespaces, n relationships</h3>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>doc </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>doc </dd></dl>
 <h2>Example Query</h2>
 <p>Here is an example of query that may be produced within this function. </p>
 <pre class="fragment"> PREFIX a: &lt;info:fedora/fedora-system:def/relations-external#&gt;
@@ -842,7 +860,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 12 2014 21:28:16 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 13 2014 00:56:37 for Islandora Bioinformatics Base by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

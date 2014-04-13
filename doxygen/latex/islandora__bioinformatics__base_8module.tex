@@ -44,6 +44,8 @@
 \item 
 \hyperlink{islandora__bioinformatics__base_8module_a2d88db4e05c753b2fd28042ce12f1d12}{person\+\_\+mads\+\_\+to\+\_\+array} (\$person\+\_\+object)
 \item 
+\hyperlink{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}{project\+\_\+mads\+\_\+to\+\_\+array} (\$project\+\_\+object)
+\item 
 \hyperlink{islandora__bioinformatics__base_8module_a1dc5e940beb7a2b30952ce00b01d388e}{related\+\_\+islandora\+\_\+objects} (\$object, \$cmodels=null, \$relationships=null)
 \item 
 \hypertarget{islandora__bioinformatics__base_8module_a99b5ea81575c95fda8879358c2ea0999}{{\bfseries test\+\_\+people\+\_\+add} (\$object)}\label{islandora__bioinformatics__base_8module_a99b5ea81575c95fda8879358c2ea0999}
@@ -117,24 +119,7 @@ This page callback takes an object and determines which lab object content model
 
 From here it should use drupal\+\_\+get\+\_\+form once for each content model to generate a form populated with the lab objects of the specified content model related to the given object.
 
-These forms will be stored as a elements in a renderable array, which the function will then return.
-
-\$query = " P\+R\+E\+F\+I\+X fedora-\/model\+: $<$info\+:fedora/fedora-\/system\+:def/model\#$>$ P\+R\+E\+F\+I\+X fedora\+: $<$info\+:fedora/fedora-\/system\+:def/relations-\/external\#$>$ S\+E\+L\+E\+C\+T ?pid F\+R\+O\+M $<$\#ri$>$ W\+H\+E\+R\+E \{ ?pid fedora-\/model\+:has\+Model $<$info\+:fedora/islandora\+:lab\+\_\+object\+\_\+cmodel . ?pid fedora\+:datarel\+\_\+is\+Part\+Of $<$info\+:fedora/\$target\+\_\+pid$>$ \}";
-
-foreach (\$related\+\_\+cmodels as \$related\+\_\+cmodel\+\_\+pid) \{ //\+For each of the content models returned by the query,
-
-Parse the pid of the related content model to get the form id.
-
-The format will namespace\+:object\+Type\+\_\+cmodel, so use the strtok function twice with '\+:' as the delimiter, and then once more with '\+\_\+' to extract the object\+\_\+type, which will be used to construct the form id. \begin{DoxyVerb}$first_part_of_pid = strtok($related_cmodel_pid, ':');
-$related_cmodel = strtok($related_cmodel_pid, ':');
-$object_type = strtok($related_cmodel, '_');
-
-$form_id = 'related_' . $object_type . '_form';
-\end{DoxyVerb}
-
-
-Add the form array to the render array. \begin{DoxyVerb}$render_array/*[] \end{DoxyVerb}
-\hypertarget{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}}
+These forms will be stored as a elements in a renderable array, which the function will then return.\hypertarget{islandora__bioinformatics__base_8module_a6c31991c3bd91b6c9c008c69b8fe7f87}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}}
 \index{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest@{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest}]{\setlength{\rightskip}{0pt plus 5cm}callback\+\_\+related\+\_\+lab\+\_\+objects\+\_\+ingest (
 \begin{DoxyParamCaption}
@@ -184,8 +169,9 @@ Fedora\+Object \$object $\vert$ null If a Fedora\+Object is found and it is a Co
 \item[{\&}]{\$form\+\_\+state}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a833d478f4f75aec1a655731d56a9524d}
-Implements hook\+\_\+related\+\_\+people\+\_\+form\+\_\+alter()
-
+\begin{DoxyAuthor}{Author}
+Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
+\end{DoxyAuthor}
 
 \begin{DoxyParams}{Parameters}
 {\em \$form} & \\
@@ -194,12 +180,15 @@ Implements hook\+\_\+related\+\_\+people\+\_\+form\+\_\+alter()
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-mixed
+form array \$form
 \end{DoxyReturn}
-\begin{DoxyAuthor}{Author}
-Nolan Phillips \href{mailto:ncphillips@upei.ca}{\tt ncphillips@upei.\+ca}
-\end{DoxyAuthor}
-Alters the related\+\_\+objects\+\_\+form for displaying related People. \hypertarget{islandora__bioinformatics__base_8module_a2e95f32f792ce2fcd79c32895fcdbe43}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms}}
+Implements hook\+\_\+related\+\_\+people\+\_\+form\+\_\+alter()
+
+Alters the related\+\_\+objects\+\_\+form for displaying related People.
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000004}{Todo}]The name link to the Person Object is hardcoded. This must be changed to be relative. \end{DoxyRefDesc}
+\hypertarget{islandora__bioinformatics__base_8module_a2e95f32f792ce2fcd79c32895fcdbe43}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+forms (
 \begin{DoxyParamCaption}
@@ -340,7 +329,7 @@ Implements hook\+\_\+\+C\+M\+O\+D\+E\+L\+\_\+\+P\+I\+D\+\_\+islandora\+\_\+view\
 \item[{}]{\$path}
 \end{DoxyParamCaption}
 )}}\label{islandora__bioinformatics__base_8module_a76e704c8060620f768f46bd4bacb05e0}
-Implements hook\+\_\+theme(). \hypertarget{islandora__bioinformatics__base_8module_aa5707478f46c88f1840a3d7e341fb5e1}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel}}
+Implements hook\+\_\+theme().\hypertarget{islandora__bioinformatics__base_8module_aa5707478f46c88f1840a3d7e341fb5e1}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel}}
 \index{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel@{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
 \subsubsection[{islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel}]{\setlength{\rightskip}{0pt plus 5cm}islandora\+\_\+bioinformatics\+\_\+base\+\_\+user\+\_\+cancel (
 \begin{DoxyParamCaption}
@@ -393,6 +382,24 @@ Brent Mitton
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 An array with person information Takes in an islandora person object and returns a simple array of the M\+A\+D\+S data 
+\end{DoxyReturn}
+\hypertarget{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!project\+\_\+mads\+\_\+to\+\_\+array@{project\+\_\+mads\+\_\+to\+\_\+array}}
+\index{project\+\_\+mads\+\_\+to\+\_\+array@{project\+\_\+mads\+\_\+to\+\_\+array}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
+\subsubsection[{project\+\_\+mads\+\_\+to\+\_\+array}]{\setlength{\rightskip}{0pt plus 5cm}project\+\_\+mads\+\_\+to\+\_\+array (
+\begin{DoxyParamCaption}
+\item[{}]{\$project\+\_\+object}
+\end{DoxyParamCaption}
+)}}\label{islandora__bioinformatics__base_8module_a8a44fbb60fa898cede4db18005cd8602}
+Takes a project object and returns a simple array of the data in the M\+A\+D\+S stream. I'm not sure what data we need from this right now. \begin{DoxyAuthor}{Author}
+Brent Mitton 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}{Parameters}
+{\em \$project\+\_\+object} & An islandora object for the project \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array an array of information needed pertaining to the projcet 
 \end{DoxyReturn}
 \hypertarget{islandora__bioinformatics__base_8module_abaa5d1481d1ed7e3ca134bb436b0c325}{\index{islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}!rel\+\_\+cmodel\+\_\+load@{rel\+\_\+cmodel\+\_\+load}}
 \index{rel\+\_\+cmodel\+\_\+load@{rel\+\_\+cmodel\+\_\+load}!islandora\+\_\+bioinformatics\+\_\+base.\+module@{islandora\+\_\+bioinformatics\+\_\+base.\+module}}
@@ -452,25 +459,25 @@ If an Fedora Object's C\+Model set is a subset of \$cmodels then the object may 
 If no X\+M\+L Namespaces are provided, then a Fedora Object may be accepted regardless of the namespace or relationship to the \$object. \paragraph*{Single Namespace, 0 relationships}
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000004}{Todo}]doc\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000005}{Todo}]doc\end{DoxyRefDesc}
 
 
 \paragraph*{Single Namespace, n relationships}
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000005}{Todo}]doc\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000006}{Todo}]doc\end{DoxyRefDesc}
 
 
 \paragraph*{Multiple namespaces, 0 relationships}
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000006}{Todo}]doc\end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000007}{Todo}]doc\end{DoxyRefDesc}
 
 
 \paragraph*{Multiple namespaces, n relationships}
 
 \begin{DoxyRefDesc}{Todo}
-\item[\hyperlink{todo__todo000007}{Todo}]doc \end{DoxyRefDesc}
+\item[\hyperlink{todo__todo000008}{Todo}]doc \end{DoxyRefDesc}
 
 
 \subsubsection*{Example Query}

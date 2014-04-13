@@ -332,30 +332,30 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   return $form;
 }
 
-/**
- * Implements hook_related_people_form_alter()
- *
- * @param $form
- * @param $form_state
- * @return mixed
- *
- * @author Nolan Phillips ncphillips@upei.ca
- *
- * Alters the related_objects_form for displaying related People.
- */
+
 function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$form_state) {
-  // @todo Make the related people form pretty.
+  /**
+   * @author Nolan Phillips ncphillips@upei.ca
+   *
+   * @param $form
+   * @param $form_state
+   * @return form array $form
+   *
+   * Implements hook_related_people_form_alter()
+   *
+   * Alters the related_objects_form for displaying related People.
+   */
+
   $object = $form_state['object'];
   $people = $form_state['related_objects'];
 
-  // Table of Related Lab Objects.
   $header = array(
     'name' => t('Name'),
     'phone' => t('Phone Number'),
     'email' => t('Email'),
   );
 
-  $options = array();
+  $people_rows = array();
 
   foreach ($people as $person){
     // Default Values
@@ -365,8 +365,14 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     $person_id = $person->id;
 
     $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
+
+    /**
+     * @todo
+     * The name link to the Person Object is hardcoded. This must be changed to be relative.
+     */
     $name_link = "<a href='137.149.157.10/islandora/object/$person_id'>$name</a>";
-    $options[$person_id] = array(
+
+    $people_entries[$person_id] = array(
       'name' => $name_link,
       'phone' => $person_mads['contact']['phone'],
       'email' => $person_mads['contact']['email'],
@@ -377,7 +383,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
   $form['table'] = array(
     '#type' => 'tableselect',
     '#header' => $header,
-    '#options' => $options,
+    '#options' => $people_entries,
     '#empty' => t('There is no people related to ' . $object->id . '.'),
   );
 
@@ -602,6 +608,7 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
   );
 }
 
+
 /**
  * Implements hook_islandora_xml_form_builder_form_associations()
  * @return array
@@ -627,6 +634,7 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_form_associati
   );
 }
 
+
 ///////////////// Ingest Steps/////////////////
 /**
  * Implements hook_islandora_ingest_steps() for the person_cmodel.
@@ -643,6 +651,7 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_
     ),
   );
 }
+
 
 /**
  * Implements hook_islandora_ingest_steps() for the project_cmodel.
@@ -669,10 +678,16 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
   );
 }
 
+
 ///////////////// Drupal User/Fedora Person Synchronization /////////////////
 /**
- * Implements hook_user_insert()
  * @author Quintin Dawson
+ * @param &$edit
+ * @param $account
+ * @param $category
+ *
+ * Implements hook_user_insert()
+ *
  * When a new drupal user is created, this function will create a corresponding Person object in Fedora.
  *
  */
@@ -742,11 +757,16 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   //$ingested_object = islandora_add_object($person_object);
 }
 
+
 /**
- * Implements hook_user_update()
  * @author Quintin Dawson
- * When a Drupal user is modified, update the associated person object with the new values
+ * @param &$edit
+ * @param $account
+ * @param $category
  *
+ * Implements hook_user_update()
+ *
+ * When a Drupal user is modified, update the associated person object with the new values
  */
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
   //retrieve Person object related to the Drupal user
@@ -787,7 +807,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person = result[0];
   }  
   */ 
-  
   //if the Fedora object related to the Drupal account is found, make the desired changes
   
   if(!empty($account_person)) {
@@ -823,9 +842,14 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
 
 
 /**
- * Implements hook_user_delete()
  * @author Quintin Dawson qdawson@upei.ca
- * Called when a drupal user is deleted.  This should find and delete the associated Fedora person object from the repository
+ * @param $edit
+ * @param $account
+ * @param $method
+ *
+ * Implements hook_user_delete()
+ *
+ * Called when a drupal user is deleted. This should find and delete the associated Fedora person object from the repository
  */
 //function islandora_bioinformatics_base_user_delete($account) {
 function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
@@ -854,7 +878,6 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
     }
   }  
   
-  
   if(!empty($account_person)) {
     switch($method) {
       case 'user_cancel_block':
@@ -877,6 +900,7 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
     }
   }
 }
+
 
 ///////////////// Helper Functions /////////////////
 /**
@@ -928,18 +952,19 @@ function person_mads_to_array($person_object){
         break;
     }
   }
-
   return $person_mads;
 }
 
+
 /**
- * Takes a project object and returns a simple array of the data in the MADS stream.
- * I'm not sure what data we need from this right now.
  * @author Brent Mitton
  * @param $project_object
  *  An islandora object for the project
  * @return array
  *  an array of information needed pertaining to the projcet
+ *
+ * Takes a project object and returns a simple array of the data in the MADS stream.
+ * I'm not sure what data we need from this right now.
  */
 function project_mads_to_array($project_object){
   $ns = "http://www.loc.gov/mads/v2";
@@ -975,11 +1000,7 @@ function project_mads_to_array($project_object){
       case "fieldOfActivity":
         break;
     };
-
   }
-
-
-
   return $project_mads;
 }
 
