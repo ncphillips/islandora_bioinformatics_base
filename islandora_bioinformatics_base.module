@@ -205,7 +205,11 @@ function callback_related_lab_objects($object) {
     $related_cmodel_pid = $related_cmodel_object->id;
     preg_match($pattern, $related_cmodel_pid, $match);
 
-    $object_type = $match[1];
+    $object_type = $match[1]; //Get the cmodel
+
+    $module_name = "islandora_lab_object_" . $object_type;
+
+    module_load_include('module', $module_name, $module_name);
 
     $form_id = 'related_' . $object_type. '_form';
 
@@ -213,14 +217,7 @@ function callback_related_lab_objects($object) {
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-      $args = array($object);
-      $forms = module_invoke_all('forms', $form_id, $args );
-      if(array_key_exists($form_id, $forms)){
-        $render_array[$object_type] = drupal_get_form($form_id, $object);
-      }
-      else {
-        $render_array[$object_type] = array();
-      }
+     return "";
     }
  }
   //Return the renderable array
