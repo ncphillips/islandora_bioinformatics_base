@@ -178,6 +178,9 @@ function callback_related_lab_objects($object) {
     else {
       $args = array($object);
       $forms = module_invoke_all('forms', $form_id, $args );
+      echo"<pre>";
+      var_dump($forms);
+      echo"</pre>";
 
       if(in_array($form_id, $forms)){
         echo "Uses a base form.";
