@@ -43,7 +43,7 @@
             var_dump($relationship);
             
             if(empty($relationship)){
-                $default_values[$person_object->id] = $person_object->label;
+                $people[$person_object->id] = $person_object->label;
             }
         }
         
@@ -51,7 +51,7 @@
             //list of people
             'people' => array(
                 '#type' => 'checkboxes',
-                '#default_value' => $default_values,
+                '#default_value' => $people,
                 '#options' => $people,
             ),
         );
