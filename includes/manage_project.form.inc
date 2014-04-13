@@ -65,6 +65,11 @@
             '#submit' => array('islandora_project_people_add_submit', $object),
         );
         
+        $form['project_object'] = array(
+            '#type' => 'value',
+            '#value' => $object,
+        );
+        
         //var_dump($form);
         
         return $form;
@@ -81,11 +86,14 @@
      * the Project object the form is associated with
      *
      */
-    function islandora_project_people_add_submit(array $form, array &$form_state, AbstractObject $object) {
+    function islandora_project_people_add_submit(array $form, array &$form_state) {
         $tuque = new IslandoraTuque();
     
         //get the checkboxes submitted (only those checked are submitted)  
         $person_ids = array_filter($form_state['values']['people']);
+        
+        //get the saved object
+        $object = $form_state['values']['project_object'];
     
         //iterate over every person and remove their relationship (if it exists) with the project.
         $query = "SELECT ?pid
