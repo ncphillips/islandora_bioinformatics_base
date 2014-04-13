@@ -1157,8 +1157,7 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
-  echo $query;
-  exit();
+  file_put_contents('/home', $query);
 
 /**
  * ## Example Query
