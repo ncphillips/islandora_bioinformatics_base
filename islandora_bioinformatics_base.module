@@ -527,6 +527,7 @@ function islandora_bioinformatics_base_project_theme($existing, $type, $theme, $
 
 
 function islandora_bioinformatics_base_person_cmodel_islandora_view_object(AbstractObject $person) {
+  echo "HEY"; die;
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for Person.
    */
