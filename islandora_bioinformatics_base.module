@@ -1077,6 +1077,10 @@ function related_lab_object_cmodels($object) {
   return array();
 }
 
+function islandora_object_has_relationship($sub, $pred_uri, $pred, $object, $type) {
+  $relationships = $sub->relationships->get($pred_uri, $pred, $object, $type);
+  return !empty($relationships);
+}
 
 function related_islandora_objects($object, $cmodels=null, $relationships=null){
   /**
