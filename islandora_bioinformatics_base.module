@@ -504,7 +504,7 @@ function rel_cmodel_load($cmodel_id_part, $object) {
 
 ///////////////// Theming /////////////////
 
-function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
+function islandora_bioinformatics_base_person_theme($existing, $type, $theme, $path) {
   /**
   * Implements hook_theme().
   */
@@ -512,15 +512,23 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
     'islandora_person' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora_person',
-      'pattern' => 'islandora_person__',
+      'pattern' => 'islandora_bioinformatics__',
       'variables' => array(
         'object' => NULL,
       ),
     ),
-    'islandora_project' => array(
+  );
+}
+
+
+
+
+function islandora_bioinformatics_base_project_theme($existing, $type, $theme, $path){
+   return array(
+       'islandora_project' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora_project',
-      'pattern' => 'islandora_project__',
+      'pattern' => 'islandora_bioinformatics__',
       'variables' => array(
         'object' => NULL,
       ),
@@ -533,7 +541,7 @@ function islandora_bioinformatics_base_person_cmodel_islandora_view_object(Abstr
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for Person.
    */
-  $output = theme('islandora_bioinformatics_base', array('object' => $person));
+  $output = theme('islandora_bioinformatics_base_person', array('object' => $person));
   return array(
     'islandora_person' => $output,
   );

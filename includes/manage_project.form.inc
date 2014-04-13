@@ -104,4 +104,9 @@
           $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
         }
         
+        //redirects to the people menu for the object
+        $form_state['redirect'] = array(
+          'islandora/object/'.$object->id.'/people'
+        );
+        
     }
