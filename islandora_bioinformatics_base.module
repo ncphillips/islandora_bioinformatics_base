@@ -1042,12 +1042,11 @@ function related_cmodels($object, $abstract_cmodels=None) {
    */
   $pred_uri = FEDORA_MODEL_URI; // There is currently no pred_uri
   $pred = 'hasModel';
-  $target = islandora_object_load('fedora-system:ContentModel-3.0');
   $type = FALSE; // Don't know why.
 
 
-
-  //$cmodels = array($target->id) + $abstract_cmodels;
+  $CM_cmodel = 'fedora-system:ContentModel-3.0');
+  $cmodels = array($CM_cmodel) + $abstract_cmodels;
   $relationships = array();
 
   $related_cmodels = related_islandora_objects($object->id, $cmodels, $relationships);
