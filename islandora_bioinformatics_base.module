@@ -394,7 +394,8 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   
   foreach($table_values as $lines => $line){
     if($line){
-      $dump[] = $related_object = islandora_object_load($line["pid"]["value"]);
+      $related_object = islandora_object_load($line["pid"]["value"]);
+      $dump[] = $related_object;
      // $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
     }
   }
