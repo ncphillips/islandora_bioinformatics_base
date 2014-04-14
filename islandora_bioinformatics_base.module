@@ -270,7 +270,7 @@ function related_lab_objects_ingest_action($object, $cmodel) {
 
   $object_type = $match[1]; //Get the cmodel
 
-  $module_name = 'islandora_lab_object' . $object_type;
+  $module_name = 'islandora_lab_object_' . $object_type;
   //$callback_to_call = 'islandora_bioinformatics_'.$object_type. '_lab_object_'.$object_type.'_ingest';
   $callback_to_call = "{$module_name}_ingest";
   module_load_include('module', $module_name, $module_name);
