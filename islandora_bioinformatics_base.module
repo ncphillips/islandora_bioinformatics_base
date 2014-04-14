@@ -387,27 +387,21 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 }
 
 function related_islandora_objects_submit(array $form, array &$form_state){
-  $object = $form_state['values']['object'];
-  
-  $table_values = $form_state['values']['table'];
   
   $selected_option = $form_state['values']['selected'];
+  $object = $form_state['values']['object'];
+  $table_values = $form_state['values']['table'];
   
-  var_dump($selected_option);
-  
-  exit();
-  //$dump = array();
-  
-  /*foreach($table_values as $lines => $line){
-    if($line){
-      $related_object = islandora_object_load($line);
-     $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
-    }
-  }*/
-  
-  //var_dump($dump);
-  
-  //exit();
+  switch($selected_option){
+    case "delete":
+      foreach($table_values as $lines => $line){
+        if($line){
+          $related_object = islandora_object_load($line);
+          $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
+        }
+      }
+    break;
+  }
 }
 
 
