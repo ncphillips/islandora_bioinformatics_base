@@ -207,17 +207,20 @@ function callback_related_lab_objects($object) {
 
     $object_type = $match[1]; //Get the cmodel
 
-    $module_name = "islandora_lab_object_" . $object_type;
-
-    module_load_include('module', $module_name, $module_name);
-
     $form_id = 'related_' . $object_type. '_form';
 
     if(function_exists($form_id)){
       $render_array[$object_type] = drupal_get_form($form_id, $object);
     }
     else {
-     return "";
+      $args = array($object);
+      $forms = module_invoke_all('forms', $form_id, $args );
+      if(array_key_exists($form_id, $forms)){
+        $render_array[$object_type] = drupal_get_form($form_id, $object);
+      }
+      else {
+        $render_array[$object_type] = array();
+      }
     }
  }
   //Return the renderable array
