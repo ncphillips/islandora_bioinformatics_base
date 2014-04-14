@@ -677,7 +677,6 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
   );
 }
 
-
 /**
  * Implements hook_islandora_xml_form_builder_form_associations()
  * @return array
