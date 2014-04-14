@@ -246,8 +246,6 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    */
   // @todo test callbac_related_lab_object_ingest
 
-  echo "Hello";
-  exit();
   //Get the pid of the content model
   $content_model_pid = $cmodel->id;
   
