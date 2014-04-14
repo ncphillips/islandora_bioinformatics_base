@@ -247,15 +247,17 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   // @todo test callbac_related_lab_object_ingest
 
   //Get the pid of the content model
+  $pattern = '/islandora:(.*)_cmodel/';
   $content_model_pid = $cmodel->id;
+  preg_match($pattern, $content_model_pid, $match);
+
+  $object_type = $match[1]; //Get the cmodel
   
-  $first_part_of_pid = strtok($content_model_pid, ':');
-  $subtype_cmodel = strtok($content_model_pid, ':');
-  $subtype = strtok($related_cmodel, '_');
-
-  $callback_to_call = "callback_rel_lab_object_" . $subtype . "_ingest";
-
-  $callback_to_call($object);
+  $callback_to_call = 'callback_rel_lab_object_'.$object_type.'ingest';
+  if(function_exists($callback_to_call))
+     $callback_to_call($object);
+  else
+    return "";
 }
 
 ///////////////// Forms /////////////////
