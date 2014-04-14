@@ -259,8 +259,10 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   echo $callback_to_call;
   echo $module_name;
   module_load_include('module', $module_name, $module_name);
-  if(function_exists($callback_to_call))
+  if(function_exists($callback_to_call)){
+     echo "</br>Bam";
      $callback_to_call($object);
+  }
   else
     return "NOPE";
 }
