@@ -1319,6 +1319,7 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
 function islandora_related_lab_objects_access($permission, AbstractObject $object) {
 
   //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
     islandora_display_repository_inaccessible_message();
     return FALSE;
