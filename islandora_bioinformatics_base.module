@@ -1324,5 +1324,7 @@ function islandora_related_lab_objects_access(AbstractObject $object) {
   echo var_dump($object);
   echo '</pre>';
 
+  echo dpm($object);
+
   return TRUE;
 }
