@@ -362,7 +362,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   // Header form
   $form['cmodel'] = array(
-    '#markup' => ucfirst($object_type),
+    '#markup' => ucfirst($object_type).'aaaaa',
     '#prefix' => '<h1>',
     '#suffix' => '</h1>',
   );
