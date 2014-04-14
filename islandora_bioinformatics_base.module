@@ -325,6 +325,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
    * @param $cmodels
    * An array of CModel PIDs
    *
+   *      array('islandora:lcms_cmodel', 'islandora:book_cmodel')
+   *
    * @param $relationships
    * An associative array in the form of:
    *
@@ -337,6 +339,13 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
    * Constructs a form which has a select table of islandora objects related to the
    * $object. A related object is listed iff it's cmodel is in $cmodels and the
    * relationship to $object is in $relationships.
+   *
+   * @todo This function isn't generic enough. It will list all CModels passed
+   * in through the $cmodels array; but, the title of the form and the links to
+   * add new objects will be based only off the first CModel provided. It might
+   * be best if this link would link to a callback function that deals with this
+   * in a way that is similar to how the Collection Solution Pack deals with
+   * adding objects to collections that can contain multiple types of content.
    */
   $related_objects = related_islandora_objects($object, $cmodels, $relationships);
 
@@ -345,17 +354,26 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
+
+  // Load the Content Model
+  $cmodel = islandora_object_load($cmodels[0]);
+
+  // Content Model Type
   $pattern = '/islandora:(.*)_cmodel/';
   preg_match($pattern, $cmodels[0], $match);
-  $object_type = ucfirst($match[1]);
+  $object_type = $match[1];
+
 
   $form['cmodel'] = array(
-    '#markup' => "<h1>$object_type</h1>",
+    '#markup' => ucfirst($object_type),
+    '#prefix' => '<h1>',
+    '#suffix' => '</h1>',
   );
 
+  $add_text = ingest_rel_cmodel_title($cmodel);
   $form['add'] = array(
     '#type' => 'hidden',
-    '#markup' =>  l('Add', ''),
+    '#markup' =>  l($add_text, t("islandora/object/{$object->id}/ingest/$object_type")),
   );
 
   // From our form there should be a list of specific operations that can be performed
