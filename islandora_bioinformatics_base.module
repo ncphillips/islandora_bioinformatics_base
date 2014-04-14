@@ -394,14 +394,16 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   $selected_option = $form_state['values']['selected'];
   
   var_dump($selected_option);
+  
+  exit();
   //$dump = array();
   
-  foreach($table_values as $lines => $line){
+  /*foreach($table_values as $lines => $line){
     if($line){
       $related_object = islandora_object_load($line);
      $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
     }
-  }
+  }*/
   
   //var_dump($dump);
   
