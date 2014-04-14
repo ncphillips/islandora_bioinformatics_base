@@ -47,7 +47,6 @@
             }
         }
         
-        //list of people
         $form = array();
         
         //h1 header
