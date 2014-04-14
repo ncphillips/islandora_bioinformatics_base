@@ -110,8 +110,7 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'related_lab_objects_action',
       'page arguments' => array(2),
-      //'access callback' => 'islandora_object_has_lab_objects',
-      'access callback' => 'islandora_related_lab_objects_access',
+      'access callback' => 'islandora_object_has_lab_objects',
       'access arguments' => array(2),
     ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
@@ -1307,11 +1306,4 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
  */
 
   return $related_objects;
-}
-
-function islandora_related_lab_objects_access(AbstractObject $object) {
-  echo '<pre>';
-  echo var_dump($object);
-  echo '</pre>';
-  exit;
 }
