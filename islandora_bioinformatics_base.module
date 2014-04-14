@@ -340,7 +340,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $pattern = '/islandora:(.*)_cmodel/';
   preg_match($pattern, $cmodels[0], $match);
-  $object_type = ucfirst($match[0]);
+  $object_type = ucfirst($match[1]);
 
   $form['cmodel'] = array(
     '#markup' => "<h1>$object_type</h1>",
