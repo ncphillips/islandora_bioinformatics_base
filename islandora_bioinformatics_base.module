@@ -464,6 +464,7 @@ function related_islandora_objects_submit(array $form, array &$form_state){
         //if $line exists (if it is a selected table row)
         echo "Object is $line";
         if($line){
+          echo "Removing object";
           //load the object in the table row
           $related_object = islandora_object_load($line);
           //remove its relationship with the object in question
