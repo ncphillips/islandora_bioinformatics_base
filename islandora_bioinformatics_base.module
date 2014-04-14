@@ -528,7 +528,7 @@ function rel_cmodel_load($cmodel_id_part, $object_id) {
     $relationships = $cmodel->relationships->get($pred_uri, $pred, $object, $type);
     // Check if it has a datarel to the target object.
     if(!empty($relationships)){
-      echo "Oh no empty"
+      echo "Oh no empty";
       return NULL;
     }
   }
