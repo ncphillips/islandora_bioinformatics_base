@@ -48,17 +48,23 @@
         }
         
         //list of people
-        $form = array(
+        $form = array();
+       /* $form = array(
             'people' => array(
                 '#type' => 'checkboxes',
                 '#options' => $values,
             ),
-        );
+        );*/
         
         $form['header'] = array(
             '#markup' => 'Add people',
             '#prefix' => '<h1>',
             '#suffix' => '</h1>',
+        );
+        
+        $form['people'] = array(
+            '#type' => 'checkboxes',
+            '#options' => $values,
         );
         
         //submit button
