@@ -766,7 +766,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
    *
    */
 
-  /*
   $tuque = new IslandoraTuque();
   
   echo '<pre>';
@@ -831,7 +830,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
 }
-*/
 
 
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
