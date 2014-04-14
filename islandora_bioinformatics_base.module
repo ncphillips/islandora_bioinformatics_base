@@ -373,6 +373,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $add_text = ingest_rel_cmodel_title($cmodel);
   echo "A: $add_text";
   $form['add'] = array(
+    '#type' => 'markdown',
     '#markdown' =>  l($add_text, t("islandora/object/{$object->id}/ingest/$object_type")),
   );
 
