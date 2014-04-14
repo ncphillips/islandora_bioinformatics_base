@@ -340,7 +340,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   // Get the name of the CModel and make the first letter upper case.
   $pattern = '/islandora:(.*)_cmodel/';
-  $related_cmodel_pid = $related_objects[0]->models[0];
+  $anObject= $related_object[0];
+  $related_cmodel_pid = $anObject->models[0];
   preg_match($pattern, $related_cmodel_pid, $match);
   $object_type = $match[1]; //Get the cmodel
   $object_type = ucfirst($object_type);
