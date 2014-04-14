@@ -110,8 +110,8 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'related_lab_objects_action',
       'page arguments' => array(2),
-      'access callback' => 'islandora_object_has_lab_objects',
-      //'access callback' => 'islandora_related_lab_objects_access',
+      //'access callback' => 'islandora_object_has_lab_objects',
+      'access callback' => 'islandora_related_lab_objects_access',
       'access arguments' => array(2),
     ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
