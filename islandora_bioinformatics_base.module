@@ -524,7 +524,7 @@ function rel_cmodel_load($cmodel_id_part, $object) {
     $type = FALSE; // Don't know why.
 
     // Check if it has a datarel to the target object.
-    if (!islandora_object_has_relationship($cmodel, $pred_uri, $pred, $target_id, $type))
+    if(!empty($cmodel->relationships->get($pred_uri, $pred, $object, $type)))
       return NULL;
   }
   return $cmodel;
