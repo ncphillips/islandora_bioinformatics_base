@@ -465,6 +465,7 @@ function related_islandora_objects_submit(array $form, array &$form_state){
           //load the object in the table row
           $related_object = islandora_object_load($line);
           //remove its relationship with the object in question
+          echo "Hmm.";
           $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
         }
       }
