@@ -253,9 +253,11 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   preg_match($pattern, $content_model_pid, $match);
 
   $object_type = $match[1]; //Get the cmodel
-  
+
+  $module_name = 'islandora_lab_object' . $object_type;
   $callback_to_call = 'callback_rel_lab_object_'.$object_type.'_ingest';
   echo $callback_to_call;
+  module_load_include('module', $module_name, $module_name);
   if(function_exists($callback_to_call))
      $callback_to_call($object);
   else
