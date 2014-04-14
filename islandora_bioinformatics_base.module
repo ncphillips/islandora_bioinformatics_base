@@ -392,7 +392,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
     '#type' => 'select',
     '#title' => 'Actions',
     '#options' => array(
-      'delete' => t('Remove'),
+      'remove' => t('Remove'),
     ),
     '#description' => t('Actions'),
   );
@@ -447,7 +447,7 @@ function related_islandora_objects_submit(array $form, array &$form_state){
    * the form state
    * 
    * */
-   
+  echo "Submited related object form...";
   //which action was selected form the drop down menu 
   $selected_option = $form_state['values']['selected'];
   //the object in question
@@ -457,15 +457,16 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   
   switch($selected_option){
     //in case of relationship removal from the object
-    case "delete":
+    case "remove":
+      echo "Chose to remove the relationship...";
       //for each table row
       foreach($table_values as $lines => $line){
         //if $line exists (if it is a selected table row)
+        echo "Object is $line";
         if($line){
           //load the object in the table row
           $related_object = islandora_object_load($line);
           //remove its relationship with the object in question
-          echo "Hmm.";
           $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
         }
       }
