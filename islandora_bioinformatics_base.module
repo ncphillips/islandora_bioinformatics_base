@@ -1307,3 +1307,21 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
 
   return $related_objects;
 }
+
+
+/**
+ * @param AbstractObject $object
+ * Checks if the user has permission to view lab objects and that lab objects exist for the object.
+ */
+function islandora_related_lab_objects_access(AbstractObject $object) {
+  //if there are no lab objects for the $object, there is nothing to see
+  if(!islandora_object_has_lab_objects($object)) {
+    return FALSE;
+  }
+
+  echo '<pre>';
+  echo var_dump($object);
+  echo '</pre>';
+
+  return TRUE;
+}
