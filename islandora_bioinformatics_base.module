@@ -110,9 +110,11 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'related_lab_objects_action',
       'page arguments' => array(2),
-      //'access callback' => 'islandora_object_has_lab_objects',
       'access callback' => 'islandora_related_lab_objects_access',
-      'access arguments' => array(2),
+      'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
+      //'access callback' => 'islandora_object_has_lab_objects',
+      //'access arguments' => array(2),
+
     ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /**
@@ -1314,17 +1316,18 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
  * @param AbstractObject $object
  * Checks if the user has permission to view lab objects and that lab objects exist for the object.
  */
-function islandora_related_lab_objects_access(AbstractObject $object) {
+function islandora_related_lab_objects_access($permission, AbstractObject $object) {
+
+  //check if repository is available
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
   //if there are no lab objects for the $object, there is nothing to see
   if(!islandora_object_has_lab_objects($object)) {
     return FALSE;
   }
 
-  echo '<pre>';
-  echo var_dump($object);
-  echo '</pre>';
-
-  echo dpm($object);
-
-  return TRUE;
+  return islandora_object_access($permission, $object);
 }
