@@ -520,7 +520,7 @@ function rel_cmodel_load($cmodel_id_part, $object_id) {
 
   // If a cmodel FedoraObject is found.
   if ($object and $cmodel) {
-    echo "k"
+    echo "k";
     $pred_uri = ""; // There is currently no pred_uri
     $pred = "datarel";
     $type = FALSE; // Don't know why.
