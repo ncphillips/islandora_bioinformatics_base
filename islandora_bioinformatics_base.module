@@ -516,22 +516,10 @@ function rel_cmodel_load($cmodel_id_part, $object_id) {
    * the cmodel of %object, then it is returned; else return NULL.
    */
   $cmodel = cmodel_load($cmodel_id_part);
-  $object = islandora_object_load($object_id);
+  /**
+   * @todo Make this function actually check if they are supposed to be related.
+   */
 
-  // If a cmodel FedoraObject is found.
-  if ($object and $cmodel) {
-    echo "k";
-    $pred_uri = ""; // There is currently no pred_uri
-    $pred = "datarel";
-    $type = FALSE; // Don't know why.
-
-    $relationships = $cmodel->relationships->get($pred_uri, $pred, $object, $type);
-    // Check if it has a datarel to the target object.
-    if(empty($relationships)){
-      echo "Oh no empty";
-      return NULL;
-    }
-  }
   return $cmodel;
 }
 
