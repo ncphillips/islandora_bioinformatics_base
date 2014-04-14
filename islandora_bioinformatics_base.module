@@ -516,13 +516,12 @@ function rel_cmodel_load($cmodel_id_part, $object) {
    * the cmodel of %object, then it is returned; else return NULL.
    */
   $cmodel = cmodel_load($cmodel_id_part);
-  echo $cmodel_id_part;
+  echo $object;
   // If a cmodel FedoraObject is found.
   if ($object and $cmodel) {
     $pred_uri = ""; // There is currently no pred_uri
     $pred = "datarel";
     $type = FALSE; // Don't know why.
-    echo $object->id;
 
     $relationships = $cmodel->relationships->get($pred_uri, $pred, $object, $type);
     // Check if it has a datarel to the target object.
