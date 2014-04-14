@@ -47,18 +47,18 @@
             }
         }
         
-        $form['header'] = array(
-            '#markup' => 'Add people',
-            '#prefix' => '<h1>',
-            '#suffix' => '</h1>',
-        );
-        
         //list of people
         $form = array(
             'people' => array(
                 '#type' => 'checkboxes',
                 '#options' => $values,
             ),
+        );
+        
+        $form['header'] = array(
+            '#markup' => 'Add people',
+            '#prefix' => '<h1>',
+            '#suffix' => '</h1>',
         );
         
         //submit button
