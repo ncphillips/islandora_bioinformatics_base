@@ -828,10 +828,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
 
   $tuque = new IslandoraTuque();
   
-  echo '<pre>';
-  echo var_dump($account->uid);
-  echo '</pre>';
-  
   //build person object
 
   //////You're overwriting the Person Content Model, not making a new object of type content model.
