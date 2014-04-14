@@ -49,12 +49,6 @@
         
         //list of people
         $form = array();
-       /* $form = array(
-            'people' => array(
-                '#type' => 'checkboxes',
-                '#options' => $values,
-            ),
-        );*/
         
         //h1 header
         $form['header'] = array(
