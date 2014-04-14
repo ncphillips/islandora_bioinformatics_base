@@ -335,6 +335,16 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
+  $pattern = '/islandora:(.*)_cmodel/';
+  $related_cmodel_pid = $related_objects[0]->models[0];
+  preg_match($pattern, $related_cmodel_pid, $match);
+
+  $object_type = $match[1]; //Get the cmodel
+
+  $form['cmodel'] = array(
+    '#markup' => "<h1>$object_type</h1>",
+  );
+
   $form['add'] = array(
     '#type' => 'hidden',
     '#markup' =>  l('Add', ''),
