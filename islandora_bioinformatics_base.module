@@ -339,16 +339,16 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
   // Get the name of the CModel and make the first letter upper case.
-//  $pattern = '/islandora:(.*)_cmodel/';
-//  $related_cmodel_pid = $related_objects[0]->models[0];
-//  preg_match($pattern, $related_cmodel_pid, $match);
-//  $object_type = $match[1]; //Get the cmodel
-//  $object_type = ucfirst($object_type);
-//
-//
-//  $form['cmodel'] = array(
-//    '#markup' => "<h1>$object_type</h1>",
-//  );
+  $pattern = '/islandora:(.*)_cmodel/';
+  $related_cmodel_pid = $related_objects[0]->models[0];
+  preg_match($pattern, $related_cmodel_pid, $match);
+  $object_type = $match[1]; //Get the cmodel
+  $object_type = ucfirst($object_type);
+
+
+  $form['cmodel'] = array(
+    '#markup' => "<h1>$object_type</h1>",
+  );
 
   $form['add'] = array(
     '#type' => 'hidden',
