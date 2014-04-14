@@ -56,12 +56,14 @@
             ),
         );*/
         
+        //h1 header
         $form['header'] = array(
             '#markup' => 'Add people',
             '#prefix' => '<h1>',
             '#suffix' => '</h1>',
         );
         
+        //list of available people for the project
         $form['people'] = array(
             '#type' => 'checkboxes',
             '#options' => $values,
@@ -107,14 +109,6 @@
         
         //get the saved project object that will have people added to it
         $object = $form_state['values']['project_object'];
-    
-        //iterate over every person and remove their relationship (if it exists) with the project.
-       /* $query = "SELECT ?pid
-                  FROM <#ri>
-                  WHERE {
-                  ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
-              }";
-        $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');*/
     
         //for each person checked, create a relationship between the person and the project
         foreach ($person_ids as $id)  {
