@@ -355,26 +355,22 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
 
-  // Load the Content Model
-  $cmodel = islandora_object_load($cmodels[0]);
-
   // Content Model Type
   $pattern = '/islandora:(.*)_cmodel/';
   preg_match($pattern, $cmodels[0], $match);
   $object_type = $match[1];
 
-
+  // Header form
   $form['cmodel'] = array(
     '#markup' => ucfirst($object_type),
     '#prefix' => '<h1>',
     '#suffix' => '</h1>',
   );
 
-  $add_text = ingest_rel_cmodel_title($cmodel);
-  echo "A: $add_text";
+  // Add Link
   $form['add'] = array(
     '#type' => 'markdown',
-    '#markdown' =>  l($add_text, t("islandora/object/{$object->id}/ingest/$object_type")),
+    '#markdown' =>  l(t("Add $object_type"), t("islandora/object/{$object->id}/ingest/$object_type")),
   );
 
   // From our form there should be a list of specific operations that can be performed
