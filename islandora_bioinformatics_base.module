@@ -503,7 +503,7 @@ function cmodel_load($cmodel_id_part) {
 }
 
 
-function rel_cmodel_load($cmodel_id_part, $object) {
+function rel_cmodel_load($cmodel_id_part, $object_id) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
    *
@@ -516,7 +516,7 @@ function rel_cmodel_load($cmodel_id_part, $object) {
    * the cmodel of %object, then it is returned; else return NULL.
    */
   $cmodel = cmodel_load($cmodel_id_part);
-  echo $object;
+  $object = islandora_object_load($object_id);
   // If a cmodel FedoraObject is found.
   if ($object and $cmodel) {
     $pred_uri = ""; // There is currently no pred_uri
