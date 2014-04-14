@@ -94,7 +94,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a8bc2170d2deb3df2af507fb22571e0f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bc2170d2deb3df2af507fb22571e0f4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>has_related_lab_objects</b> ($object)</td></tr>
 <tr class="separator:a8bc2170d2deb3df2af507fb22571e0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a68c82f4c7760c83fb600e25c7d5a23a3">callback_related_lab_objects</a> ($object)</td></tr>
+<tr class="memitem:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a68c82f4c7760c83fb600e25c7d5a23a3">related_lab_objects_action</a> ($object)</td></tr>
 <tr class="separator:a68c82f4c7760c83fb600e25c7d5a23a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c31991c3bd91b6c9c008c69b8fe7f87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a6c31991c3bd91b6c9c008c69b8fe7f87">callback_related_lab_objects_ingest</a> ($object, $cmodel)</td></tr>
 <tr class="separator:a6c31991c3bd91b6c9c008c69b8fe7f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,7 +138,7 @@ Functions</h2></td></tr>
 <tr class="separator:a042f57d3aea3c501198ded2f31193f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae0f40af714fe2b8b0435eeabbb00152"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#aae0f40af714fe2b8b0435eeabbb00152">related_lab_object_cmodels</a> ($object)</td></tr>
 <tr class="separator:aae0f40af714fe2b8b0435eeabbb00152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a1dc5e940beb7a2b30952ce00b01d388e">related_islandora_objects</a> ($object, $cmodels=null, $relationships=null)</td></tr>
+<tr class="memitem:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="islandora__bioinformatics__base_8module.html#a1dc5e940beb7a2b30952ce00b01d388e">islandora_object_related_islandora_objects</a> ($object, $cmodels=null, $relationships=null)</td></tr>
 <tr class="separator:a1dc5e940beb7a2b30952ce00b01d388e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99b5ea81575c95fda8879358c2ea0999"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99b5ea81575c95fda8879358c2ea0999"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>test_people_add</b> ($object)</td></tr>
@@ -189,7 +189,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">callback_related_lab_objects </td>
+          <td class="memname">related_lab_objects_action </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$object</em></td><td>)</td>
@@ -205,7 +205,7 @@ const&#160;</td><td class="memItemRight" valign="bottom"><b>FEDORA_RELS_EXT_URI<
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>$render_array - A renderable array, containing forms for each content model with objects related to the target object.</dd></dl>
-<p>Page Callback callback_related_lab_objects($object)</p>
+<p>Page Callback related_lab_objects_action($object)</p>
 <p>This page callback takes an object and determines which lab object content models have a relationship with its content model via SPARQL query.</p>
 <p>From here it should use drupal_get_form once for each content model to generate a form populated with the lab objects of the specified content model related to the given object.</p>
 <p>These forms will be stored as a elements in a renderable array, which the function will then return.</p>
@@ -794,7 +794,7 @@ Nolan Phillips <a href="#" onclick="location.href='mai'+'lto:'+'ncp'+'hi'+'llu'+
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">related_islandora_objects </td>
+          <td class="memname">islandora_object_related_islandora_objects </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$object</em>, </td>

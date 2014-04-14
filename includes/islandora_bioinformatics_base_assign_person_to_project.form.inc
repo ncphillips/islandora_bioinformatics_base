@@ -42,11 +42,11 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 
       /*
       if($person_object->id == 'islandora:388') {
-        $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
+        $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);	//used for testing
       }
       */
       
-      $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+      $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
 
       if (!empty($relationship)) {  //if relationship exists, add it to $default_values
         $default_values[$person_object->id] = $person_object->id;
@@ -54,7 +54,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
       
       /*
       if($person_object->id == 'islandora:388') {
-        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);	//used for testing
+        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);	//used for testing
       }
       */
 
@@ -96,13 +96,13 @@ function islandora_bioinformatics_base_assign_person_to_project_form_submit(arra
 
   foreach ($result as $person) {
     $person_object = islandora_object_load($person['pid']['value']);  //loads object
-    $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+    $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
   }
 
   //for each person checked, create a relationship between the person and the project
   foreach ($person_ids as $id)  {
     //create a relationship within the current person object to the project
     $person_object = islandora_object_load($id); //loads object
-    $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+    $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
   }
 }
