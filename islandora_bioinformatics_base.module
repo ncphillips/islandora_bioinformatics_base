@@ -373,9 +373,6 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $add_text = ingest_rel_cmodel_title($cmodel);
   $form['add'] = array(
     '#markdown' =>  l($add_text, t("islandora/object/{$object->id}/ingest/$object_type")),
-    '#prefix' => '<div class=\'form-submit\'>',
-    '#suffix' => '</div>'
-
   );
 
   // From our form there should be a list of specific operations that can be performed
