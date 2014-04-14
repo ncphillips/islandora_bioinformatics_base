@@ -254,7 +254,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
 
   $object_type = $match[1]; //Get the cmodel
   
-  $callback_to_call = 'callback_rel_lab_object_'.$object_type.'ingest';
+  $callback_to_call = 'callback_rel_lab_object_'.$object_type.'_ingest';
   echo $callback_to_call;
   if(function_exists($callback_to_call))
      $callback_to_call($object);
