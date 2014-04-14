@@ -14,12 +14,10 @@
  */
 
 /**
- * @todo function islandora_objects_related_cmodels($object, $abstract_cmodels)
+ * @todo create islandora_objects_related_cmodels($object, $abstract_cmodels)
  * Returns an array of IslandoraFedora objects. Restricts them based off some of the $abstract_cmodels.
  * Find all cmodels related to any of the cmodels in the $object->cmodels array. Check if the $object
  * itself is a CModel as well.
- *
- * @todo rename related_islandora_objects(...) to islandora_object_related_islandora_objects(...)
  *
  * @todo create islandora_related_lab_objects_access(...)
  * @todo create islandora_related_lab_objects_ingest_access(...)
@@ -110,7 +108,7 @@ function islandora_bioinformatics_base_menu() {
        */
       'title' => 'Lab Objects',
       'type' => MENU_LOCAL_TASK,
-      'page callback' => 'callback_related_lab_objects',
+      'page callback' => 'related_lab_objects_action',
       'page arguments' => array(2),
       'access callback' => 'islandora_object_has_lab_objects',
       'access arguments' => array(2),
@@ -126,7 +124,7 @@ function islandora_bioinformatics_base_menu() {
       'title arguments' => array(4),
       'load arguments' => array(2),
       'type' => MENU_CALLBACK,
-      'page callback' => 'callback_ingest_related_lab_objects',
+      'page callback' => 'related_lab_objects_ingest_action',
       'page arguments' => array(2, 4),
       'access callback' => TRUE,
     ),
@@ -169,7 +167,7 @@ function ingest_rel_cmodel_title($cmodel){
 
 
 ///////////////// Page Callbacks /////////////////
-function callback_related_lab_objects($object) {
+function related_lab_objects_action($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -178,7 +176,7 @@ function callback_related_lab_objects($object) {
    * @return $render_array - A renderable array, containing forms for each content
    * model with objects related to the target object.
    *
-   * Page Callback callback_related_lab_objects($object)
+   * Page Callback related_lab_objects_action($object)
    *
    * This page callback takes an object and determines
    * which lab object content models have a relationship
@@ -250,7 +248,7 @@ function callback_related_lab_objects($object) {
 }
 
 
-function callback_ingest_related_lab_objects($object, $cmodel) {
+function related_lab_objects_ingest_action($object, $cmodel) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -264,11 +262,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    *
    * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
-   *
-   * @todo rename this function to related_lab_object_ingest_action
-   *
    */
-
   //Get the pid of the content model
   $pattern = '/islandora:(.*)_cmodel/';
   $content_model_pid = $cmodel->id;
@@ -367,7 +361,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
    * in a way that is similar to how the Collection Solution Pack deals with
    * adding objects to collections that can contain multiple types of content.
    */
-  $related_objects = related_islandora_objects($object, $cmodels, $relationships);
+  $related_objects = islandora_object_related_islandora_objects($object, $cmodels, $relationships);
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
@@ -1173,7 +1167,7 @@ function project_mads_to_array($project_object){
 }
 
 
-function related_islandora_objects($object, $cmodels=null, $relationships=null){
+function islandora_object_related_islandora_objects($object, $cmodels=null, $relationships=null){
   /**
    * @author Nolan Phillips ncphillips@upei.ca
    *
