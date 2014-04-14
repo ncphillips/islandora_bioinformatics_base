@@ -54,20 +54,16 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
   public function testIngestProjectandPerson() {
     
 
-    //Creates an admin user
-
-    $user = $this->drupalCreateUser(array(
-      'view fedora repository objects',
-      'ingest fedora objects',
-      'administer site configuration',
-      'manage object properties',
-      'delete fedora objects and datastreams',
-      'create child collection',
-    ));
+    //Gets the admin user
+    $user = $this->admin;
 
     //Logs them in.
 
     $this->drupalLogin($user);
+
+    //Get the path to prepend onto the fixtures datastreams locations.
+    $path = drupal_get_path('module', 'islandora_bioinformatics_base');
+    $path = $path . "/"; //Append a '/' to delimit between the $path and fixtures/$datastream_file
 
     //Create a project properties array for the construction and ingestion of a project object.
     $proj_properties = array();   //init the array
@@ -85,19 +81,19 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     
     $proj_datastream_dc = array(); //Init the Dublin Core datastream
     $proj_datastream_dc['dsid'] = 'DC';  //dsid comes from the ds composite model in the xml directory
-    $proj_datastream_dc['path'] = 'fixtures/example_project_dc.xml'; //Path to the file containing the datastream
+    $proj_datastream_dc['path'] = $path . 'fixtures/example_project_dc.xml'; //Path to the file containing the datastream
     $proj_datastream_dc['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $proj_datastream_dc['mimetype'] = 'text/xml';
 
     $proj_datastream_mads = array(); //Init the MADS datastream
     $proj_datastream_mads['dsid'] = 'MADS'; //dsid comes from the ds composite model in the xml directory
-    $proj_datastream_mads['path'] = 'fixtures/example_project_mads.xml'; //Path to the file containing the datastream
+    $proj_datastream_mads['path'] = $path . 'fixtures/example_project_mads.xml'; //Path to the file containing the datastream
     $proj_datastream_mads['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $proj_datastream_mads['mimetype'] = 'text/xml';
 
     $proj_datastream_relsext = array(); //Init the RELS-EXT datastream
     $proj_datastream_relsext['dsid'] = 'RELS-EXT'; //dsid comes from the ds composite model in the xml directory
-    $proj_datastream_relsext['path'] = 'fixtures/example_project_relsext.rdf'; //Path to the file containing the datastream
+    $proj_datastream_relsext['path'] = $path . 'fixtures/example_project_relsext.rdf'; //Path to the file containing the datastream
     $proj_datastream_relsext['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $proj_datastream_relsext['mimetype'] = 'text/xml';
 
@@ -124,19 +120,19 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     
     $person_datastream_dc = array(); //Init the Dublin Core datastream array
     $person_datastream_dc['dsid'] = 'DC';
-    $person_datastream_dc['path'] = 'fixtures/example_person_dc.xml';
+    $person_datastream_dc['path'] = $path . 'fixtures/example_person_dc.xml';
     $person_datastream_dc['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $person_datastream_dc['mimetype'] = 'text/xml';
 
     $person_datastream_mads = array(); //Init the MADS datastream array
     $person_datastream_mads['dsid'] = 'MADS';
-    $person_datastream_mads['path'] = 'fixtures/example_person_mads.xml';
+    $person_datastream_mads['path'] = $path . 'fixtures/example_person_mads.xml';
     $person_datastream_mads['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $person_datastream_mads['mimetype'] = 'text/xml';
 
     $person_datastream_relsext = array(); //Init the RELS-EXT datastream array.
     $person_datastream_relsext['dsid'] = 'RELS-EXT';
-    $person_datastream_relsext['path'] = 'fixtures/example_person_relsext.rdf'; 
+    $person_datastream_relsext['path'] = $path . 'fixtures/example_person_relsext.rdf'; 
     $person_datastream_relsext['control_group'] = 'M'; //M - managed by Fedora, X - in line XML
     $person_datastream_relsext['mimetype'] = 'text/xml';
 
@@ -147,25 +143,13 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     $person_datastreams[] = $person_datastream_relsext;
 
     //Ingest the person object
-    $person_test_object = $this->ingestConstructedObject($person_properties, $person_datastreams);
 
-    /*
-        Test solr indexing
-
-        *May be inconsistent due to timing issues.
-    */
-
-    //May need to explicitly add a relationship.
-
-    //Purge when finished.
-    
-    //deleteObject($pid, $button = NULL,$safety = TRUE) function IslandoraWebTestCase
-
-
-    //Test every role with every use case. (Make sure anon can't delete objects, but admins can etc.)
-  
-    //As for clicking links and such, manage permissions in the collection test group has a bunch of link clicking
-    //methods to look at.
+    try {
+      $person_test_object = $this->ingestConstructedObject($person_properties, $person_datastreams);
+    }
+    catch (RepositoryException $re) {
+      echo 'Caught exception: ', $re->getMessage(), "\n";
+    }
 
   }
 
@@ -223,13 +207,16 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       else {
 
         $testSuccess = false;
+        $this->fail("The relationship test was unsuccessful.");
       }
     }
+
+    $this->assertTrue($testSuccess);
   }
 
   public function purgeTestForPersonandProject() {  
     
-    $this->deleteObject('islandora:test_person', $button = NULL, $safety = TRUE);
-    $this->deleteObject('islandora:test_project', $button = NULL, $safety = TRUE);
+    $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
+    $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
   }
 }
