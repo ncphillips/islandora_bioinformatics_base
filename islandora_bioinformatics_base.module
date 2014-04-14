@@ -35,7 +35,7 @@ function islandora_object_has_lab_objects($object){
    */
 
   /**
-   * @todo replace this section with a call to
+   * @todo Once it's created, replace this section with a call to
    * islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'))
    */
   $cmodel_id = $object->models[0];
@@ -466,7 +466,6 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
    */
 
   $object = $form_state['object'];
-  $object_id = $object->id;
   $people = $form_state['related_objects'];
 
   $header = array(
@@ -477,7 +476,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
   $form['add'] = array(
     '#type' => 'markup',
-    '#markup' => l('Add Person', "islandora/object/$object_id/people/add")
+    '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add")
   );
 
   $people_rows = array();
