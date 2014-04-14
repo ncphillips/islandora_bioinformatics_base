@@ -11,8 +11,15 @@
  * islandora_bioinformatics_base.module
  *
  * Hooks and callbacks for the module.
+ */
+
+/**
+ * @todo function islandora_objects_related_cmodels($object, $abstract_cmodels)
+ * Returns an array of IslandoraFedora objects. Restricts them based off some of the $abstract_cmodels.
+ * Find all cmodels related to any of the cmodels in the $object->cmodels array. Check if the $object
+ * itself is a CModel as well.
  *
- *
+ * @todo rename related_islandora_objects(...) to islandora_object_related_islandora_objects(...)
  */
 function islandora_object_has_lab_objects($object){
   /**
@@ -21,6 +28,11 @@ function islandora_object_has_lab_objects($object){
    *
    * This function returns true if the $object passed in might
    * have Lab Objects related to it.
+   */
+
+  /**
+   * @todo replace this section with a call to
+   * islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'))
    */
   $cmodel_id = $object->models[0];
   $query = "
@@ -245,7 +257,7 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    *
    */
-  // @todo test callbac_related_lab_object_ingest
+  // @todo test callback_related_lab_object_ingest
 
   //Get the pid of the content model
   $pattern = '/islandora:(.*)_cmodel/';
@@ -255,12 +267,10 @@ function callback_ingest_related_lab_objects($object, $cmodel) {
   $object_type = $match[1]; //Get the cmodel
 
   $module_name = 'islandora_lab_object' . $object_type;
-  $callback_to_call = 'islandora_bioinformatics_'.$object_type. '_lab_object_'.$object_type.'_ingest';
-  echo $callback_to_call;
-  echo $module_name;
+  //$callback_to_call = 'islandora_bioinformatics_'.$object_type. '_lab_object_'.$object_type.'_ingest';
+  $callback_to_call = "{$module_name}_{$object_type}_ingest";
   module_load_include('module', $module_name, $module_name);
   if(function_exists($callback_to_call)){
-     echo "</br>Bam";
      return $callback_to_call($object);
   }
   else
@@ -1280,7 +1290,14 @@ function related_islandora_objects($object, $cmodels=null, $relationships=null){
   return $related_objects;
 }
 
+
+
+
+
 ///////////////// Test Functions /////////////////
+/**
+ * @param $object
+ */
 function test_people_add($object){
   echo "hello";
   module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
