@@ -362,7 +362,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   // Header form
   $form['cmodel'] = array(
-    '#markup' => ucfirst($object_type). "aaaa",
+    '#markup' => ucfirst($object_type),
     '#prefix' => '<h1>',
     '#suffix' => '</h1>',
   );
@@ -371,6 +371,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['add'] = array(
     '#type' => 'markup',
     '#markup' =>  l(t("Add $object_type"), t("islandora/object/{$object->id}/ingest/$object_type")),
+    '#prefix' => '<div class=\'form-submit\'>',
+    '#prefix' => '<div>',
   );
 
   // From our form there should be a list of specific operations that can be performed
