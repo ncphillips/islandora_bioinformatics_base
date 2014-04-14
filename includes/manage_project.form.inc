@@ -48,7 +48,7 @@
         }
         
         $form['header'] = array(
-            '#markup' => 'Add people to '.object->id.'.',
+            '#markup' => 'Add people',
             '#prefix' => '<h1>',
             '#suffix' => '</h1>',
         );
