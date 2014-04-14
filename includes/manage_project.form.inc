@@ -47,6 +47,12 @@
             }
         }
         
+        $form['header'] = array(
+            '#markup' => 'Add people',
+            '#prefix' => '<h1>',
+            '#suffix' => '</h1>',
+        );
+        
         //list of people
         $form = array(
             'people' => array(
