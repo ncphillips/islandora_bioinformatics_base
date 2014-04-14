@@ -218,7 +218,6 @@ function related_lab_objects_action($object) {
    $related_cmodels[] = islandora_object_load($cmodel['pid']['value']);
   }
 
-  // Testing Porpoises.
   foreach ($related_cmodels as $related_cmodel_object) { //For each of the content models returned by the query,
  
     $pattern = '/islandora:(.*)_cmodel/';
@@ -550,7 +549,7 @@ function cmodel_load($cmodel_id_part) {
    * This function assumes that Content Model IDs follow
    * the pattern "islandora:" . $name . "_cmodel"
    */
-  $cmodel_id = "islandora:" . $cmodel_id_part . "_cmodel";
+  $cmodel_id = "islandora:{$cmodel_id_part}_cmodel";
   $cmodel = islandora_object_load($cmodel_id);
   if ($cmodel && !in_array('fedora-system:ContentModel-3.0', $cmodel->models)) {
     return NULL;
@@ -605,11 +604,6 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
     ),
   );
 }
-
-
-
-
-
 
 function islandora_bioinformatics_base_islandora_person_cmodel_islandora_view_object($object, $page_number, $page_size) {
 
@@ -1309,18 +1303,4 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
  */
 
   return $related_objects;
-}
-
-
-
-
-
-///////////////// Test Functions /////////////////
-/**
- * @param $object
- */
-function test_people_add($object){
-  echo "hello";
-  module_load_include('inc', 'islandora_bioinformatics_base', 'manage_project.form.inc');
-  drupal_get_form('islandora_project_people_add_form', $object);
 }
