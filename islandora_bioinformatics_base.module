@@ -471,7 +471,6 @@ function related_islandora_objects_submit(array $form, array &$form_state){
           $related_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
         }
       }
-      exit();
     break;
   }
 }
