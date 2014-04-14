@@ -753,6 +753,7 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 
 
 ///////////////// Drupal User/Fedora Person Synchronization /////////////////
+/*
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
   /**
    * @author Quintin Dawson
@@ -829,7 +830,7 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
 }
-
+*/
 
 
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
@@ -883,7 +884,10 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   */ 
   //if the Fedora object related to the Drupal account is found, make the desired changes
   
-  if(!empty($account_person)) {
+  if(empty($account_person)) { //create the person object if missing when modified
+    islandora_bioinformatics_base_user_insert($edit, $account, $category);
+  }
+  else {  //modify the person object if existing
     //change the label
     $account_person->label = $account->name;
     
@@ -908,9 +912,6 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     $account_person['MADS']->setContentFromString($person_xml->asXML());
     $account_person['MADS']->label = 'MADS Record';
     $account_person['MADS']->mimetype = 'text/xml';
-    
-    //Save changes object in Fedora
-    //$tuque->repository->ingestObject($account_person);
   }
 }
 
