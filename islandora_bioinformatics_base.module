@@ -753,8 +753,7 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 
 
 ///////////////// Drupal User/Fedora Person Synchronization /////////////////
-/*
-function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
+//function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
   /**
    * @author Quintin Dawson
    * @param &$edit
@@ -766,6 +765,8 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
    * When a new drupal user is created, this function will create a corresponding Person object in Fedora.
    *
    */
+
+  /*
   $tuque = new IslandoraTuque();
   
   echo '<pre>';
