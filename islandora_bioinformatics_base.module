@@ -249,7 +249,7 @@ function islandora_related_lab_objects_action($object) {
 }
 
 
-function islandora_related_lab_objects_ingest_action($object, $cmodel) {
+function islandora_related_lab_object_ingest_action($object, $cmodel) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
