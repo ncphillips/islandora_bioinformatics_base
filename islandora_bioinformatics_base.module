@@ -131,7 +131,7 @@ function islandora_bioinformatics_base_menu() {
       'page arguments' => array(2, 4),
       //'access callback' => TRUE,
       'access callback' => 'islandora_related_lab_objects_ingest_access',
-      'access arguments' => array( array(ISLANDORA_INGEST), 2, 4),
+      'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
     ),
     'islandora/object/%islandora_object/people' => array(
        /**
@@ -1387,9 +1387,10 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
     return FALSE;
   }
 
-  $has_access = FALSE;
-  for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
-    $has_access = $has_access || islandora_object_access($permissions[$i], $object);
+  for ($i = 0; $i < count($permissions); $i++) {
+    if(!islandora_object_access($permissions[$i], $object)) {
+      return FALSE;
+    }
   }
-  return $has_access;
+  return TRUE;
 }
