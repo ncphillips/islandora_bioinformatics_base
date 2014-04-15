@@ -1389,5 +1389,5 @@ function islandora_cmodel_name($cmodel) {
   $pattern = '/islandora:(.*)_cmodel/';
   $content_model_pid = $cmodel->id;
   preg_match($pattern, $content_model_pid, $match);
-  return $match[0];
+  return $match[1];
 }
