@@ -263,6 +263,7 @@ function related_lab_objects_ingest_action($object, $cmodel) {
    * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    */
+  echo "Ingest action";
   $object_name = islandora_cmodel_name($cmodel);
 
   $module_name = 'islandora_lab_object_' . $object_name;
@@ -270,6 +271,7 @@ function related_lab_objects_ingest_action($object, $cmodel) {
   module_load_include('module', $module_name, $module_name);
   if(function_exists($callback_to_call)){
      return $callback_to_call($object);
+    ec
   }
   else
     return drupal_not_found();
