@@ -232,7 +232,6 @@ function related_lab_objects_action($object) {
     $object_name = islandora_cmodel_name($related_cmodel_object);
 
     $form_id = 'related_' . $object_name. '_form';
-    echo $form_id;
     if(function_exists($form_id)){
       $render_array[$object_name] = drupal_get_form($form_id, $object);
     }
@@ -444,8 +443,7 @@ function related_islandora_objects_submit(array $form, array &$form_state){
    * the form state
    * 
    * */
-  echo "Submited related object form...";
-  //which action was selected form the drop down menu 
+  //which action was selected form the drop down menu
   $selected_option = $form_state['values']['selected'];
   //the object in question
   $object = $form_state['values']['object'];
@@ -455,13 +453,10 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   switch($selected_option){
     //in case of relationship removal from the object
     case "remove":
-      echo "Chose to remove the relationship</br>";
       //for each table row
       foreach($table_values as $lines => $line){
         //if $line exists (if it is a selected table row)
-        echo "Object is $line</br>";
         if($line){
-          echo "Removing object</br>";
           //load the object in the table row
           $related_object = islandora_object_load($line);
           //remove its relationship with the object in question
@@ -1387,6 +1382,7 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
 
 function islandora_cmodel_name($cmodel) {
   $pattern = '/islandora:(.*)_cmodel/';
+
   $content_model_pid = $cmodel->id;
   preg_match($pattern, $content_model_pid, $match);
   return $match[1];
