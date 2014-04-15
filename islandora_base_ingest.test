@@ -157,7 +157,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       echo 'Caught exception with Person: ', $re->getMessage(), "\n";
     }
 
-    testRelationBetweenPersonAndProject();
+    $this->testRelationBetweenPersonAndProject();
 
     //Now delete the two objects, safety is turned off, but this is a specific test case.
 
