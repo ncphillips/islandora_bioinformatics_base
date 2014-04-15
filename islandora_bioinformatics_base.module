@@ -1407,6 +1407,8 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
         $abstract_tripples
     }
   ";
+  echo "CMode: $cmodel_id";
+  echo $query;
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
