@@ -110,8 +110,11 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'related_lab_objects_action',
       'page arguments' => array(2),
-      'access callback' => 'islandora_object_has_lab_objects',
-      'access arguments' => array(2),
+      'access callback' => 'islandora_related_lab_objects_access',
+      'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
+      //'access callback' => 'islandora_object_has_lab_objects',
+      //'access arguments' => array(2),
+
     ),
     'islandora/object/%islandora_object/ingest/%rel_cmodel' => array(
       /**
@@ -126,7 +129,9 @@ function islandora_bioinformatics_base_menu() {
       'type' => MENU_CALLBACK,
       'page callback' => 'related_lab_objects_ingest_action',
       'page arguments' => array(2, 4),
-      'access callback' => TRUE,
+      //'access callback' => TRUE,
+      'access callback' => 'islandora_related_lab_objects_ingest_access',
+      'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
     ),
     'islandora/object/%islandora_object/people' => array(
        /**
@@ -139,8 +144,10 @@ function islandora_bioinformatics_base_menu() {
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
     ),
     'islandora/object/%islandora_object/people/add' => array(
       /**
@@ -153,8 +160,10 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
   );
@@ -1308,4 +1317,82 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
  */
 
   return $related_objects;
+}
+
+
+/**
+ * @param AbstractObject $object
+ * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
+ */
+function islandora_related_lab_objects_access($permissions, AbstractObject $object) {
+
+  //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  //if there are no lab objects for the $object, there is nothing to see
+  if(!islandora_object_has_lab_objects($object)) {
+    return FALSE;
+  }
+
+  $has_access = FALSE;
+  for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
+    $has_access = $has_access || islandora_object_access($permissions[$i], $object);
+  }
+
+  return $has_access;
+}
+
+/**
+ * @param AbstractObject $object
+ * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
+ */
+function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
+
+  //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  //check if $relatedCModel is null or empty
+  if(empty($relatedCModel)) {
+    return FALSE;
+  }
+
+  //if there are no lab objects for the $object, there is nothing to see
+  if(!islandora_object_has_lab_objects($object)) {
+    return FALSE;
+  }
+
+  $has_access = FALSE;
+  for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
+    $has_access = $has_access || islandora_object_access($permissions[$i], $object);
+  }
+
+  return $has_access;
+}
+
+function islandora_related_people_access($permissions, AbstractObject $object) {
+  //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  if(!islandora_object_has_people($object)) {
+    return FALSE;
+  }
+
+  for ($i = 0; $i < count($permissions); $i++) {
+    if(!islandora_object_access($permissions[$i], $object)) {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
