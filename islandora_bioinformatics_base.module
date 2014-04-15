@@ -131,7 +131,7 @@ function islandora_bioinformatics_base_menu() {
       'page arguments' => array(2, 4),
       //'access callback' => TRUE,
       'access callback' => 'islandora_related_lab_objects_ingest_access',
-      'access arguments' => array( array(ISLANDORA_INGEST), 2, 4),
+      'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
     ),
     'islandora/object/%islandora_object/people' => array(
        /**
@@ -144,8 +144,10 @@ function islandora_bioinformatics_base_menu() {
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
     ),
     'islandora/object/%islandora_object/people/add' => array(
       /**
@@ -158,8 +160,10 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
   );
@@ -502,6 +506,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     'phone' => t('Phone Number'),
     'email' => t('Email'),
   );
+
+  $form['cmodel']['#markup'] = 'People'
 
   $form['add'] = array(
     '#type' => 'markup',
@@ -1369,4 +1375,24 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   }
 
   return $has_access;
+}
+
+function islandora_related_people_access($permissions, AbstractObject $object) {
+  //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  if(!islandora_object_has_people($object)) {
+    return FALSE;
+  }
+
+  for ($i = 0; $i < count($permissions); $i++) {
+    if(!islandora_object_access($permissions[$i], $object)) {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
