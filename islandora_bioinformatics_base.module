@@ -25,6 +25,7 @@ function islandora_object_has_lab_objects($object){
   $lab_objects= islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
   if (sizeof($lab_objects) > 0){
+    echo "Has Lab Objects";
     return TRUE;
   }
   else{
@@ -56,8 +57,9 @@ function islandora_object_has_people($object){
 
   $cmodels = islandora_objects_related_cmodels($object);
   foreach($cmodels as $cmodel){
-    if($cmodel->id == 'islandora:person_cmodel')
+    if($cmodel->id == 'islandora:person_cmodel'){
       return TRUE;
+    }
   }
 
   return FALSE;
