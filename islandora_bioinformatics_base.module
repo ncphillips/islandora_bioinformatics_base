@@ -51,11 +51,11 @@ function islandora_object_has_lab_objects($object){
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
   if (sizeof($result) > 0){
-    echo "TRUE";
     return TRUE;
   }
-  else
+  else{
     return FALSE;
+  }
 }
 
 function islandora_object_has_people($object){
@@ -106,7 +106,7 @@ function islandora_bioinformatics_base_menu() {
        */
       'title' => 'Lab Objects',
       'type' => MENU_LOCAL_TASK,
-      'page callback' => 'related_lab_objects_action',
+      'page callback' => 'islandora_related_lab_objects_action',
       'page arguments' => array(2),
       'access callback' => 'islandora_related_lab_objects_access',
       'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
@@ -125,7 +125,7 @@ function islandora_bioinformatics_base_menu() {
       'title arguments' => array(4),
       'load arguments' => array(2),
       'type' => MENU_CALLBACK,
-      'page callback' => 'islandora_related_cmodel_ingest_title',
+      'page callback' => 'islandora_related_lab_object_ingest_action',
       'page arguments' => array(2, 4),
       'access callback' => 'islandora_related_lab_objects_ingest_access',
       'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
@@ -167,15 +167,14 @@ function islandora_bioinformatics_base_menu() {
 }
 
 function islandora_related_cmodel_ingest_title($cmodel_id){
-  echo "Cmodel Name: $cmodel_id </br>";
   $cmodel = islandora_object_load($cmodel_id);
-  $cmodel_name = islandora_cmodel_name($cmodel);
+  $cmodel_name = ucfirst(islandora_cmodel_name($cmodel));
   return "Add $cmodel_name";
 }
 
 
 ///////////////// Page Callbacks /////////////////
-function related_lab_objects_action($object) {
+function islandora_related_lab_objects_action($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -250,7 +249,7 @@ function related_lab_objects_action($object) {
 }
 
 
-function related_lab_objects_ingest_action($object, $cmodel) {
+function islandora_related_lab_objects_ingest_action($object, $cmodel) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -1334,7 +1333,7 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
-  return TRUE;
+  return 1;
 
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
