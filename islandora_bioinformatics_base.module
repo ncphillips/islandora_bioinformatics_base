@@ -22,7 +22,7 @@ function islandora_object_has_lab_objects($object){
    * have Lab Objects related to it.
    */
 
-  $lab_objects= islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
+  $lab_objects = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
   if (sizeof($lab_objects) > 0){
     return TRUE;
@@ -40,19 +40,23 @@ function islandora_object_has_people($object){
    * This function returns true if the $object passed in might
    * have Lab Objects related to it.
    */
-  $cmodel_id = $object->models[0];
-  $query = "
-    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-    SELECT ?datarel
-    FROM <#ri>
-    WHERE
-    {
-      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
-    }
-  ";
-
-  $tuque = new IslandoraTuque();
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+//  $cmodel_id = $object->models[0];
+//  $query = "
+//    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+//    SELECT ?datarel
+//    FROM <#ri>
+//    WHERE
+//    {
+//      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
+//    }
+//  ";
+//
+//  $tuque = new IslandoraTuque();
+//  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+//
+//  if(sizeof($result) >0)
+//    return TRUE;
+//  else return false;
 
   $cmodels = islandora_objects_related_cmodels($object);
   foreach($cmodels as $cmodel){
@@ -688,6 +692,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/collections/lab_objects_collection_policy.xml", FALSE);
   $lab_object_collection->ingestDatastream($datastream);
 
+  $person_cm->relationships->add(FEDORA_RELS_EXT_URI, 'datarel_isPartOf', 'islandora:project_cmodel');
 
   return array(
     'islandora_bioinformatics_base' => array(
@@ -1323,7 +1328,7 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
-
+  return true;
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
@@ -1381,7 +1386,7 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
-  $object_id = $object->id;
+  $cmodel_id = $object->models[0];
 
   $abstract_tripples = '';
   if($abstract_cmodels){
@@ -1397,14 +1402,13 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
     WHERE
     {
         {?pid <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>} .
-        {?pid ?rel <info:fedora/$object_id>} .
+        {?pid ?rel <info:fedora/$cmodel_id>} .
         $abstract_tripples
     }
   ";
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
-  file_put_contents('/tmp/query.txt', $query);
   $related_cmodels = array();
   foreach($result as $related_cmodel) {
     $obj = islandora_object_load($related_cmodel['pid']['value']);
