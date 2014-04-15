@@ -110,7 +110,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     catch (RepositoryException $re) {
       echo 'Caught exception with Project: ', $re->getMessage(), "\n";
     }
-  }
+  
 
     //Next we'll construct and ingest a person object
 
