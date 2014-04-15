@@ -19,10 +19,6 @@
  * Find all cmodels related to any of the cmodels in the $object->cmodels array. Check if the $object
  * itself is a CModel as well.
  *
- * @todo create islandora_related_lab_objects_access(...)
- * @todo create islandora_related_lab_objects_ingest_access(...)
- * @todo create islandora_related_lab_objects_ingest_title(...)
- * @todo create islandora_related_people_access(...)
  * @todo create islandora_related_people_add_access(...)
  */
 function islandora_object_has_lab_objects($object){
@@ -123,13 +119,12 @@ function islandora_bioinformatics_base_menu() {
        * related to %islandora_object. The new object will be of type
        * %rel_cmodel. This is only allowed if the CModel
        */
-      'title callback' => 'islandora_related_cmodel_title',
+      'title callback' => 'islandora_related_cmodel_ingest_title',
       'title arguments' => array(4),
       'load arguments' => array(2),
       'type' => MENU_CALLBACK,
-      'page callback' => 'related_lab_objects_ingest_action',
+      'page callback' => 'islandora_related_cmodel_ingest_title',
       'page arguments' => array(2, 4),
-      //'access callback' => TRUE,
       'access callback' => 'islandora_related_lab_objects_ingest_access',
       'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
     ),
@@ -169,7 +164,7 @@ function islandora_bioinformatics_base_menu() {
   );
 }
 
-function islandora_related_cmodel_title($cmodel){
+function islandora_related_cmodel_ingest_title($cmodel){
   $cmodel_name = islandora_cmodel_name($cmodel);
   return "Add $cmodel_name";
 }
