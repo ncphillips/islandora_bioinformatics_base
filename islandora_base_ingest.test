@@ -205,7 +205,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
 
     $result_count = 0;
 
-    foreach ($query_result as $person) {
+    foreach ($query_results as $person) {
       if ($person['pid']['value'] == 'test_person') {
         $testSuccess = true; //The test worked, now remove the relationship.
 
