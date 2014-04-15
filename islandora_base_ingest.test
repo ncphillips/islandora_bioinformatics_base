@@ -184,7 +184,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
 
     //First load the objects using the pids.
     $person_object = islandora_object_load('islandora:test_person');
-    $project_ojbect = islandora_object_load('islandora:test_project');
+    $project_object = islandora_object_load('islandora:test_project');
 
     //Next, add the isMemberOf relationship to the person_object, with the project_object as the target.
 
@@ -198,6 +198,8 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
                   ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
                   ?pid <fedora:isPartOf> <info:fedora/islandora:test_project> .
                 }";
+
+    $tuque = new IslandoraTuque();
 
     $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
