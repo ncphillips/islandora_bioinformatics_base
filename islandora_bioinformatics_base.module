@@ -51,6 +51,7 @@ function islandora_object_has_lab_objects($object){
 //  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
   $result = islandora_objects_related_cmodels($object, array('islandora:lab_objects'));
+  echo "RESUL SIZE: " . sizeof($result);
 
   if (sizeof($result) > 0){
     return TRUE;
@@ -1422,6 +1423,8 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels) {
     $obj = islandora_object_load($related_cmodel['pid']['value']);
     $related_cmodels[] = $obj ;
   }
+
+  echo $query;
 
   return $related_cmodels;
   /**
