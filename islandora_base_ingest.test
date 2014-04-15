@@ -2,7 +2,7 @@
 
 /**
 * @file islandora_base_ingest.test
-* Attempts to ingest a project object into a randomly generated base collection, follwed by a person object, and then tries to add the person object to the project using an isPartOf relationship. Finally, it deletes both objects.
+* Attempts to ingest a project object, follwed by a person object, and then tries to add the person object to the project using an isPartOf relationship. Finally, it deletes both objects.
 *
 * For the duration of the test, the two pids in use will be:
 *
