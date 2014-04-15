@@ -156,6 +156,16 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     catch (RepositoryException $re) {
       echo 'Caught exception with Person: ', $re->getMessage(), "\n";
     }
+
+    $this->testRelationBetweenPersonAndProject();
+
+    //Now delete the two objects, safety is turned off, but this is a specific test case.
+
+    $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
+    $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
+
+    exit();
+
   }
 
   /**
@@ -176,7 +186,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
   * be run again. The results should be empty.
   */
 
-  public function testRelationBetweenPersonAndProject() {
+  private function testRelationBetweenPersonAndProject() {
 
     $testSuccess = false;
 
@@ -218,12 +228,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       }
     }
 
-     $this->assertTrue($testSuccess);
-  }
-
-  public function purgeTestForPersonandProject() {  
+    $this->assertTrue($testSuccess);
     
-    $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
-    $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
   }
 }
