@@ -453,7 +453,6 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   switch($selected_option){
     //in case of relationship removal from the object
     case "remove":
-      echo "Chose to remove the relationship</br>";
       //for each table row
       foreach($table_values as $lines => $line){
         //if $line exists (if it is a selected table row)
@@ -1385,7 +1384,6 @@ function islandora_cmodel_name($cmodel) {
   $pattern = '/islandora:(.*)_cmodel/';
 
   $content_model_pid = $cmodel->id;
-  echo "a".$content_model_pid
   preg_match($pattern, $content_model_pid, $match);
   return $match[1];
 }
