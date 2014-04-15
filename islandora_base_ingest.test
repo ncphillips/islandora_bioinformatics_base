@@ -2,7 +2,7 @@
 
 /**
 * @file islandora_base_ingest.test
-* Attempts to ingest a project object into a randomly generated base collection, follwed by a person object, and then tries to add the person object to the project.
+* Attempts to ingest a project object into a randomly generated base collection, follwed by a person object, and then tries to add the person object to the project using an isPartOf relationship. Finally, it deletes both objects.
 *
 * For the duration of the test, the two pids in use will be:
 *
@@ -49,9 +49,23 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
   * @author Dalton Mackenzie <demackenzie@upei.ca>
   *
   * Creates an administrative user and attempts to ingest a project
+  * Then a person object is ingested.
+  * The pids used for these two objects are islandora:test_project and
+  * islandora:test_person.
+  *
+  * After the objects are ingested, a test relationship is assigned between
+  * them, and islandora:test_person is assigned an isPartOf relationship with
+  * islandora:test_project.
+  *
+  * Next a Sparql query is used, and it searches for an object of type person_cmodel,
+  * (a person object), that also has an isPartOf relationship with islandora:test_project.
+  *
+  * The test asserts that it has found a result with pid islandora:test_person as expected.
+  *
+  * Finally, the relationship is removed, and a purge of both objects is tested as well.
   */
 
-  public function testIngestProjectandPerson() {
+  public function testIngestProjectandPersonRelatePurge() {
     
 
     //Gets the admin user
@@ -157,46 +171,22 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       echo 'Caught exception with Person: ', $re->getMessage(), "\n";
     }
 
-    $this->testRelationBetweenPersonAndProject();
+    /******************************************************************************************************
+    
+    At this point we should have successfully ingested a project object and a person object.
 
-    //Now delete the two objects, safety is turned off, but this is a specific test case.
+    Project object -> (Php var name: $project_test_object) (islandora pid: islandora:test_project)
+    Person object -> (Php var name: $person_test_object) (islandora pid: islandora:test_person)
 
-    $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
-    $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
+    The relationship between the two of them will now be established and tested.
 
-    exit();
+    *******************************************************************************************************/
 
-  }
-
-  /**
-  *
-  * @function testRelationBetweenPersonAndProject
-  *
-  * @author Dalton Mackenzie <demackenzie@upei.ca>
-  *
-  * This function will establish the relationship:
-  * islandora:test_person isPartOf islandora:test_project
-  *
-  * It will then run a SPARQL query, searching for all people
-  * related to the test project.
-  *
-  * The only expected returned result should be islandora:test_person
-  *
-  * Finally, the relationship will be removed, and the query will
-  * be run again. The results should be empty.
-  */
-
-  private function testRelationBetweenPersonAndProject() {
-
-    $testSuccess = false;
+    $testSuccess = false; //A variable to track whether or not the relationship test was successful.
 
     //Establish a relationship between islandora:test_person and islandora_test_project
 
-    //First load the objects using the pids.
-    $person_object = islandora_object_load('islandora:test_person');
-    $project_object = islandora_object_load('islandora:test_project');
-
-    //Next, add the isMemberOf relationship to the person_object, with the project_object as the target.
+    //Next, add the isPartOf relationship to the person_object, with the project_object as the target.
 
     $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
 
@@ -209,11 +199,12 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
                   ?pid <fedora-rels-ext:isPartOf> <info:fedora/islandora:test_project> .
                 }";
 
+    // Get a new Tuque connection, for more info, 
+    // see https://github.com/Islandora/islandora/wiki/Build,-Access,-Modify-and-Delete-Fedora-objects-with-the-Tuque-interface
+    
     $tuque = new IslandoraTuque();
 
-    $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-
-    $result_count = 0;
+    $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited'); //Get the query results
 
     foreach ($query_results as $person) {
       if ($person['pid']['value'] == 'islandora:test_person') {
@@ -228,7 +219,13 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       }
     }
 
-    $this->assertTrue($testSuccess);
-    
+    $this->assertTrue($testSuccess); //Make sure that the relationship test was successful.
+ 
+
+    //Now delete the two objects, safety is turned off, but this is a specific test case.
+
+    $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
+    $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
+
   }
 }
