@@ -688,6 +688,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/collections/lab_objects_collection_policy.xml", FALSE);
   $lab_object_collection->ingestDatastream($datastream);
 
+  add_isPartOf($person_cm, "islandora:project_cmodel");
 
   return array(
     'islandora_bioinformatics_base' => array(
