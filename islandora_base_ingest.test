@@ -188,7 +188,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
 
     //Next, add the isMemberOf relationship to the person_object, with the project_object as the target.
 
-    $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+    $person_object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
 
     //Now run a query to ensure that the relationship exists.
 
@@ -196,7 +196,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
                 FROM <#ri>
                 WHERE {
                   ?pid <fedora-model:hasModel> <info:fedora/islandora:person_cmodel> .
-                  ?pid <fedora:isMemberOf> <info:fedora/islandora:test_project> .
+                  ?pid <fedora:isPartOf> <info:fedora/islandora:test_project> .
                 }";
 
     $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
@@ -207,7 +207,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       if ($person['pid']['value'] == 'test_person') {
         $testSuccess = true; //The test worked, now remove the relationship.
 
-        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOf', $project_object->id);
+        $person_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
       }
       else {
 

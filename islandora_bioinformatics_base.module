@@ -1348,9 +1348,9 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   }
 
   //check if $relatedCModel is null or empty
-  if(empty($relatedCModel)) {
-    return FALSE;
-  }
+  //if(empty($relatedCModel)) {
+    //return FALSE;
+  //}
 
   //if there are no lab objects for the $object, there is nothing to see
   if(!islandora_object_has_lab_objects($object)) {
