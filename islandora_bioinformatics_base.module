@@ -677,6 +677,17 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $datastream->setContentFromFile("$module_path/xml/collections/islandora_bioinformatics_person_collection_policy.xml", FALSE);
   $person_collection->ingestDatastream($datastream);
 
+  //---------Lab Objects Collection ---------------------------------------------------------------------------------------//
+  $lab_object_collection = $connection->repository->constructObject('islandora:lab_object_collection');
+  $lab_object_collection->owner = 'fedoraAdmin';
+  $lab_object_collection->label = 'Lab Objects Collection';
+  $lab_object_collection->models = 'islandora:collectionCModel';
+  $lab_object_collection->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', 'islandora:root');
+  $datastream = $lab_object_collection->constructDatastream('COLLECTION_POLICY', 'X');
+  $datastream->mimetype = 'text/xml';
+  $datastream->setContentFromFile("$module_path/xml/collections/lab_objects_collection_policy.xml", FALSE);
+  $lab_object_collection->ingestDatastream($datastream);
+
 
   return array(
     'islandora_bioinformatics_base' => array(
@@ -687,6 +698,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
         $person_cm,
         $person_collection,
         $lab_object_cm,
+        $lab_object_collectionm,
         $lab_activity_cm,
       ),
     ),
