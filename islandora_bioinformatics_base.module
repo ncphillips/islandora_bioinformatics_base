@@ -1336,16 +1336,19 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
     islandora_display_repository_inaccessible_message();
+    echo"First nope";
     return FALSE;
   }
 
   //check if $relatedCModel is null or empty
   if(empty($relatedCModel)) {
+    echo "second nope";
     return FALSE;
   }
 
   //if there are no lab objects for the $object, there is nothing to see
   if(!islandora_object_has_lab_objects($object)) {
+    echo "third nope";
     return FALSE;
   }
 
