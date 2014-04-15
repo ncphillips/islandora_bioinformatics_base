@@ -1354,7 +1354,6 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
 }
 
 function islandora_related_people_access($permissions, AbstractObject $object) {
-  return true;
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
