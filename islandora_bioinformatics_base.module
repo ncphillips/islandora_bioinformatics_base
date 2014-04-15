@@ -365,9 +365,10 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
   if(isset($relationships)) $form_state['relationships'] = $relationships;
 
+  $cmodel = islandora_object_load($cmodel[0]);
 
   // Content Model Type
-  $object_name = islandora_cmodel_name($cmodels[0]);
+  $object_name = islandora_cmodel_name($cmodel);
 
   // Header form
   $form['cmodel'] = array(
