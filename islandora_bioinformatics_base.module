@@ -1380,5 +1380,8 @@ function islandora_cmodel_name($cmodel) {
 
   $content_model_pid = $cmodel->id;
   preg_match($pattern, $content_model_pid, $match);
-  return $match[1];
+  if(sizeof($match) > 1)
+    return $match[1];
+  else
+    return 'Not a CModel...';
 }
