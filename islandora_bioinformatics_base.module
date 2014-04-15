@@ -1387,7 +1387,9 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
 
 function islandora_cmodel_name($cmodel) {
   $pattern = '/islandora:(.*)_cmodel/';
+
   $content_model_pid = $cmodel->id;
+  echo "a".$content_model_pid
   preg_match($pattern, $content_model_pid, $match);
   return $match[1];
 }
