@@ -24,9 +24,6 @@ function islandora_object_has_lab_objects($object){
 
   $lab_objects = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
-  $cmodel = $object->models[0];
-  echo "$cmodel";
-
   if (sizeof($lab_objects) > 0){
     return TRUE;
   }
@@ -43,20 +40,20 @@ function islandora_object_has_people($object){
    * This function returns true if the $object passed in might
    * have Lab Objects related to it.
    */
-  $cmodel_id = $object->models[0];
-  $query = "
-    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-    SELECT ?datarel
-    FROM <#ri>
-    WHERE
-    {
-      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
-    }
-  ";
-
-  $tuque = new IslandoraTuque();
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-
+//  $cmodel_id = $object->models[0];
+//  $query = "
+//    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+//    SELECT ?datarel
+//    FROM <#ri>
+//    WHERE
+//    {
+//      {<info:fedora/islandora:person_cmodel> ?datarel <info:fedora/$cmodel_id>} .
+//    }
+//  ";
+//
+//  $tuque = new IslandoraTuque();
+//  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+//
 //  if(sizeof($result) >0)
 //    return TRUE;
 //  else return false;
