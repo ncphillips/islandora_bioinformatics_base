@@ -1382,7 +1382,8 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
-  $object_id = $object->models[0]->id;
+  $cmodel = $object->models[0];
+  $cmodel_id = $cmodel->id;
 
   $abstract_tripples = '';
   if($abstract_cmodels){
@@ -1398,7 +1399,7 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
     WHERE
     {
         {?pid <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>} .
-        {?pid ?rel <info:fedora/$object_id>} .
+        {?pid ?rel <info:fedora/$cmodel_id>} .
         $abstract_tripples
     }
   ";
