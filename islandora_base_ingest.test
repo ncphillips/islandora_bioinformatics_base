@@ -218,11 +218,10 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       }
     }
 
-     $this->assertTrue($testSuccess);
-  }
-
-  public function purgeTestForPersonandProject() {  
+    $this->assertTrue($testSuccess);
     
+    //Now delete the two objects, safety is turned off, but this is a specific test case.
+
     $this->deleteObject('islandora:test_person', $button = NULL, $safety = FALSE);
     $this->deleteObject('islandora:test_project', $button = NULL, $safety = FALSE);
   }
