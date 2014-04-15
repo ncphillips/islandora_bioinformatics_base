@@ -58,7 +58,7 @@ echo "</pre>";*/
 <div class="person-info">
     <table>
         <tbody>
-        <tr><td><img src="<?php print $variables['img_url'] ?>" width="250"></td></tr>
+        <?php if (isset ($variables['img_url'])):?><tr><td><img src="<?php print $variables['img_url'] ?>" width="250"></td></tr><?php endif; ?>
         </tbody>
     </table>
 </div>
@@ -66,10 +66,10 @@ echo "</pre>";*/
     <table>
         <tbody>
         <tr><th class="person-info-heading">Personal Information</th></tr>
-        <tr><td class="person-info-label">Title:</td><td><?php print $variables['person']['title'] ?></td></tr>
-        <tr><td class="person-info-label">First Name:</td><td><?php print $variables['person']['name']['first'] ?></td></tr>
-        <tr><td class="person-info-label">Last Name:</td><td><?php print $variables['person']['name']['last'] ?></td></tr>
-        <tr><td class="person-info-label">Birth Date: Name:</td><td><?php print $variables['person']['name']['birthdate'] ?></td></tr>
+        <tr><td class="person-info-label">Title:</td><?php if (isset ($variables['person']['title'])):?><td><?php print $variables['person']['title'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">First Name:</td><?php if (isset ($variables['person']['name']['first'])):?><td><?php print $variables['person']['name']['first'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Last Name:</td><?php if (isset ($variables['person']['name']['last'])):?><td><?php print $variables['person']['name']['last'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Birth Date: Name:</td><?php if (isset ($variables['person']['name']['birthdate'])):?><td><?php print $variables['person']['name']['birthdate'] ?></td><?php endif; ?></tr>
         </tbody>
     </table>
 </div>
@@ -77,15 +77,14 @@ echo "</pre>";*/
     <table>
         <tbody>
         <tr><th class="person-info-heading">Contact Information</th></tr>
-        <tr><td class="person-info-label">Phone Number:</td><td><?php print $variables['person']['contact']['phone'] ?></td></tr>
-        <tr><td class="person-info-label">Email Address:</td><td><?php print $variables['person']['contact']['email'] ?></td></tr>
-        <tr><td class="person-info-label">Organization:</td><td><?php print $variables['person']['contact']['organization'] ?></td></tr>
-        <tr><td class="person-info-label">Position:</td><td><?php print $variables['person']['contact']['position'] ?></td></tr>
-        <tr><td class="person-info-label">Address:</td><td><?php print $variables['person']['contact']['address'] ?></td></tr>
-        <tr><td class="person-info-label">Start Date:</td><td><?php print $variables['person']['contact']['startDate'] ?></td></tr>
-        <tr><td class="person-info-label">End Date:</td><td><?php print $variables['person']['contact']['endDate'] ?></td></tr>
-        <tr><td class="person-info-label">Website:</td><td><?php print $variables['person']['contact']['url'] ?></td></tr>
+        <tr><td class="person-info-label">Phone Number:</td><?php if (isset ($variables['person']['contact']['phone'])):?><td><?php print $variables['person']['contact']['phone'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Email Address:</td><?php if (isset ($variables['person']['contact']['email'])):?><td><?php print $variables['person']['contact']['email'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Organization:</td><?php if (isset ($variables['person']['contact']['organization'])):?><td><?php print $variables['person']['contact']['organization'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Position:</td><?php if (isset ($variables['person']['contact']['position'])):?><td><?php print $variables['person']['contact']['position'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Address:</td><?php if (isset ($variables['person']['contact']['address'])):?><td><?php print $variables['person']['contact']['address'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Start Date:</td><?php if (isset ($variables['person']['contact']['startDate'])):?><td><?php print $variables['person']['contact']['startDate'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">End Date:</td><?php if (isset ($variables['person']['contact']['endDate'])):?><td><?php print $variables['person']['contact']['endDate'] ?></td><?php endif; ?></tr>
+        <tr><td class="person-info-label">Website:</td><?php if (isset ($variables['person']['contact']['url'])):?><td><?php print $variables['person']['contact']['url'] ?></td><?php endif; ?></tr>
         </tbody>
     </table>
 </div>
-
