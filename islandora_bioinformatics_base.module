@@ -1388,6 +1388,7 @@ function islandora_cmodel_name($cmodel) {
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
   echo "Object: $object</br>";
   $object = islandora_object_load($object);
+  echo "Object? $object";
   $cmodel = $object->models[0];
   $cmodel_id = $cmodel->id;
   echo "Cmodel: $cmodel_id ,</br>";
@@ -1410,8 +1411,6 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
         $abstract_tripples
     }
   ";
-  echo "CMode: $cmodel_id";
-  echo $query;
 
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
