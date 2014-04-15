@@ -246,7 +246,6 @@ function islandora_related_lab_object_ingest_action($object, $cmodel) {
    * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    */
-  echo "Ingest action";
   $object_name = islandora_cmodel_name($cmodel);
 
   $module_name = 'islandora_lab_object_' . $object_name;
@@ -361,6 +360,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['add'] = array(
     '#type' => 'markup',
     '#markup' =>  l("Add $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
+    '#prefix' => '<div class="m-btn green">',
+    '#suffix' => '</div>',
   );
 
   // From our form there should be a list of specific operations that can be performed
