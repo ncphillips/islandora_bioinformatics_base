@@ -50,8 +50,10 @@ function islandora_object_has_lab_objects($object){
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
-  if (sizeof($result) > 0)
+  if (sizeof($result) > 0){
+    echo "TRUE";
     return TRUE;
+  }
   else
     return FALSE;
 }
