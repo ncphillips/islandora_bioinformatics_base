@@ -698,7 +698,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
         $person_cm,
         $person_collection,
         $lab_object_cm,
-        $lab_object_collectionm,
+        $lab_object_collection,
         $lab_activity_cm,
       ),
     ),
