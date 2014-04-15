@@ -1328,7 +1328,7 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
-
+  return true;
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
@@ -1354,6 +1354,7 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
 }
 
 function islandora_related_people_access($permissions, AbstractObject $object) {
+  return true;
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
