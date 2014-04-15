@@ -24,6 +24,9 @@ function islandora_object_has_lab_objects($object){
 
   $lab_objects = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
+  $cmodel = $object->models[0];
+  echo "$cmodel";
+
   if (sizeof($lab_objects) > 0){
     return TRUE;
   }
@@ -1386,9 +1389,6 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
-  echo "Object: $object</br>";
-  $object = islandora_object_load($object);
-  echo "Object? $object";
   $cmodel = $object->models[0];
   $cmodel_id = $cmodel->id;
   echo "Cmodel: $cmodel_id ,</br>";
