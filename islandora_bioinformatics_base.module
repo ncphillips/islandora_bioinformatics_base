@@ -1386,7 +1386,7 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
-  echo $cmodel;
+  echo $object;
   $cmodel = $object->models[0];
   $cmodel_id = $cmodel->id;
 
