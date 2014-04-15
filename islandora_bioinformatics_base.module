@@ -144,8 +144,10 @@ function islandora_bioinformatics_base_menu() {
       'description' => 'People collaborating on this project.',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('related_people_form', 2),
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
     ),
     'islandora/object/%islandora_object/people/add' => array(
       /**
@@ -1368,5 +1370,24 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
     $has_access = $has_access || islandora_object_access($permissions[$i], $object);
   }
 
+  return $has_access;
+}
+
+function islandora_related_people_access($permissions, AbstractObject $object) {
+  //check if repository is available
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  if (!islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
+  if(!islandora_object_has_people($object)) {
+    return FALSE;
+  }
+
+  $has_access = FALSE;
+  for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
+    $has_access = $has_access || islandora_object_access($permissions[$i], $object);
+  }
   return $has_access;
 }
