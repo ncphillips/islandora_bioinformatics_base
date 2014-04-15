@@ -16,8 +16,8 @@ module_load_include('inc', 'islandora', 'islandora.rules');
  * This function simply checks to make sure a relationship doesnt exist before adding it
  */
 function add_hasPart($cmodel, $rel_to){
-  if (!islandora_object_has_relationship($cmodel, '', 'datarel_hasPart', $rel_to, FALSE))
-    $cmodel->relationships->add(FEDORA_RELS_EXT_URI, 'datarel_hasPart', $rel_to);
+  if (!islandora_object_has_relationship($cmodel, '', 'hasPart_datarel', $rel_to, FALSE))
+    $cmodel->relationships->add(ISLANDORA_RELS_EXT_URI, 'hasPart_datarel', $rel_to);
 }
 
 /**
@@ -29,6 +29,6 @@ function add_hasPart($cmodel, $rel_to){
  * This function simply checks to make sure a relationship doesnt exist before adding it
  */
 function add_isPartOf($cmodel, $rel_to){
-  if (!islandora_object_has_relationship($cmodel, '', 'datarel_isPartOf', $rel_to, FALSE))
-    $cmodel->relationships->add(FEDORA_RELS_EXT_URI, 'datarel_isPartOf', $rel_to);
+  if (!islandora_object_has_relationship($cmodel, '', 'isPartOf_datarel', $rel_to, FALSE))
+    $cmodel->relationships->add(ISLANDORA_RELS_EXT_URI, 'isPartOf_datarel', $rel_to);
 }

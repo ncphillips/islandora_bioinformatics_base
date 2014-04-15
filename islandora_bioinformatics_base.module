@@ -492,7 +492,7 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add")
   );
 
-  $people_rows = array();
+  $people_entries = array();
 
   foreach ($people as $person){
     // Default Values
