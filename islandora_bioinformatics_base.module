@@ -1395,7 +1395,7 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
 
-  file_put_contents('/tmp/hasxquery.txt', $query);
+  file_put_contents('/tmp/query.txt', $query);
   $related_cmodels = array();
   foreach($result as $related_cmodel) {
     $obj = islandora_object_load($related_cmodel['pid']['value']);
