@@ -271,7 +271,6 @@ function related_lab_objects_ingest_action($object, $cmodel) {
   module_load_include('module', $module_name, $module_name);
   if(function_exists($callback_to_call)){
      return $callback_to_call($object);
-    ec
   }
   else
     return drupal_not_found();
