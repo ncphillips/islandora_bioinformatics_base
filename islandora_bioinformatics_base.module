@@ -50,7 +50,7 @@ function islandora_object_has_lab_objects($object){
 //  $tuque = new IslandoraTuque();
 //  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
-  $result = islandora_objects_related_cmodels($object, array('islandora:lab_objects'));
+  $result = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
   echo "RESUL SIZE: " . sizeof($result);
 
   if (sizeof($result) > 0){
