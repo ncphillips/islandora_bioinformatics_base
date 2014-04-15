@@ -1356,7 +1356,7 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
     $has_access = $has_access || islandora_object_access($permissions[$i], $object);
   }
-
+  echo $has_access;
   return $has_access;
 }
 
