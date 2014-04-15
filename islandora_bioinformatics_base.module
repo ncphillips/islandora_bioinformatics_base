@@ -51,7 +51,6 @@ function islandora_object_has_lab_objects($object){
 //  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
   $result = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
-  echo "RESUL SIZE: " . sizeof($result);
 
   if (sizeof($result) > 0){
     return TRUE;
@@ -83,10 +82,13 @@ function islandora_object_has_people($object){
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
-  if (sizeof($result) > 0)
-    return TRUE;
-  else
-    return FALSE;
+  $cmodels = islandora_objects_related_cmodels($object);
+  foreach($cmodels as $cmodel){
+    if($cmodel->id == 'islandora:person_cmodel')
+      return TRUE;
+  }
+
+  return FALSE;
 }
 
 function islandora_bioinformatics_base_menu() {
@@ -1423,8 +1425,6 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels) {
     $obj = islandora_object_load($related_cmodel['pid']['value']);
     $related_cmodels[] = $obj ;
   }
-
-  echo $query;
 
   return $related_cmodels;
   /**
