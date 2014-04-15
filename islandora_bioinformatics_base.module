@@ -34,21 +34,23 @@ function islandora_object_has_lab_objects($object){
    * @todo Once it's created, replace this section with a call to
    * islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'))
    */
-  $cmodel_id = $object->models[0];
-  $query = "
-    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-    SELECT ?pid
-    FROM <#ri>
-    WHERE
-    {
-      {?pid fedora-model:hasModel <info:fedora/fedora-system:ContentModel-3.0>} .
-      {?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel>} .
-      {?pid ?datarel <info:fedora/$cmodel_id>} .
-    }
-  ";
+//  $cmodel_id = $object->models[0];
+//  $query = "
+//    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+//    SELECT ?pid
+//    FROM <#ri>
+//    WHERE
+//    {
+//      {?pid fedora-model:hasModel <info:fedora/fedora-system:ContentModel-3.0>} .
+//      {?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel>} .
+//      {?pid ?datarel <info:fedora/$cmodel_id>} .
+//    }
+//  ";
+//
+//  $tuque = new IslandoraTuque();
+//  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
-  $tuque = new IslandoraTuque();
-  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  $result = islandora_objects_related_cmodels($object, array('islandora:lab_objects'));
 
   if (sizeof($result) > 0){
     return TRUE;
@@ -1387,4 +1389,56 @@ function islandora_cmodel_name($cmodel) {
     return $match[1];
   else
     return '';
+}
+
+
+function islandora_objects_related_cmodels($object, $abstract_cmodels) {
+  $object_id = $object->id;
+
+  $abstract_tripples = '';
+  if($abstract_cmodels){
+    foreach($abstract_cmodels as $abstract_cmodel){
+      $abstract_tripples_array[] = "{?pid <fedora-model:hasModel> <info:fedora/$abstract_cmodel>}";
+    }
+    $abstract_tripples = '{'.implode(' UNION ', $abstract_tripples_array).'}';
+  }
+
+  $query = "
+    SELECT ?pid
+    FROM <#ri>
+    WHERE
+    {
+        {?pid <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>} .
+        {?pid ?rel <info:fedora/islandora:project_cmodel>} .
+        $abstract_tripples
+    }
+  ";
+
+  $tuque = new IslandoraTuque();
+  $result = $tuque->repository->ri->sparqlQuery($query);
+
+  $related_cmodels = array();
+  foreach($result as $related_cmodel) {
+    $obj = islandora_object_load($related_cmodel['pid']['value']);
+    $related_cmodels[] = $obj ;
+  }
+
+  return $related_cmodels;
+  /**
+   * Example Query
+   *
+   *    SELECT ?pid
+   *    FROM <#ri>
+   *    WHERE
+   *    {
+   *      {?pid <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>} .
+   *      {?pid ?rel <info:fedora/islandora:project_cmodel>} .
+   *      {
+   *        {?pid <fedora-model:hasModel> <info:fedora/islandora:lab_object_cmodel>}
+   *        UNION
+   *        {?pid <fedora-model:hasModel> <info:fedora/islandora:lab_activity_cmodel>}
+   *      }
+   *    }
+   */
+
 }
