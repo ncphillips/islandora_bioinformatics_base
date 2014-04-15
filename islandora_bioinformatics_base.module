@@ -50,10 +50,12 @@ function islandora_object_has_lab_objects($object){
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
-  if (sizeof($result) > 0)
+  if (sizeof($result) > 0){
     return TRUE;
-  else
+  }
+  else{
     return FALSE;
+  }
 }
 
 function islandora_object_has_people($object){
@@ -104,7 +106,7 @@ function islandora_bioinformatics_base_menu() {
        */
       'title' => 'Lab Objects',
       'type' => MENU_LOCAL_TASK,
-      'page callback' => 'related_lab_objects_action',
+      'page callback' => 'islandora_related_lab_objects_action',
       'page arguments' => array(2),
       'access callback' => 'islandora_related_lab_objects_access',
       'access arguments' => array(array(ISLANDORA_VIEW_OBJECTS), 2),
@@ -123,7 +125,7 @@ function islandora_bioinformatics_base_menu() {
       'title arguments' => array(4),
       'load arguments' => array(2),
       'type' => MENU_CALLBACK,
-      'page callback' => 'islandora_related_cmodel_ingest_title',
+      'page callback' => 'islandora_related_lab_object_ingest_action',
       'page arguments' => array(2, 4),
       'access callback' => 'islandora_related_lab_objects_ingest_access',
       'access arguments' => array(array(ISLANDORA_INGEST), 2, 4),
@@ -164,14 +166,15 @@ function islandora_bioinformatics_base_menu() {
   );
 }
 
-function islandora_related_cmodel_ingest_title($cmodel){
-  $cmodel_name = islandora_cmodel_name($cmodel);
+function islandora_related_cmodel_ingest_title($cmodel_id){
+  $cmodel = islandora_object_load($cmodel_id);
+  $cmodel_name = ucfirst(islandora_cmodel_name($cmodel));
   return "Add $cmodel_name";
 }
 
 
 ///////////////// Page Callbacks /////////////////
-function related_lab_objects_action($object) {
+function islandora_related_lab_objects_action($object) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -212,7 +215,7 @@ function related_lab_objects_action($object) {
     FROM <#ri>
     WHERE {
       ?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel> .
-      ?pid fedora:isPartOf_datarel <info:fedora/$target_pid>
+      ?pid fedora:datarel_isPartOf<info:fedora/$target_pid>
     }";
 
   $results = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
@@ -246,7 +249,7 @@ function related_lab_objects_action($object) {
 }
 
 
-function related_lab_objects_ingest_action($object, $cmodel) {
+function islandora_related_lab_object_ingest_action($object, $cmodel) {
   /**
    * @author Dalton Mackenzie <demackenzie@upei.ca>
    *
@@ -261,6 +264,7 @@ function related_lab_objects_ingest_action($object, $cmodel) {
    * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    */
+  echo "Ingest action";
   $object_name = islandora_cmodel_name($cmodel);
 
   $module_name = 'islandora_lab_object_' . $object_name;
@@ -559,7 +563,7 @@ function rel_cmodel_load($cmodel_id_part, $object_id) {
    * @param IslandoraFedoraObject $object
    *
    * @return FedoraObject|null
-   * If the cmodel exists and has a isPartOf_datarel relationship to
+   * If the cmodel exists and has a datarel_isPartOf relationship to
    * the cmodel of %object, then it is returned; else return NULL.
    */
   $cmodel = cmodel_load($cmodel_id_part);
@@ -647,7 +651,7 @@ function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque
   $person_cm->ingestDatastream($datastream);
 
   // Create relationship with LabObject
-  $person_cm->relationships->add(ISLANDORA_RELS_EXT_URI, 'isPartOf_datarel', 'islandora:project_cmodel');
+  $person_cm->relationships->add(ISLANDORA_RELS_EXT_URI, 'datarel_isPartOf', 'islandora:project_cmodel');
 
   //---------Lab Object Content Model---------------------------------------------------------------------------------//
   $lab_object_cm = $connection->repository->constructObject('islandora:lab_object_cmodel');
@@ -1351,7 +1355,6 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
     $has_access = $has_access || islandora_object_access($permissions[$i], $object);
   }
-
   return $has_access;
 }
 
@@ -1380,5 +1383,8 @@ function islandora_cmodel_name($cmodel) {
 
   $content_model_pid = $cmodel->id;
   preg_match($pattern, $content_model_pid, $match);
-  return $match[1];
+  if(sizeof($match) >= 1)
+    return $match[1];
+  else
+    return '';
 }
