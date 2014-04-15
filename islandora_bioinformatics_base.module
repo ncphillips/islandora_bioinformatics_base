@@ -498,6 +498,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     'email' => t('Email'),
   );
 
+  $form['cmodel']['#markup'] = 'People'
+
   $form['add'] = array(
     '#type' => 'markup',
     '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add")
