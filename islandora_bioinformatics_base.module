@@ -1385,5 +1385,5 @@ function islandora_cmodel_name($cmodel) {
   if(sizeof($match) >= 1)
     return $match[1];
   else
-    return 'Not a CModel...';
+    return 'Not a ..';
 }
