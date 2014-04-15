@@ -1386,10 +1386,11 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
+  echo "Object: $object</br>";
   $object = islandora_object_load($object);
   $cmodel = $object->models[0];
   $cmodel_id = $cmodel->id;
-  echo $cmodel_id;
+  echo "Cmodel: $cmodel_id ,</br>";
 
   $abstract_tripples = '';
   if($abstract_cmodels){
