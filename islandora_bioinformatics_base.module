@@ -160,8 +160,10 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_project_people_add_form', 2),
       'type' => MENU_CALLBACK,
-      'access callback' => 'islandora_object_has_people',
-      'access arguments' => array(2),
+      //'access callback' => 'islandora_object_has_people',
+      //'access arguments' => array(2),
+      'access callback' => 'islandora_related_people_access',
+      'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
   );
