@@ -1382,7 +1382,7 @@ function islandora_cmodel_name($cmodel) {
 
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
-  $object_id = $object->id;
+  $object_id = $object->models[0]->id;
 
   $abstract_tripples = '';
   if($abstract_cmodels){
