@@ -229,25 +229,21 @@ function related_lab_objects_action($object) {
 
   foreach ($related_cmodels as $related_cmodel_object) { //For each of the content models returned by the query,
  
-    $pattern = '/islandora:(.*)_cmodel/';
-    $related_cmodel_pid = $related_cmodel_object->id;
-    preg_match($pattern, $related_cmodel_pid, $match);
+    $object_name = islandora_cmodel_name($related_cmodel_object);
 
-    $object_type = $match[1]; //Get the cmodel
-
-    $form_id = 'related_' . $object_type. '_form';
+    $form_id = 'related_' . $object_name. '_form';
 
     if(function_exists($form_id)){
-      $render_array[$object_type] = drupal_get_form($form_id, $object);
+      $render_array[$object_name] = drupal_get_form($form_id, $object);
     }
     else {
       $args = array($object);
       $forms = module_invoke_all('forms', $form_id, $args );
       if(array_key_exists($form_id, $forms)){
-        $render_array[$object_type] = drupal_get_form($form_id, $object);
+        $render_array[$object_name] = drupal_get_form($form_id, $object);
       }
       else {
-        $render_array[$object_type] = array();
+        $render_array[$object_name] = array();
       }
     }
  }
@@ -271,15 +267,9 @@ function related_lab_objects_ingest_action($object, $cmodel) {
    * This callback will take an object and a cmodel object as parameters. The callback will then determine what type of content model
    * the cmodel is, and it will call callback_rel_lab_object_SUBTYPE_ingest($object) where SUBTYPE is the type of the content model.
    */
-  //Get the pid of the content model
-  $pattern = '/islandora:(.*)_cmodel/';
-  $content_model_pid = $cmodel->id;
-  preg_match($pattern, $content_model_pid, $match);
+  $object_name = islandora_cmodel_name($cmodel);
 
-  $object_type = $match[1]; //Get the cmodel
-
-  $module_name = 'islandora_lab_object_' . $object_type;
-  //$callback_to_call = 'islandora_bioinformatics_'.$object_type. '_lab_object_'.$object_type.'_ingest';
+  $module_name = 'islandora_lab_object_' . $object_name;
   $callback_to_call = "{$module_name}_ingest";
   module_load_include('module', $module_name, $module_name);
   if(function_exists($callback_to_call)){
@@ -378,13 +368,11 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
 
   // Content Model Type
-  $pattern = '/islandora:(.*)_cmodel/';
-  preg_match($pattern, $cmodels[0], $match);
-  $object_type = $match[1];
+  $object_name = islandora_cmodel_name($cmodels[0]);
 
   // Header form
   $form['cmodel'] = array(
-    '#markup' => ucfirst($object_type),
+    '#markup' => ucfirst($object_name),
     '#prefix' => '<h1>',
     '#suffix' => '</h1>',
   );
@@ -392,7 +380,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   // Add Link
   $form['add'] = array(
     '#type' => 'markup',
-    '#markup' =>  l("Add $object_type", "islandora/object/{$object->id}/ingest/$object_type"),
+    '#markup' =>  l("Add $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
   );
 
   // From our form there should be a list of specific operations that can be performed
@@ -1395,4 +1383,11 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
     }
   }
   return TRUE;
+}
+
+function islandora_cmodel_name($cmodel) {
+  $pattern = '/islandora:(.*)_cmodel/';
+  $content_model_pid = $cmodel->id;
+  preg_match($pattern, $content_model_pid, $match);
+  return $match[0];
 }
