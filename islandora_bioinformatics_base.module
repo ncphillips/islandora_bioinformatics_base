@@ -54,6 +54,10 @@ function islandora_object_has_people($object){
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
+  if(sizeof($result) >0)
+    return TRUE;
+  else return false;
+
   $cmodels = islandora_objects_related_cmodels($object);
   foreach($cmodels as $cmodel){
     if($cmodel->id == 'islandora:person_cmodel'){
