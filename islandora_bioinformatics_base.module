@@ -166,7 +166,7 @@ function islandora_bioinformatics_base_menu() {
 
 function islandora_related_cmodel_ingest_title($cmodel_id){
   echo "Cmodel Name: $cmodel_id </br>";
-  $cmodel = cmodel_load($cmodel_id);
+  $cmodel = islandora_object_load($cmodel_id);
   $cmodel_name = islandora_cmodel_name($cmodel);
   return "Add $cmodel_name";
 }
