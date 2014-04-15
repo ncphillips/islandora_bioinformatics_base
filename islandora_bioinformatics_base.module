@@ -13,14 +13,6 @@
  * Hooks and callbacks for the module.
  */
 
-/**
- * @todo create islandora_objects_related_cmodels($object, $abstract_cmodels)
- * Returns an array of IslandoraFedora objects. Restricts them based off some of the $abstract_cmodels.
- * Find all cmodels related to any of the cmodels in the $object->cmodels array. Check if the $object
- * itself is a CModel as well.
- *
- * @todo create islandora_related_people_add_access(...)
- */
 function islandora_object_has_lab_objects($object){
   /**
    * @author Nolan Phillips
@@ -30,29 +22,9 @@ function islandora_object_has_lab_objects($object){
    * have Lab Objects related to it.
    */
 
-  /**
-   * @todo Once it's created, replace this section with a call to
-   * islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'))
-   */
-//  $cmodel_id = $object->models[0];
-//  $query = "
-//    PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
-//    SELECT ?pid
-//    FROM <#ri>
-//    WHERE
-//    {
-//      {?pid fedora-model:hasModel <info:fedora/fedora-system:ContentModel-3.0>} .
-//      {?pid fedora-model:hasModel <info:fedora/islandora:lab_object_cmodel>} .
-//      {?pid ?datarel <info:fedora/$cmodel_id>} .
-//    }
-//  ";
-//
-//  $tuque = new IslandoraTuque();
-//  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+  $lab_objects= islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
-  $result = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
-
-  if (sizeof($result) > 0){
+  if (sizeof($lab_objects) > 0){
     return TRUE;
   }
   else{
