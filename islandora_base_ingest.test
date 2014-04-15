@@ -199,6 +199,8 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
                   ?pid <fedora:isPartOf> <info:fedora/islandora:test_project> .
                 }";
 
+    $tuque = new IslandoraTuque();
+
     $query_results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
     $result_count = 0;
