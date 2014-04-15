@@ -104,7 +104,13 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
     $proj_datastreams[] = $proj_datastream_relsext;
 
     //Ingest the object with its properties array and datastreams array.
-    $project_test_object = $this->ingestConstructedObject($proj_properties, $proj_datastreams);
+    try {
+      $project_test_object = $this->ingestConstructedObject($proj_properties, $proj_datastreams);
+    }
+    catch (RepositoryException $re) {
+      echo 'Caught exception with Project: ', $re->getMessage(), "\n";
+    }
+  }
 
     //Next we'll construct and ingest a person object
 
@@ -148,9 +154,8 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
       $person_test_object = $this->ingestConstructedObject($person_properties, $person_datastreams);
     }
     catch (RepositoryException $re) {
-      echo 'Caught exception: ', $re->getMessage(), "\n";
+      echo 'Caught exception with Person: ', $re->getMessage(), "\n";
     }
-
   }
 
   /**
