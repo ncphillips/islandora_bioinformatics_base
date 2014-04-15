@@ -1333,25 +1333,21 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
-  return 1;
 
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
     islandora_display_repository_inaccessible_message();
-    echo"First nope";
     return FALSE;
   }
 
   //check if $relatedCModel is null or empty
   if(empty($relatedCModel)) {
-    echo "second nope";
     return FALSE;
   }
 
   //if there are no lab objects for the $object, there is nothing to see
   if(!islandora_object_has_lab_objects($object)) {
-    echo "third nope";
     return FALSE;
   }
 
@@ -1359,7 +1355,6 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   for ($i = 0; $i < count($permissions) && !$has_access; $i++) {
     $has_access = $has_access || islandora_object_access($permissions[$i], $object);
   }
-  echo 'A: '.$has_access;
   return $has_access;
 }
 
@@ -1391,5 +1386,5 @@ function islandora_cmodel_name($cmodel) {
   if(sizeof($match) >= 1)
     return $match[1];
   else
-    return 'Not a ..';
+    return '';
 }
