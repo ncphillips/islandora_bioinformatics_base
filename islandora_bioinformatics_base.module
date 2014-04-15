@@ -1298,8 +1298,12 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
 }
 
 
+
 /**
+ * @author Quintin Dawson
+ * @param $permissions
  * @param AbstractObject $object
+ * @return bool
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_access($permissions, AbstractObject $object) {
@@ -1325,11 +1329,14 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
 }
 
 /**
+ * @author Quintin Dawson
+ * @param $permissions
  * @param AbstractObject $object
+ * @param AbstractObject $relatedCModel
+ * @return bool
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
-  return true;
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
@@ -1354,6 +1361,12 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   return $has_access;
 }
 
+/**
+ * @author Quintin Dawson
+ * @param $permissions
+ * @param AbstractObject $object
+ * @return bool
+ */
 function islandora_related_people_access($permissions, AbstractObject $object) {
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
@@ -1374,6 +1387,10 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
   return TRUE;
 }
 
+/**
+ * @param $cmodel
+ * @return string
+ */
 function islandora_cmodel_name($cmodel) {
   $pattern = '/islandora:(.*)_cmodel/';
 
