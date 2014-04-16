@@ -145,10 +145,10 @@ function islandora_bioinformatics_base_menu() {
       'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
-    'islandora/object/%islandora_object/add_lab_object_to_project' => array(
+    'islandora/object/%islandora_object/manage_lab_object_projects' => array(
       'title' => 'Add Lab Object to Project',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('islandora_bioinformatics_base_add_lab_object_to_project_form', 2),
+      'page arguments' => array('islandora_bioinformatics_base_manage_lab_object_projects_form', 2),
       'access arguments' => 'islandora_related_lab_objects_ingest_access',
       'access callback' => array(array(ISLANDORA_INGEST), 2),
       'access callback' => TRUE,
@@ -1469,7 +1469,7 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
  * @param $object
  * Presents checkboxes for all projects which may be selected
  */
-function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $form_state, AbstractObject $object) {
+function islandora_bioinformatics_base_manage_lab_object_projects_form($form, $form_state, AbstractObject $object) {
   $tuque = new IslandoraTuque();
   $query = "SELECT ?pid
                     FROM <#ri>
@@ -1504,7 +1504,7 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
-    '#submit' => array('islandora_bioinformatics_base_add_lab_object_to_project_form_submit'),
+    '#submit' => array('islandora_bioinformatics_base_manage_lab_object_projects_form_submit'),
   );
 
   return $form;
@@ -1515,7 +1515,7 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
  * @param $object
  * Creates the relationship between an object and selected projects
  */
-function islandora_bioinformatics_base_add_lab_object_to_project_form_submit($form, $form_state) {
+function islandora_bioinformatics_base_manage_lab_object_projects_form_submit($form, $form_state) {
   $tuque = new IslandoraTuque();
 
   $object = $form_state['islandora']['objects'][0];
