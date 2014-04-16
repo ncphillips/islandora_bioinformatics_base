@@ -146,7 +146,7 @@ function islandora_bioinformatics_base_menu() {
       'file' => 'includes/manage_project.form.inc',
     ),
     'islandora/object/%islandora_object/manage_lab_object_projects' => array(
-      'title' => 'Add Lab Object to Project',
+      'title' => 'Manage Projects',
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_bioinformatics_base_manage_lab_object_projects_form', 2),
       'access arguments' => 'islandora_related_lab_objects_ingest_access',
