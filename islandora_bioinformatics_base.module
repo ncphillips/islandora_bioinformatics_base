@@ -129,11 +129,11 @@ function islandora_bioinformatics_base_theme($existing, $type, $theme, $path) {
 }
 
 ///////////////// Islandora Form Builder /////////////////
-/**
- * Implements hook_islandora_xml_form_builder_forms()
- * @return array
- */
 function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
+  /**
+   * Implements hook_islandora_xml_form_builder_forms()
+   * @return array
+   */
   $module_path = drupal_get_path('module', 'islandora_bioinformatics_base');
   return array(
     'Person' => array(
@@ -145,11 +145,11 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_forms() {
   );
 }
 
-/**
- * Implements hook_islandora_xml_form_builder_form_associations()
- * @return array
- */
 function islandora_bioinformatics_base_islandora_xml_form_builder_form_associations() {
+  /**
+   * Implements hook_islandora_xml_form_builder_form_associations()
+   * @return array
+   */
   return array(
     'islandora_bioinformatics_person_form_mads' => array(
       'content_model' => 'islandora:person_cmodel',
@@ -171,7 +171,6 @@ function islandora_bioinformatics_base_islandora_xml_form_builder_form_associati
 }
 
 ///////////////// Forms /////////////////
-
 function islandora_bioinformatics_base_forms($form_id, $args) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
@@ -368,7 +367,6 @@ function related_islandora_objects_submit(array $form, array &$form_state) {
   }
 }
 
-
 function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$form_state) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
@@ -437,7 +435,6 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_view_ob
   return array('islandora_person' => $output);
 }
 
-
 function islandora_bioinformatics_base_islandora_project_cmodel_islandora_view_object($object, $page_number, $page_size) {
   /**
    * Implements hook_CMODEL_PID_islandora_view_object() for project.
@@ -445,7 +442,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_view_o
   $output = theme('islandora_project', array('islandora_object' => $object));
   return array('islandora_project' => $output);
 }
-
 
 function islandora_bioinformatics_base_islandora_required_objects(IslandoraTuque $connection) {
   /**
@@ -575,11 +571,10 @@ function islandora_object_has_lab_objects($object) {
 }
 
 ///////////////// Ingest Steps/////////////////
-/**
- * Implements hook_islandora_ingest_steps() for the person_cmodel.
- */
 function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_steps(array $configuration) {
-
+  /**
+   * Implements hook_islandora_ingest_steps() for the person_cmodel.
+   */
   return array(
     'islandora_bioinformatics_base' => array(
       'weight' => 10,
@@ -591,11 +586,10 @@ function islandora_bioinformatics_base_islandora_person_cmodel_islandora_ingest_
   );
 }
 
-
-/**
- * Implements hook_islandora_ingest_steps() for the project_cmodel.
- */
 function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest_steps(array $configuration) {
+  /**
+   * Implements hook_islandora_ingest_steps() for the project_cmodel.
+   */
   return array(
     'islandora_bioinformatics_base' => array(
       'weight' => 10,
@@ -618,7 +612,6 @@ function islandora_bioinformatics_base_islandora_project_cmodel_islandora_ingest
 }
 
 ///////////////// Loader Functions/////////////////
-
 function cmodel_load($cmodel_id_part) {
   /**
    * @author Nolan Phillips <ncphillips@upei.ca>
@@ -641,7 +634,6 @@ function cmodel_load($cmodel_id_part) {
   return $cmodel;
 }
 
-
 function rel_cmodel_load($cmodel_id_part, $object_id) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
@@ -661,10 +653,6 @@ function rel_cmodel_load($cmodel_id_part, $object_id) {
 
   return $cmodel;
 }
-
-
-
-
 
 ///////////////// Drupal User/Fedora Person Synchronization /////////////////
 function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) {
@@ -740,7 +728,6 @@ function islandora_bioinformatics_base_user_insert(&$edit, $account, $category) 
   $tuque->repository->ingestObject($person_object);
   //$ingested_object = islandora_add_object($person_object);
 }
-
 
 function islandora_bioinformatics_base_user_update(&$edit, $account, $category) {
   /**
@@ -968,8 +955,6 @@ function islandora_object_has_people($object) {
   return FALSE;
 }
 
-
-
 function islandora_related_cmodel_ingest_title($cmodel_id) {
   $cmodel = islandora_object_load($cmodel_id);
   $cmodel_name = ucfirst(islandora_cmodel_name($cmodel));
@@ -1051,7 +1036,6 @@ function islandora_related_lab_objects_action($object) {
   //Return the renderable array
   return $render_array;
 }
-
 
 function islandora_related_lab_object_ingest_action($object, $cmodel) {
   /**
@@ -1140,8 +1124,6 @@ function person_mads_to_array($person_object) {
   return $person_mads;
 }
 
-
-
 function project_mads_to_array($project_object) {
   /**
    * @author Brent Mitton
@@ -1190,11 +1172,11 @@ function project_mads_to_array($project_object) {
   return $project_mads;
 }
 
-/**
- * @param $cmodel
- * @return string
- */
 function islandora_cmodel_name($cmodel) {
+  /**
+   * @param $cmodel
+   * @return string
+   */
   $pattern = '/islandora:(.*)_cmodel/';
 
   $content_model_pid = $cmodel->id;
@@ -1204,7 +1186,6 @@ function islandora_cmodel_name($cmodel) {
   else
     return '';
 }
-
 
 function islandora_objects_related_cmodels($object, $abstract_cmodels=NULL) {
   $cmodel_id = $object->models[0];
@@ -1412,7 +1393,6 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
   return $has_access;
 }
 
-
 function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $related_cmodel = NULL) {
   /**
    * @author Quintin Dawson
@@ -1445,7 +1425,6 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   }
   return $has_access;
 }
-
 
 function islandora_related_people_access($permissions, AbstractObject $object) {
   /**
