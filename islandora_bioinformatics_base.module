@@ -1513,7 +1513,7 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
 function islandora_bioinformatics_base_add_lab_object_to_project_form_submit($form, $form_state) {
   $object = $form_state['islandora']['objects'][0];
   $object_ids = array_filter($form_state['values']['projects']);
-  foreach ($object as $id) {
+  foreach ($object_ids as $id) {
     $object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $id);
   }
 }
