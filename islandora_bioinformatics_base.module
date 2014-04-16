@@ -357,9 +357,16 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   );
 
   // Add Link
-  $form['add'] = array(
+  $form['ingest'] = array(
     '#type' => 'markup',
-    '#markup' =>  l("Add $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
+    '#markup' =>  l("Ingest $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
+    '#prefix' => '<div class="m-btn green">',
+    '#suffix' => '</div>',
+  );
+
+  $form['add'] = array(
+    '#type' => 'hidden',
+    '#markup' =>  l("Add Existing $object_name", "islandora/object/{$object->id}/add/$object_name"),
     '#prefix' => '<div class="m-btn green">',
     '#suffix' => '</div>',
   );
@@ -479,6 +486,8 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add")
   );
 
+  $form['ingest']['#type'] = 'hidden';
+
   $people_entries = array();
 
   foreach ($people as $person){
@@ -490,10 +499,6 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
     $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
 
-    /**
-     * @todo
-     * The name link to the Person Object is hardcoded. This must be changed to be relative.
-     */
     $people_entries[$person_id] = array(
       'name' => l($name, "islandora/object/$person_id"),
       'phone' => $person_mads['contact']['phone'],
@@ -501,13 +506,9 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     );
   }
 
-  // Set up the table.
-  $form['table'] = array(
-    '#type' => 'tableselect',
-    '#header' => $header,
-    '#options' => $people_entries,
-    '#empty' => t('There is no people related to ' . $object->id . '.'),
-  );
+  $form['table']['#header'] = $header;
+  $form['table']['#options'] = $people_entries;
+  $form['table']['#empty'] = t('There is no people related to ' . $object->id . '.');
 
   return $form;
 }
