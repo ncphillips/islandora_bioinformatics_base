@@ -219,7 +219,7 @@ function islandora_related_lab_objects_action($object) {
  
     $object_name = islandora_cmodel_name($related_cmodel_object);
 
-    $form_id = 'related_' . $object_name. '_form';
+    $form_id = 'related_' . $object_name . '_form';
     if (function_exists($form_id)) {
       $render_array[$object_name] = drupal_get_form($form_id, $object);
     }
@@ -281,7 +281,7 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
    * This function is used to associate a new Form ID with an existing form constructor.
    */
   $forms = array();
-  switch($form_id) {
+  switch ($form_id) {
     /**
      * ## Related People Form
      * __Form ID:__ `related_people_form`
@@ -296,7 +296,7 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
      */
     case 'related_people_form':
       $cmodels = array('islandora:person_cmodel');
-      $relationships = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'),);
+      $relationships = array(FEDORA_RELS_EXT_URI => array('isPartOf', 'isMemberOf'), );
 
       $args[] = $cmodels;
       $args[] = $relationships;
@@ -310,7 +310,7 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
   return $forms;
 }
 
-function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=null) {
+function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=NULL) {
   /**
    * ## related_islandora_objects_form
    *
@@ -447,7 +447,7 @@ function related_islandora_objects_submit(array $form, array &$form_state) {
   //the selected table values
   $table_values = $form_state['values']['table'];
   
-  switch($selected_option) {
+  switch ($selected_option) {
     //in case of relationship removal from the object
     case "remove":
       //for each table row
@@ -1006,7 +1006,7 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   }  
   
   if (!empty($account_person)) {
-    switch($method) {
+    switch ($method) {
       case 'user_cancel_block':
         //do nothing
         break;
@@ -1181,7 +1181,7 @@ function project_mads_to_array($project_object) {
 }
 
 
-function islandora_object_related_islandora_objects($object, $cmodels=null, $relationships=null) {
+function islandora_object_related_islandora_objects($object, $cmodels=NULL, $relationships=NULL) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
    *
@@ -1222,7 +1222,7 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
     foreach ($cmodels as $cmodel)
       $cmodel_tripples[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
     // Union all the cmodel tripple queries.
-    $cmodel_query = '{'.implode(' UNION ', $cmodel_tripples).'}';
+    $cmodel_query = '{' . implode(' UNION ', $cmodel_tripples) . '}';
   }
 
   // Construct the set of prefix definitions.
@@ -1242,7 +1242,7 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
   if ($relationships) {
     // Define PREFIX statements
     foreach ($relationships as $ns => $rel) {
-      $pre[$ns] = $prefix.':';
+      $pre[$ns] = $prefix . ':';
       $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
     }
     $pre_def = implode(' ', $pre_defs);
@@ -1255,7 +1255,7 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
       }
     }
     // Union all the relationship tripples
-    $rel_query = '{'.implode(' UNION ', $rel_tripples).'}';
+    $rel_query = '{' . implode(' UNION ', $rel_tripples) . '}';
   }
   else {
     $pre_def = $pre_defs[0];
@@ -1347,7 +1347,7 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
  * @return bool
  * Checks if the user has permission to view lab objects and that the lab objects exist for $object.
  */
-function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $relatedCModel = NULL) {
+function islandora_related_lab_objects_ingest_access($permissions, AbstractObject $object, AbstractObject $related_cmodel = NULL) {
   //check if repository is available
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_describe_repository()) {
@@ -1355,8 +1355,8 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
     return FALSE;
   }
 
-  //check if $relatedCModel is null or empty
-  if (empty($relatedCModel)) {
+  //check if $related_cmodel is null or empty
+  if (empty($related_cmodel)) {
     return FALSE;
   }
 
@@ -1414,7 +1414,7 @@ function islandora_cmodel_name($cmodel) {
 }
 
 
-function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
+function islandora_objects_related_cmodels($object, $abstract_cmodels=NULL) {
   $cmodel_id = $object->models[0];
 
   $abstract_tripples = '';
@@ -1422,7 +1422,7 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
     foreach ($abstract_cmodels as $abstract_cmodel) {
       $abstract_tripples_array[] = "{?pid <fedora-model:hasModel> <info:fedora/$abstract_cmodel>}";
     }
-    $abstract_tripples = '{'.implode(' UNION ', $abstract_tripples_array).'}';
+    $abstract_tripples = '{' . implode(' UNION ', $abstract_tripples_array) . '}';
   }
 
   $query = "
