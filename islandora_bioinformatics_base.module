@@ -1493,6 +1493,12 @@ function islandora_bioinformatics_base_manage_lab_object_projects_form($form, $f
 
   $form_state['islandora']['objects'][0] = $object;
 
+  $form['header'] = array(
+    '#markup' => 'Manage Projects',
+    '#prefix' => '<h1>',
+    '#suffix' => '</h1>',
+  );
+
   $form['projects'] =  array(
     'projects' => array(
       '#type' => 'checkboxes',
