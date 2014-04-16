@@ -88,6 +88,6 @@ echo "</pre>";*/
         </tbody>
     </table>
 </div>
-<div class="person-info float-right">
+<div class="person-info float-right m-btn green">
   <?php print l('Edit', "islandora/edit_form/{$variables['islandora_object']->id}/MADS");?>
 </div>
