@@ -145,6 +145,14 @@ function islandora_bioinformatics_base_menu() {
       'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
+    'islandora/object/%islandora_object/manage_lab_object_projects' => array(
+      'title' => 'Manage Projects',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_bioinformatics_base_manage_lab_object_projects_form', 2),
+      'access arguments' => 'islandora_related_lab_objects_ingest_access',
+      'access callback' => array(array(ISLANDORA_INGEST), 2),
+      'access callback' => TRUE,
+    ),
   );
 }
 
@@ -357,11 +365,18 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   );
 
   // Add Link
-  $form['add'] = array(
+  $form['ingest'] = array(
     '#type' => 'markup',
-    '#markup' =>  l("Add $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
+    '#markup' =>  l("Ingest $object_name", "islandora/object/{$object->id}/ingest/$object_name"),
     '#prefix' => '<div class="m-btn green">',
     '#suffix' => '</div>',
+  );
+
+  $form['add'] = array(
+//    '#type' => 'type',
+//    '#markup' =>  l("Add Existing $object_name", "islandora/object/{$object->id}/add_lab_object_to_project"),
+    //'#prefix' => '<div class="m-btn green">',
+    //'#suffix' => '</div>',
   );
 
   // From our form there should be a list of specific operations that can be performed
@@ -476,8 +491,12 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
   $form['add'] = array(
     '#type' => 'markup',
-    '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add")
+    '#markup' => l('Add Person', "islandora/object/{$object->id}/people/add"),
+    '#prefix' => '<div class="m-btn green">',
+    '#suffix' => '</div>',
   );
+
+  $form['ingest'] = array();
 
   $people_entries = array();
 
@@ -490,10 +509,6 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
     $name = $person_mads['name']['first'] . ' ' . $person_mads['name']['last'];
 
-    /**
-     * @todo
-     * The name link to the Person Object is hardcoded. This must be changed to be relative.
-     */
     $people_entries[$person_id] = array(
       'name' => l($name, "islandora/object/$person_id"),
       'phone' => $person_mads['contact']['phone'],
@@ -501,13 +516,9 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
     );
   }
 
-  // Set up the table.
-  $form['table'] = array(
-    '#type' => 'tableselect',
-    '#header' => $header,
-    '#options' => $people_entries,
-    '#empty' => t('There is no people related to ' . $object->id . '.'),
-  );
+  $form['table']['#header'] = $header;
+  $form['table']['#options'] = $people_entries;
+  $form['table']['#empty'] = t('There is no people related to ' . $object->id . '.');
 
   return $form;
 }
@@ -1451,4 +1462,85 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
    *    }
    */
 
+}
+
+/**
+ * @author Quintin Dawson
+ * @param $object
+ * Presents checkboxes for all projects which may be selected
+ */
+function islandora_bioinformatics_base_manage_lab_object_projects_form($form, $form_state, AbstractObject $object) {
+  $tuque = new IslandoraTuque();
+  $query = "SELECT ?pid
+                    FROM <#ri>
+                    WHERE {
+                    ?pid <fedora-model:hasModel><info:fedora/islandora:project_cmodel> .
+                    }
+                    ";
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  $projects = array();
+  $default_values = array();
+  foreach ($result as $project) {
+    $project_object = islandora_object_load($project["pid"]["value"]);
+    $projects[$project_object->id] = $project_object->label;
+
+    $relationship = $object->relationships->get(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
+    if (!empty($relationship)) {  //if relationship exists, add it to $default_values
+      $default_values[$project_object->id] = $project_object->id;
+    }
+  }
+
+  $form_state['islandora']['objects'][0] = $object;
+
+  $form['header'] = array(
+    '#markup' => 'Manage Projects',
+    '#prefix' => '<h1>',
+    '#suffix' => '</h1>',
+  );
+
+  $form['projects'] =  array(
+    'projects' => array(
+      '#type' => 'checkboxes',
+      '#default_value' => $default_values,
+      '#options' => $projects,
+    ),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#submit' => array('islandora_bioinformatics_base_manage_lab_object_projects_form_submit'),
+  );
+
+  return $form;
+}
+
+/**
+ * @author Quintin Dawson
+ * @param $object
+ * Creates the relationship between an object and selected projects
+ */
+function islandora_bioinformatics_base_manage_lab_object_projects_form_submit($form, $form_state) {
+  $tuque = new IslandoraTuque();
+
+  $object = $form_state['islandora']['objects'][0];
+  $object_ids = array_filter($form_state['values']['projects']);
+
+  //iterate over every person and remove their relationship (if it exists) with the project.
+  $query = "SELECT ?pid
+            FROM <#ri>
+            WHERE {
+            ?pid <fedora-model:hasModel> <info:fedora/islandora:project_cmodel> .
+        }";
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  foreach ($result as $project) {
+    $object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project['pid']['value']);
+  }
+
+  //add selected relationships
+  foreach ($object_ids as $id) {
+    $object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $id);
+  }
 }
