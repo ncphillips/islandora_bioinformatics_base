@@ -310,7 +310,7 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
   return $forms;
 }
 
-function related_islandora_objects_form($form, $form_state, $object, $cmodels=null, $relationships=NULL) {
+function related_islandora_objects_form($form, $form_state, $object, $cmodels=NULL, $relationships=NULL) {
   /**
    * ## related_islandora_objects_form
    *
