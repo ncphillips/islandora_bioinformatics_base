@@ -60,13 +60,27 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
 
   }
 
-  return array(
+  $form['header'] = array(
+    '#markup' => 'Manage People in this Project',
+    '#prefix' => '<h1>',
+    '#suffix' => '</h1>',
+  );
+  
+  /*return array(
     'people' => array(
       '#type' => 'checkboxes',
       '#default_value' => $default_values,
       '#options' => $people,
       ),
+    );*/
+    
+    $form['people'] = array(
+      '#type' => 'checkboxes',
+      '#default_value' => $default_values,
+      '#options' => $people,
     );
+    
+    return $form;
   }
 
 /**

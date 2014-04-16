@@ -22,7 +22,7 @@
      * $form - the Drupal form definition
      *
      */
-    function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object){
+    function islandora_project_people_add_form(array $form, array &$form_state, AbstractObject $object) {
         
         $tuque = new IslandoraTuque();
         $query = "SELECT ?pid
@@ -36,13 +36,13 @@
         $people = array();
         $values = array();
         
-        foreach($result as $person){
+        foreach ($result as $person) {
             $person_object = islandora_object_load($person["pid"]["value"]);
             
             //check if relationship exists and ignore if so
             $relationship = $person_object->relationships->get(FEDORA_RELS_EXT_URI, 'isPartOf', $object->id);
             
-            if(empty($relationship)){
+            if (empty($relationship)) {
                 $values[$person_object->id] = $person_object->label;
             }
         }
@@ -112,7 +112,7 @@
         
         //redirects to the people menu for the object
         $form_state['redirect'] = array(
-          'islandora/object/'.$object->id.'/people'
+          'islandora/object/' . $object->id . '/people'
         );
     }
     
@@ -126,9 +126,9 @@
      * the Drupal form state
      *
      */
-     function islandora_project_people_add_cancel(array $form, array &$form_state){
+     function islandora_project_people_add_cancel(array $form, array &$form_state) {
         $object = $form_state['values']['project_object'];
         $form_state['redirect'] = array(
-            'islandora/object/'.$object->id.'/people'
+            'islandora/object/' . $object->id . '/people'
         );
      }
