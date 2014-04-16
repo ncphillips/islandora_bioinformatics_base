@@ -1488,13 +1488,21 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
 
   $form_state['islandora']['objects'][0] = $object;
 
-  return array(
+  $form['projects'] =  array(
     'projects' => array(
       '#type' => 'checkboxes',
       '#default_value' => $default_values,
       '#options' => $projects,
     ),
   );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Submit',
+    '#submit' => array('islandora_bioinformatics_base_add_lab_object_to_project_form_submit'),
+  );
+
+  return $form;
 }
 
 /**
