@@ -13,7 +13,7 @@
  * Hooks and callbacks for the module.
  */
 
-function islandora_object_has_lab_objects($object){
+function islandora_object_has_lab_objects($object) {
   /**
    * @author Nolan Phillips
    * @param $object
@@ -24,7 +24,7 @@ function islandora_object_has_lab_objects($object){
 
   $lab_objects = islandora_objects_related_cmodels($object, array('islandora:lab_object_cmodel'));
 
-  if (sizeof($lab_objects) > 0){
+  if (sizeof($lab_objects) > 0) {
     return TRUE;
   }
   else{
@@ -32,7 +32,7 @@ function islandora_object_has_lab_objects($object){
   }
 }
 
-function islandora_object_has_people($object){
+function islandora_object_has_people($object) {
   /**
    * @author Nolan Phillips
    * @param $object
@@ -54,13 +54,13 @@ function islandora_object_has_people($object){
 //  $tuque = new IslandoraTuque();
 //  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 //
-//  if(sizeof($result) >0)
+//  if (sizeof($result) >0)
 //    return TRUE;
 //  else return false;
 
   $cmodels = islandora_objects_related_cmodels($object);
-  foreach($cmodels as $cmodel){
-    if($cmodel->id == 'islandora:person_cmodel'){
+  foreach ($cmodels as $cmodel) {
+    if ($cmodel->id == 'islandora:person_cmodel') {
       return TRUE;
     }
   }
@@ -150,13 +150,13 @@ function islandora_bioinformatics_base_menu() {
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_bioinformatics_base_manage_lab_object_projects_form', 2),
       'access arguments' => 'islandora_related_lab_objects_ingest_access',
-      'access callback' => array(array(ISLANDORA_INGEST), 2),
+      //'access callback' => array(array(ISLANDORA_INGEST), 2),
       'access callback' => TRUE,
     ),
   );
 }
 
-function islandora_related_cmodel_ingest_title($cmodel_id){
+function islandora_related_cmodel_ingest_title($cmodel_id) {
   $cmodel = islandora_object_load($cmodel_id);
   $cmodel_name = ucfirst(islandora_cmodel_name($cmodel));
   return "Add $cmodel_name";
@@ -211,7 +211,7 @@ function islandora_related_lab_objects_action($object) {
   $results = $tuque->repository->ri->sparqlQuery($query); //Now get the results for this query.
 
   $related_cmodels = array();
-  foreach($results as $cmodel){
+  foreach ($results as $cmodel) {
    $related_cmodels[] = islandora_object_load($cmodel['pid']['value']);
   }
 
@@ -220,13 +220,13 @@ function islandora_related_lab_objects_action($object) {
     $object_name = islandora_cmodel_name($related_cmodel_object);
 
     $form_id = 'related_' . $object_name. '_form';
-    if(function_exists($form_id)){
+    if (function_exists($form_id)) {
       $render_array[$object_name] = drupal_get_form($form_id, $object);
     }
     else {
       $args = array($object);
       $forms = module_invoke_all('forms', $form_id, $args );
-      if(array_key_exists($form_id, $forms)){
+      if (array_key_exists($form_id, $forms)) {
         $render_array[$object_name] = drupal_get_form($form_id, $object);
       }
       else {
@@ -259,7 +259,7 @@ function islandora_related_lab_object_ingest_action($object, $cmodel) {
   $module_name = 'islandora_lab_object_' . $object_name;
   $callback_to_call = "{$module_name}_ingest";
   module_load_include('module', $module_name, $module_name);
-  if(function_exists($callback_to_call)){
+  if (function_exists($callback_to_call)) {
      return $callback_to_call($object);
   }
   else
@@ -281,7 +281,7 @@ function islandora_bioinformatics_base_forms($form_id, $args) {
    * This function is used to associate a new Form ID with an existing form constructor.
    */
   $forms = array();
-  switch($form_id){
+  switch($form_id) {
     /**
      * ## Related People Form
      * __Form ID:__ `related_people_form`
@@ -349,8 +349,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $form_state['object'] = $object;
   $form_state['related_objects'] = $related_objects;
-  if(isset($cmodels)) $form_state['cmodels'] = $cmodels;
-  if(isset($relationships)) $form_state['relationships'] = $relationships;
+  if (isset($cmodels)) $form_state['cmodels'] = $cmodels;
+  if (isset($relationships)) $form_state['relationships'] = $relationships;
 
   $cmodel = islandora_object_load($cmodels[0]);
 
@@ -403,7 +403,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $options = array();
 
-  foreach($related_objects as $related_object) {
+  foreach ($related_objects as $related_object) {
     $options[$related_object->id] = array(
       'id' => $related_object->id,
     );
@@ -425,7 +425,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   return $form;
 }
 
-function related_islandora_objects_submit(array $form, array &$form_state){
+function related_islandora_objects_submit(array $form, array &$form_state) {
   
   /**
    * This function is the submit handler for the related_islandora_objects_form function
@@ -447,13 +447,13 @@ function related_islandora_objects_submit(array $form, array &$form_state){
   //the selected table values
   $table_values = $form_state['values']['table'];
   
-  switch($selected_option){
+  switch($selected_option) {
     //in case of relationship removal from the object
     case "remove":
       //for each table row
-      foreach($table_values as $lines => $line){
+      foreach ($table_values as $lines => $line) {
         //if $line exists (if it is a selected table row)
-        if($line){
+        if ($line) {
           //load the object in the table row
           $related_object = islandora_object_load($line);
           //remove its relationship with the object in question
@@ -500,9 +500,9 @@ function islandora_bioinformatics_base_form_related_people_form_alter(&$form, &$
 
   $people_entries = array();
 
-  foreach ($people as $person){
+  foreach ($people as $person) {
     // Default Values
-    if(!isset($person['MADS'])) break;
+    if (!isset($person['MADS'])) break;
 
     $person_mads = person_mads_to_array($person);
     $person_id = $person->id;
@@ -910,13 +910,13 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   $account_person = NULL;
   
   //iterate over all people objects to find the one related to this drupal account
-  foreach($result as $person) {
+  foreach ($result as $person) {
     //load the current person object
     $person_object = islandora_object_load($person['pid']['value']);
         
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    if(!empty($relation)) {
+    if (!empty($relation)) {
       $account_person = $person_object;
     }
   }  
@@ -930,13 +930,13 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
   $result - $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   
   //only one Fedora object should be related to the Drupal account, so take the first value in the $results array
-  if(!empty($result[0])) {
+  if (!empty($result[0])) {
     $account_person = result[0];
   }  
   */ 
   //if the Fedora object related to the Drupal account is found, make the desired changes
   
-  if(empty($account_person)) { //create the person object if missing when modified
+  if (empty($account_person)) { //create the person object if missing when modified
     islandora_bioinformatics_base_user_insert($edit, $account, $category);
   }
   else {  //modify the person object if existing
@@ -946,8 +946,8 @@ function islandora_bioinformatics_base_user_update(&$edit, $account, $category) 
     //Modify the xml
     $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
     $ns = "http://www.loc.gov/mads/v2";
-    foreach ($person_xml->children($ns) as $part){
-      switch ((string) $part->getName()){
+    foreach ($person_xml->children($ns) as $part) {
+      switch ((string) $part->getName()) {
           case 'authority':
             $part->titleInfo->title = $account->name;
             break;
@@ -994,18 +994,18 @@ function islandora_bioinformatics_base_user_cancel($edit, $account, $method) {
   $account_person = NULL;
   
   //iterate over all people objects to find the one related to this drupal account
-  foreach($result as $person) {
+  foreach ($result as $person) {
     //load the current person object
     $person_object = islandora_object_load($person['pid']['value']);
     
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    if(!empty($relation)) {
+    if (!empty($relation)) {
       $account_person = $person_object;
     }
   }  
   
-  if(!empty($account_person)) {
+  if (!empty($account_person)) {
     switch($method) {
       case 'user_cancel_block':
         //do nothing
@@ -1057,18 +1057,18 @@ function islandora_bioinformatics_base_user_delete($account) {
   $account_person = NULL;
 
   //iterate over all people objects to find the one related to this drupal account
-  foreach($result as $person) {
+  foreach ($result as $person) {
     //load the current person object
     $person_object = islandora_object_load($person['pid']['value']);
 
     //check if relationship to Drupal user exists
     $relation = $person_object->relationships->get(RELS_INT_NS, 'isDrupalId', $account->uid, RELS_TYPE_INT);
-    if(!empty($relation)) {
+    if (!empty($relation)) {
       $account_person = $person_object;
     }
   }
 
-  if(!empty($account_person)) {
+  if (!empty($account_person)) {
     //purge object from fedora
     $account_person->delete();  //flag object as deleted
     $tuque->repository->purgeObject($account_person->id); //purge the object from the database
@@ -1077,7 +1077,7 @@ function islandora_bioinformatics_base_user_delete($account) {
 
 
 ///////////////// Helper Functions /////////////////
-function person_mads_to_array($person_object){
+function person_mads_to_array($person_object) {
   /**
    * @author Brent Mitton
    * @param $person_object
@@ -1091,8 +1091,8 @@ function person_mads_to_array($person_object){
 
   $person_xml = new SimpleXMLElement($person_object["MADS"]->content);
 
-  foreach ($person_xml->children($ns) as $part){
-    switch ((string) $part->getName()){
+  foreach ($person_xml->children($ns) as $part) {
+    switch ((string) $part->getName()) {
       case "authority":
         // I'm just going to rely on position for now. Which is pretty awful
         $person_mads["name"]["first"] = ($part->name->namePart[0]) ? (string)$part->name->namePart[0] : "" ;
@@ -1132,7 +1132,7 @@ function person_mads_to_array($person_object){
 
 
 
-function project_mads_to_array($project_object){
+function project_mads_to_array($project_object) {
   /**
    * @author Brent Mitton
    * @param $project_object
@@ -1149,9 +1149,9 @@ function project_mads_to_array($project_object){
 
   $project_mads = array();
 
-  foreach ($project_xml->children($ns) as $part){
+  foreach ($project_xml->children($ns) as $part) {
 
-    switch ((string) $part->getName()){
+    switch ((string) $part->getName()) {
       case "authority":
         $project_mads["title"] = ((string)$part->titleInfo->title) ? (string)$part->titleInfo->title:"";
         break;
@@ -1181,7 +1181,7 @@ function project_mads_to_array($project_object){
 }
 
 
-function islandora_object_related_islandora_objects($object, $cmodels=null, $relationships=null){
+function islandora_object_related_islandora_objects($object, $cmodels=null, $relationships=null) {
   /**
    * @author Nolan Phillips ncphillips@upei.ca
    *
@@ -1217,9 +1217,9 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
    * may be returned; however, if the set of CModels passed in is empty, then
    * an object is accepted regardless of it's CModel set.
    */
-  if ($cmodels){
+  if ($cmodels) {
     $cmodel_tripples= array();
-    foreach($cmodels as $cmodel)
+    foreach ($cmodels as $cmodel)
       $cmodel_tripples[] = "{?pid fedora-model:hasModel <info:fedora/$cmodel>}";
     // Union all the cmodel tripple queries.
     $cmodel_query = '{'.implode(' UNION ', $cmodel_tripples).'}';
@@ -1239,17 +1239,17 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
    * A Fedora Object may be accepted if it has a relationship to the
    * target $object that is listed in that namespaces associative array.
    */
-  if($relationships){
+  if ($relationships) {
     // Define PREFIX statements
-    foreach($relationships as $ns => $rel){
+    foreach ($relationships as $ns => $rel) {
       $pre[$ns] = $prefix.':';
       $pre_defs[] = 'PREFIX ' . $prefix++ . ": <$ns>";
     }
     $pre_def = implode(' ', $pre_defs);
 
     // Define relationship tripples
-    foreach($relationships as $ns => $rels){
-      foreach($rels as $rel){
+    foreach ($relationships as $ns => $rels) {
+      foreach ($rels as $rel) {
         $nsrel = $pre[$ns] . $rel;
         $rel_tripples[] = "{?pid $nsrel <info:fedora/$obj_id>}";
       }
@@ -1280,7 +1280,7 @@ function islandora_object_related_islandora_objects($object, $cmodels=null, $rel
   $result = $tuque->repository->ri->sparqlQuery($query);
 
   $related_objects = array();
-  foreach($result as $related_object) {
+  foreach ($result as $related_object) {
     $obj = islandora_object_load($related_object['pid']['value']);
     $related_objects[] = $obj ;
   }
@@ -1327,7 +1327,7 @@ function islandora_related_lab_objects_access($permissions, AbstractObject $obje
   }
 
   //if there are no lab objects for the $object, there is nothing to see
-  if(!islandora_object_has_lab_objects($object)) {
+  if (!islandora_object_has_lab_objects($object)) {
     return FALSE;
   }
 
@@ -1356,12 +1356,12 @@ function islandora_related_lab_objects_ingest_access($permissions, AbstractObjec
   }
 
   //check if $relatedCModel is null or empty
-  if(empty($relatedCModel)) {
+  if (empty($relatedCModel)) {
     return FALSE;
   }
 
   //if there are no lab objects for the $object, there is nothing to see
-  if(!islandora_object_has_lab_objects($object)) {
+  if (!islandora_object_has_lab_objects($object)) {
     return FALSE;
   }
 
@@ -1386,12 +1386,12 @@ function islandora_related_people_access($permissions, AbstractObject $object) {
     return FALSE;
   }
 
-  if(!islandora_object_has_people($object)) {
+  if (!islandora_object_has_people($object)) {
     return FALSE;
   }
 
   for ($i = 0; $i < count($permissions); $i++) {
-    if(!islandora_object_access($permissions[$i], $object)) {
+    if (!islandora_object_access($permissions[$i], $object)) {
       return FALSE;
     }
   }
@@ -1407,7 +1407,7 @@ function islandora_cmodel_name($cmodel) {
 
   $content_model_pid = $cmodel->id;
   preg_match($pattern, $content_model_pid, $match);
-  if(sizeof($match) >= 1)
+  if (sizeof($match) >= 1)
     return $match[1];
   else
     return '';
@@ -1418,8 +1418,8 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
   $cmodel_id = $object->models[0];
 
   $abstract_tripples = '';
-  if($abstract_cmodels){
-    foreach($abstract_cmodels as $abstract_cmodel){
+  if ($abstract_cmodels) {
+    foreach ($abstract_cmodels as $abstract_cmodel) {
       $abstract_tripples_array[] = "{?pid <fedora-model:hasModel> <info:fedora/$abstract_cmodel>}";
     }
     $abstract_tripples = '{'.implode(' UNION ', $abstract_tripples_array).'}';
@@ -1439,7 +1439,7 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
   $tuque = new IslandoraTuque();
   $result = $tuque->repository->ri->sparqlQuery($query);
   $related_cmodels = array();
-  foreach($result as $related_cmodel) {
+  foreach ($result as $related_cmodel) {
     $obj = islandora_object_load($related_cmodel['pid']['value']);
     $related_cmodels[] = $obj ;
   }
