@@ -1484,6 +1484,11 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
   foreach ($result as $project) {
     $project_object = islandora_object_load($project["pid"]["value"]);
     $projects[$project_object->id] = $project_object->label;
+
+    $relationship = $object->relationships->get(FEDORA_RELS_EXT_URI, 'isPartOf', $project_object->id);
+    if (!empty($relationship)) {  //if relationship exists, add it to $default_values
+      $default_values[$project_object->id] = $project_object->id;
+    }
   }
 
   $form_state['islandora']['objects'][0] = $object;
@@ -1511,8 +1516,24 @@ function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $fo
  * Creates the relationship between an object and selected projects
  */
 function islandora_bioinformatics_base_add_lab_object_to_project_form_submit($form, $form_state) {
+  $tuque = new IslandoraTuque();
+
   $object = $form_state['islandora']['objects'][0];
   $object_ids = array_filter($form_state['values']['projects']);
+
+  //iterate over every person and remove their relationship (if it exists) with the project.
+  $query = "SELECT ?pid
+            FROM <#ri>
+            WHERE {
+            ?pid <fedora-model:hasModel> <info:fedora/islandora:project_cmodel> .
+        }";
+  $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
+
+  foreach ($result as $project) {
+    $object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project['pid']['value']);
+  }
+
+  //add selected relationships
   foreach ($object_ids as $id) {
     $object->relationships->add(FEDORA_RELS_EXT_URI, 'isPartOf', $id);
   }
