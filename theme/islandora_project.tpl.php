@@ -65,7 +65,7 @@ echo "</pre>";*/
 <div class="project-info">
     <table>
         <tbody>
-        <tr><th class="project-info-heading">Project Information</th></tr>
+        <tr><th class="project-info-heading">Project Information</th><?php print l('Edit', "islandora/edit_form/{$variables['project']->id}/MADS");?></tr>
         <tr><td class="project-info-label">Title:</td><?php if (isset ($variables['project']['title'])):?><td><?php print $variables['project']['title'] ?></td><?php endif; ?></tr>
         <tr><td class="project-info-label">Organization:</td><?php if (isset ($variables['project']['organization'])):?><td><?php print $variables['project']['organization'] ?></td><?php endif; ?></tr>
         <tr><td class="project-info-label">City:</td><?php if (isset ($variables['project']['address']['city'])):?><td><?php print $variables['project']['address']['city'] ?></td><?php endif; ?></tr>
