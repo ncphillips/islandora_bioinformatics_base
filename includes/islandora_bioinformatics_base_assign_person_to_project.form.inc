@@ -61,7 +61,7 @@ function islandora_bioinformatics_base_assign_person_to_project_form(array $form
   }
 
   $form['header'] = array(
-    '#markup' => 'Add People to this Project',
+    '#markup' => 'Manage People in this Project',
     '#prefix' => '<h1>',
     '#suffix' => '</h1>',
   );
