@@ -374,7 +374,7 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
 
   $form['add'] = array(
     '#type' => 'hidden',
-    '#markup' =>  l("Add Existing $object_name", "islandora/object/{$object->id}/$object_name/add"),
+    '#markup' =>  l("Add Existing $object_name", "islandora/object/{$object->id}/add_lab_object_to_project"),
     //'#prefix' => '<div class="m-btn green">',
     //'#suffix' => '</div>',
   );
