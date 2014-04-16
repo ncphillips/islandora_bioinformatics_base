@@ -375,8 +375,8 @@ function related_islandora_objects_form($form, $form_state, $object, $cmodels=nu
   $form['add'] = array(
     '#type' => 'hidden',
     '#markup' =>  l("Add Existing $object_name", "islandora/object/{$object->id}/add/$object_name"),
-    '#prefix' => '<div class="m-btn green">',
-    '#suffix' => '</div>',
+    //'#prefix' => '<div class="m-btn green">',
+    //'#suffix' => '</div>',
   );
 
   // From our form there should be a list of specific operations that can be performed
