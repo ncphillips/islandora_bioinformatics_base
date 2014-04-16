@@ -1114,10 +1114,7 @@ function person_mads_to_array($person_object) {
           $person_mads['contact']['startDate'] = ($part->dateValid[0]) ? (string)$part->dateValid[0] : "";
           $person_mads['contact']['endDate'] = ($part->dateValid[1]) ? (string)$part->dateValid[1] : "";
 
-          var_dump($person_mads);
-
         }
-        break;
       case "url":
         $person_mads['contact']['url'] = ($part) ? (string)$part : "";
         break;
