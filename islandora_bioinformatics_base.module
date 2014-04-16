@@ -1095,7 +1095,7 @@ function person_mads_to_array($person_object){
         // I dont know if this is even working
         break;
       case "affiliation":
-        $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
+        $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "test";
         $person_mads['contact']['email'] = ($part->email) ? (string)$part->email : "";
         $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
         $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
