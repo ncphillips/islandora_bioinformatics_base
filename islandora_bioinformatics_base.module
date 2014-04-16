@@ -145,10 +145,10 @@ function islandora_bioinformatics_base_menu() {
       'access arguments' => array(array(ISLANDORA_INGEST), 2),
       'file' => 'includes/manage_project.form.inc',
     ),
-    'islandora/object/%islandora_object/add_to_project' => array(
-      'title' => 'Add Object to Project',
+    'islandora/object/%islandora_object/add_lab_object_to_project' => array(
+      'title' => 'Add Lab Object to Project',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('islandora_lab_object_add_to_project_form',2),
+      'page arguments' => array('islandora_bioinformatics_base_add_lab_object_to_project_form', 2),
       'access arguments' => 'islandora_related_lab_objects_ingest_access',
       'access callback' => array(array(ISLANDORA_INGEST), 2),
       'access callback' => TRUE,
@@ -1469,20 +1469,20 @@ function islandora_objects_related_cmodels($object, $abstract_cmodels=null) {
  * @param $object
  * Presents checkboxes for all projects which may be selected
  */
-function islandora_lab_object_add_to_project_form($form, $form_state, AbstractObject $object) {
+function islandora_bioinformatics_base_add_lab_object_to_project_form($form, $form_state, AbstractObject $object) {
   $tuque = new IslandoraTuque();
   $query = "SELECT ?pid
                     FROM <#ri>
                     WHERE {
-                    ?pid <fedora-model:hasModel><info:fedora/islandora:person_cmodel> .
+                    ?pid <fedora-model:hasModel><info:fedora/islandora:project_cmodel> .
                     }
                     ";
   $result = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
 
   $projects = array();
   $default_values = array();
-  foreach ($result as $person) {
-    $project_object = islandora_object_load($person["pid"]["value"]);
+  foreach ($result as $project) {
+    $project_object = islandora_object_load($project["pid"]["value"]);
     $projects[$project_object->id] = $project_object->label;
   }
 
@@ -1502,7 +1502,7 @@ function islandora_lab_object_add_to_project_form($form, $form_state, AbstractOb
  * @param $object
  * Creates the relationship between an object and selected projects
  */
-function islandora_lab_object_add_to_project_form_submit($form, $form_state) {
+function islandora_bioinformatics_base_add_lab_object_to_project_form_submit($form, $form_state) {
   $object = $form_state['islandora']['objects'][0];
   $object_ids = array_filter($form_state['values']['projects']);
   foreach ($object as $id) {
