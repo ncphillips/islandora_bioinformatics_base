@@ -182,7 +182,7 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
 
     *******************************************************************************************************/
 
-    $testSuccess = false; //A variable to track whether or not the relationship test was successful.
+    $testSuccess = FALSE; //A variable to track whether or not the relationship test was successful.
 
     //Establish a relationship between islandora:test_person and islandora_test_project
 
@@ -208,13 +208,13 @@ class IslandoraBaseIngestTestCase extends IslandoraWebTestCase {
 
     foreach ($query_results as $person) {
       if ($person['pid']['value'] == 'islandora:test_person') {
-        $testSuccess = true; //The test worked, now remove the relationship.
+        $testSuccess = TRUE; //The test worked, now remove the relationship.
 
         $person_test_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isPartOf', $project_test_object->id);
       }
       else {
 
-        $testSuccess = false;
+        $testSuccess = FALSE;
         $this->fail("The relationship test was unsuccessful.");
       }
     }
