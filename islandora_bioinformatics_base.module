@@ -1104,7 +1104,7 @@ function person_mads_to_array($person_object) {
         // I dont know if this is even working
         break;
       case "affiliation":
-        $person_mads['contact']['phone'] = ((string)$part->phone) ? (string)$part->phone : "";
+        $person_mads['contact']['phone'] = ($part->phone) ? (string)$part->phone : "";
         $person_mads['contact']['email'] = ($part->email) ? (string)$part->email : "";
         $person_mads['contact']['organization'] = ($part->organization) ? (string)$part->organization : "";
         $person_mads['contact']['position'] = ($part->position) ? (string)$part->position : "";
@@ -1112,6 +1112,9 @@ function person_mads_to_array($person_object) {
         $person_mads['contact']['startDate'] = ($part->dateValid[0]) ? (string)$part->dateValid[0] : "";
         $person_mads['contact']['endDate'] = ($part->dateValid[1]) ? (string)$part->dateValid[1] : "";
 
+        if (!empty($person_mads['contact'])){
+          break;
+        }
         break;
       case "url":
         $person_mads['contact']['url'] = ($part) ? (string)$part : "";
